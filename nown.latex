@@ -16,7 +16,7 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=linkblue, citecolor=black,
   pdftitle={Nown: A Peer-to-Peer Protocol for Portable Trust and Merit-Based Arbitration},
-  pdfauthor={Anonymous}}
+  pdfauthor={Anonymous}, pdfcreator={}, pdfproducer={}}
 % Strip identifying metadata: no creation/mod dates, deterministic trailer ID.
 \ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
 \ifdefined\pdftrailerid\pdftrailerid{}\fi
@@ -34,7 +34,7 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \title{Nown: A Peer-to-Peer Protocol for\\[2pt] Portable Trust and Merit-Based Arbitration}
-\author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small Draft v0.3 \quad Released to the public domain (CC0 1.0)}
+\author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.4 \quad Released into the public domain (the Unlicense)}
 \date{}
 
 \begin{document}

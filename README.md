@@ -35,6 +35,6 @@ contribute because it should exist.
 
 ## License
 
-Released to the public domain. The repository is under the **Unlicense** ([`LICENSE`](LICENSE)); the
-whitepaper text is additionally dedicated **CC0 1.0**. Nothing here is owned, so there is nothing to
+Released into the public domain. Everything in the repository, the whitepaper included, is under
+the **Unlicense** ([`LICENSE`](LICENSE)). Nothing here is owned, so there is nothing to
 capture. See [`NOTICE`](NOTICE).
