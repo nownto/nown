@@ -8,6 +8,8 @@ cd "$(dirname "$0")"
 
 command -v pandoc >/dev/null || { echo "pandoc missing"; exit 1; }
 export PATH="/Library/TeX/texbin:$PATH"
+# Reproducible, metadata-free PDF: no build timestamp, no locale leak.
+export SOURCE_DATE_EPOCH=0
 command -v pdflatex >/dev/null || { echo "pdflatex missing"; exit 1; }
 
 TMP="$(mktemp -d)"

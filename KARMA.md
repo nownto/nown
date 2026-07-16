@@ -109,8 +109,7 @@ itself while earning nothing, since karma is inflow from outside and a closed lo
 **Steward skin in the game.** To serve, a steward locks a capital bond plus a slashable fraction of
 their own karma, both sized to the value in dispute. Panels are value-scaled: few stewards on a small
 claim, many on a large one, so expected pay for honest reading always clears the cost of reading and no
-large sum ever rests on a handful. A coherent verdict (lands with the sealed majority and beats its own
-predicted popularity) returns the bond and pays the steward; an incoherent one is slashed and the
+large sum ever rests on a handful. A coherent verdict (lands with the sealed majority) returns the bond and pays the steward; an incoherent one is slashed and the
 steward is drawn less often. Stewards are scored across a batch of cases, so honest reading dominates
 any lazy or collusive rule over many cases whatever the others do. Honest stewards are paid from the
 losing side's pre-posted deposit plus the slashed stakes of incoherent stewards; the protocol takes
@@ -177,7 +176,7 @@ R15. Disputes: justified win returns deposit + restitution; frivolous loss burns
 vindication restores risked standing; loss slashes deposit + karma scaled to value.
 R16. Steward stake to serve = capital bond + slashable fraction of own karma, both sized to the value
 in dispute. Panels value-scaled: few stewards on small claims, many on large ones.
-R17. Coherent verdict (lands with the sealed majority AND beats its predicted popularity) returns bond
+R17. Coherent verdict (lands with the sealed majority) returns bond
 + reward. Incoherent (against outcome, or provably lazy) is slashed and redistributed to coherent
 stewards.
 R18. Correlated-fault slashing: the incoherent penalty rises with how many stewards were wrong in the
