@@ -517,6 +517,36 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
   #faq .faq-q{ font-size:1.16rem }
   #faq .faq-a{ padding-left:0 }
 }
+
+/* -- sim4: cash out and vanish -- */
+/* sim 4 : cash out and vanish (additions to #simulations) */
+#simulations .s4wrap{ padding:1.7rem 1.2rem 1.3rem; min-height:clamp(230px,32vw,300px); display:flex; flex-direction:column; justify-content:center; gap:.95rem }
+#simulations .s4row{ display:flex; align-items:center; gap:.8rem; flex-wrap:wrap; font-family:var(--mono); font-size:.64rem;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); font-variant-numeric:tabular-nums }
+#simulations .s4row b{ color:var(--bronze); font-weight:600 }
+#simulations .s4row input[type=range]{ -webkit-appearance:none; appearance:none; flex:1; min-width:6.5rem; height:22px; margin:0; background:transparent; cursor:pointer }
+#simulations .s4row input[type=range]::-webkit-slider-runnable-track{ height:2px; border-radius:1px; background:var(--rule-2) }
+#simulations .s4row input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none;
+  width:15px; height:15px; margin-top:-6.5px; border-radius:50%; background:var(--bronze); border:2px solid var(--paper-2) }
+#simulations .s4row input[type=range]::-moz-range-track{ height:2px; border-radius:1px; background:var(--rule-2) }
+#simulations .s4row input[type=range]::-moz-range-thumb{ width:11px; height:11px; border-radius:50%; background:var(--bronze); border:2px solid var(--paper-2) }
+#simulations .s4row input[type=range]:disabled{ opacity:.45; cursor:default }
+#simulations .s4meta{ display:flex; justify-content:space-between; gap:.6rem 1.2rem; flex-wrap:wrap; font-family:var(--mono);
+  font-size:.64rem; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-3); font-variant-numeric:tabular-nums }
+#simulations .s4meta b{ color:var(--bronze); font-weight:600 }
+#simulations .s4meter{ height:4px; background:var(--rule); border-radius:2px; overflow:hidden }
+#simulations .s4meter i{ display:block; height:100%; width:0%; background:var(--bronze) }
+#simulations .s4meter i.seized{ background:var(--ink-3) }
+#simulations .s4chips{ display:flex; flex-wrap:wrap; gap:.45rem; min-height:2.1rem; align-content:flex-start }
+#simulations .s4chip{ font-family:var(--mono); font-size:.62rem; letter-spacing:.06em; font-variant-numeric:tabular-nums;
+  color:var(--ink-2); border:1px solid var(--rule-2); border-radius:6px; padding:.3rem .55rem; background:var(--paper) }
+#simulations .s4chip.dead{ border-style:dashed; color:var(--ink-3); text-decoration:line-through; opacity:.55 }
+#simulations .s4chip.refused{ border-style:dashed; border-color:var(--ink-3); color:var(--ink-3); background:var(--paper-3) }
+@media (prefers-reduced-motion: no-preference){
+  #simulations .s4meter i{ transition:width .35s ease }
+  #simulations .s4chip.refused{ animation:s4bounce .55s ease }
+  @keyframes s4bounce{ 0%,100%{ transform:translateX(0) } 25%{ transform:translateX(-5px) } 55%{ transform:translateX(4px) } 80%{ transform:translateX(-2px) } }
+}
 </style>
 </head>
 <body>
@@ -563,7 +593,7 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
     <p class="eyebrow rv">Why it matters</p>
     <h2 class="statement rv">Money no longer needs a banker. Judgment still needs a <span class="q">judge</span>.</h2>
     <p class="lead rv">Before passports, a village already knew who to trust. Not from papers, from memory. The baker delivered. The carpenter kept his word. The smith stood behind his work. Nown is that memory, rebuilt for strangers at the scale of the network.</p>
-    <p class="lead rv">For all of history the power to settle a dispute between strangers has belonged to a third party: a lord, a guild, a court, a platform. Every one of them could be bribed, captured, subpoenaed, or switched off, and owned your reputation for as long as it lasted.</p>
+    <p class="lead rv">The power to settle a dispute between strangers has belonged to a third party: a lord, a guild, a court, a platform. Each could be bribed, captured, subpoenaed, or switched off, and owned your reputation for as long as it lasted.</p>
     <p class="lead rv">Nown removes the third party from both. Your standing you carry yourself. A dispute is settled by a quorum that no one can find, selected for the case and gone when it ends. No one to bribe, no office to raid, no company to capture. It does not ask who you are. It asks what you have done.</p>
     <p class="pull rv">The internet solved information. Bitcoin solved money. Nown solves judgment.</p>
   </div>
@@ -585,13 +615,13 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
         <svg class="gl" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="8" cy="12" r="2.2" fill="currentColor" opacity=".4"/><circle cx="20" cy="8" r="2.2" fill="currentColor"/><circle cx="32" cy="13" r="2.2" fill="currentColor" opacity=".4"/><circle cx="12" cy="26" r="2.2" fill="currentColor"/><circle cx="28" cy="28" r="2.2" fill="currentColor" opacity=".4"/><circle cx="20" cy="20" r="2.8" fill="currentColor"/><path d="M20 8v12M12 26l8-6M20 20l8 8" stroke="currentColor" stroke-width="1.1" opacity=".5"/></svg>
         <p class="k">Quorum</p>
         <h3>A verdict no one can buy</h3>
-        <p>An anonymous quorum selected at random from proven peers, several steps removed from both sides, unknown to you and to each other. Not everyone decides; those who earned the right decide. Not permanently, not by decree. For this case, for this time, and gone when it ends. Their verdict is final, because no authority sits above them to capture.</p>
+        <p>An anonymous quorum selected at random from proven peers, several steps removed from both sides, unknown to you and to each other. Those who earned the right decide, for this case only, and gone when it ends. Their verdict is final, because no authority sits above them.</p>
       </div>
       <div class="pillar rv">
         <svg class="gl" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M20 5l12 5v8c0 8-5 13-12 17-7-4-12-9-12-17v-8l12-5z" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="20" cy="18" r="2.6" fill="currentColor"/></svg>
         <p class="k">Sovereignty</p>
         <h3>You answer for yourself</h3>
-        <p>The protocol rules on the trade, not on the person. Your politics, your beliefs, your life are your own, and your record is yours too. You are free to act, and you carry the consequences. No authority sits above you, and your record, kept by no one, is the only thing that speaks for you.</p>
+        <p>The protocol rules on the trade, not on the person. Your politics, your beliefs, your life are your own. You are free to act, and you carry the consequences. Your record, kept by no one, speaks for you.</p>
       </div>
     </div>
   </div>
@@ -747,7 +777,7 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
   <div class="inner narrow">
     <p class="eyebrow rv">One dispute &middot; start to finish</p>
     <h2 class="statement rv">Every ending is signed <span class="q">before anything moves.</span></h2>
-    <p class="lead rv">Alice buys a camera lens from Bob, 0.5 units. It arrives broken. Follow the case, and watch the one thing the quorum can do, and everything it cannot.</p>
+    <p class="lead rv">Alice buys a camera lens from Bob, 0.5 units. It arrives broken. Follow the case. The quorum can do one thing only.</p>
   </div>
   <div class="inner case-stagecol">
     <div class="case-live">
@@ -979,13 +1009,14 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
 <section class="section rule-top" id="simulations">
   <div class="inner">
     <p class="eyebrow rv">Try to break it</p>
-    <h2 class="statement rv">Every attack costs more than it can <span class="q">win</span>.</h2>
-    <p class="lead rv">Three attacks people always propose, made playable. Set the attack yourself, run it, and read the ledger. Every run ends the same way: compare what it burned with what it could ever take.</p>
+    <h2 class="statement rv">The attack costs more than the <span class="q">prize</span>.</h2>
+    <p class="lead rv">Commonly raised attacks, made playable. Set the attack, run it, read the ledger.</p>
 
     <div class="stabs rv" role="tablist" aria-label="Attack simulations">
       <button class="stab" id="simtab1" role="tab" aria-selected="true" aria-controls="simpanel1"><span class="tno">01</span>Capture the quorum</button>
       <button class="stab" id="simtab2" role="tab" aria-selected="false" aria-controls="simpanel2" tabindex="-1"><span class="tno">02</span>Poison the vouch graph</button>
       <button class="stab" id="simtab3" role="tab" aria-selected="false" aria-controls="simpanel3" tabindex="-1"><span class="tno">03</span>Stall the verdict</button>
+      <button class="stab" id="simtab4" role="tab" aria-selected="false" aria-controls="simpanel4" tabindex="-1"><span class="tno">04</span>Cash out and vanish</button>
     </div>
 
     <!-- tab 1 -->
@@ -1056,7 +1087,7 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
         <p class="simcap">A stall never captures the money. It only burns the attacker.<br>An illustration of the incentive design, not a measurement.</p>
       </div>
       <div class="sim-side">
-        <p class="intro">Click stewards to bribe them into withholding their signature. Each bribe costs more than the last. The escrow waits, patient, for the deadline.</p>
+        <p class="intro">Click stewards to bribe them into withholding their signature. Each bribe costs more than the last. The escrow waits for the deadline.</p>
         <div class="sled">
           <p class="sled-h">The ledger &middot; prize at stake 100</p>
           <div class="sled-row"><span>attack cost</span><b data-r="cost">0</b></div>
@@ -1067,6 +1098,38 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
         <button class="sreset" id="s3reset">Reset the run</button>
       </div>
     </div>
+
+    <div class="sim-grid rv" id="simpanel4" role="tabpanel" aria-labelledby="simtab4" hidden>
+  <div>
+    <div class="stage">
+      <div class="s4wrap">
+        <div class="s4row"><span>standing</span><input type="range" id="s4k" min="0" max="10" step="1" value="10" aria-label="Your standing. High standing prices the deposit down. It does not move the cap."><span>deposit per trade &middot; <b id="s4dep">5</b></span></div>
+        <div class="s4meta"><span>open value-at-risk &middot; <b id="s4exp">0</b></span><span>cap &middot; <b id="s4cap">300</b> = bond <b id="s4bond">100</b> &times;3</span></div>
+        <div class="s4meter" aria-hidden="true"><i id="s4fill"></i></div>
+        <div class="s4chips" id="s4chips"></div>
+      </div>
+      <p class="sim-status" id="sim4st" aria-live="polite">Years of standing. Deposit per trade: 5 of 100. Cap: 300, three times your locked bond.</p>
+    </div>
+    <p class="simcap">Units are illustrative. The bound is mechanical: open exposure never exceeds the locked bond times a fixed multiple.<br>An illustration of the incentive design, not a measurement.</p>
+  </div>
+  <div class="sim-side">
+    <p class="intro">You are a seller with years of standing, and deposits priced thin because of it. Open every trade you can, collect the payments, then default on it all.</p>
+    <button class="sctl" id="s4open">Open a trade <span class="pr" id="s4op">&minus;5</span></button>
+    <p class="sctl-d">Adds 100 of counterparty value-at-risk against your cap. Standing prices your deposit down.</p>
+    <button class="sctl" id="s4lock">Lock more bond <span class="pr">&minus;100</span></button>
+    <p class="sctl-d">Raises the cap by 300. Only capital a verdict can seize moves it. Reclaimable after every deadline, unless you default.</p>
+    <button class="sctl" id="s4exit" disabled>Exit scam <span class="pr" id="s4xp">+0</span></button>
+    <p class="sctl-d">Default on everything open and keep the payments. Bond seized, deposits lost, account written off.</p>
+    <div class="sled">
+      <p class="sled-h">The ledger &middot; cap = bond &times;3</p>
+      <div class="sled-row"><span>take on exit</span><b id="s4take">0</b></div>
+      <div class="sled-row"><span>burned on exit</span><b id="s4burn">100</b></div>
+      <p class="sled-sub" id="s4sub">bond locked 100</p>
+      <p class="sled-verdict" id="s4ver" aria-live="polite">Nothing open. Karma opened the door cheap. It is not a credit line.</p>
+    </div>
+    <button class="sreset" id="s4reset">Reset the run</button>
+  </div>
+</div>
   </div>
 </section>
 
@@ -1137,7 +1200,7 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
       <div class="cmp-fade" aria-hidden="true"></div>
     </div>
     <p class="cmp-hint" aria-hidden="true">slide &rarr;</p>
-    <p class="disc rv">Each column judged by its failure mode, which is the only honest way to judge a court.</p>
+    <p class="disc rv">Each column judged by its failure mode.</p>
   </div>
 </section>
 
@@ -1154,7 +1217,7 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
   <div class="inner narrow">
     <p class="eyebrow rv">Before you ask</p>
     <h2 class="statement rv">The obvious <span class="q">objections</span>.</h2>
-    <p class="lead rv">Every honest reader arrives holding one of these. They are answered from the design, not from promises.</p>
+    <p class="lead rv">Answered from the design, not from promises.</p>
 
     <div class="faq-list rv">
 
@@ -1165,27 +1228,27 @@ html.js #case[data-mode="live"] .case-controls{ display:flex }
 
       <details>
         <summary><span class="faq-no">02</span><span class="faq-q">Why is there no appeal?</span><span class="faq-mk" aria-hidden="true">&rsaquo;</span></summary>
-        <div class="faq-a"><p>Because every appeal path ends somewhere, and wherever it ends sits an authority that can be captured. The search for a final incorruptible authority is the search that has always failed; Nown stops searching. A verdict that is final in days is worth more than one still grinding through instances years later. The patient and the rich win wars of attrition, so here there are none to win.</p></div>
+        <div class="faq-a"><p>Because every appeal path ends somewhere, and wherever it ends sits an authority that can be captured. A verdict that is final in days is worth more than one still grinding through instances years later. The patient and the rich win wars of attrition, so here there are none to win.</p></div>
       </details>
 
       <details>
         <summary><span class="faq-no">03</span><span class="faq-q">Why would anyone serve as a steward?</span><span class="faq-mk" aria-hidden="true">&rsaquo;</span></summary>
-        <div class="faq-a"><p>Because it is paid work. Stewards who vote with the outcome earn the dispute fees, the loser&rsquo;s deposit, and the bonds of the stewards who voted against it. Serving well also compounds karma, and karma is worth real opportunity: better counterparties, larger trades, future service. It is the one court where the judge is paid by the judged and owned by no one.</p></div>
+        <div class="faq-a"><p>Because it is paid work. Stewards who vote with the outcome earn the dispute fees, the loser&rsquo;s deposit, and the bonds of the stewards who voted against it. Serving well also compounds karma, and karma is worth real opportunity: better counterparties, larger trades, future service. The judge is paid by the judged and owned by no one.</p></div>
       </details>
 
       <details>
         <summary><span class="faq-no">04</span><span class="faq-q">Can the rich buy a verdict?</span><span class="faq-mk" aria-hidden="true">&rsaquo;</span></summary>
-        <div class="faq-a"><p>They can try to outspend, but the design spends back. Deposits scale with the dispute, and the quorum grows with the stake. Karma is capped by tenure, and no amount of money lifts the cap. Above all, each ballot is sealed and can be silently revised, so a bribed steward can take the money and vote honestly anyway. A bribe that cannot be verified cannot be enforced, and an unenforceable bribe buys nothing.</p></div>
+        <div class="faq-a"><p>They can try to outspend, but the design spends back. Deposits scale with the dispute, and the quorum grows with the stake. Karma is capped by tenure, and no amount of money lifts the cap. Each ballot is sealed and can be silently revised, so a bribed steward can take the money and vote honestly anyway. An unverifiable bribe buys nothing.</p></div>
       </details>
 
       <details>
         <summary><span class="faq-no">05</span><span class="faq-q">What stops someone from creating a thousand accounts?</span><span class="faq-mk" aria-hidden="true">&rsaquo;</span></summary>
-        <div class="faq-a"><p>Every account begins with the same irreversible creation sacrifice; a thousand accounts cost a thousand sacrifices, with no volume discount. Karma flows only from settled dealings with independent counterparties, so a ring that praises itself has no inflow. Stated honestly: telling persons apart without documents is an unsolved problem. The protocol raises the cost of pretending until it stops paying. It does not claim to make it impossible.</p></div>
+        <div class="faq-a"><p>Every account begins with the same irreversible creation sacrifice; a thousand accounts cost a thousand sacrifices, with no volume discount. Karma flows only from settled dealings with independent counterparties, so a ring that praises itself has no inflow. Telling persons apart without documents is an unsolved problem. The protocol raises the cost of pretending until it stops paying; it does not claim to make it impossible.</p></div>
       </details>
 
       <details>
         <summary><span class="faq-no">06</span><span class="faq-q">What happens if the quorum never delivers a verdict?</span><span class="faq-mk" aria-hidden="true">&rsaquo;</span></summary>
-        <div class="faq-a"><p>The verdict has a deadline that no one can hurry. Every signing round either completes or names the withholders; a named withholder pays and loses its seat in the retry. Failing every verdict, a pre-signed default becomes valid after a generous delay: the outcome the record itself committed, or, where the record commits nothing, a refund to the two traders. A stall burns the staller and captures nothing. Funds can wait; they cannot be imprisoned.</p></div>
+        <div class="faq-a"><p>The verdict has a deadline that no one can hurry. Every signing round either completes or names the withholders; a named withholder pays and loses its seat in the retry. Failing every verdict, a pre-signed default becomes valid after a generous delay: the outcome the record itself committed, or, where the record commits nothing, a refund to the two traders. A stall burns the staller and captures nothing.</p></div>
       </details>
 
       <details>
@@ -1842,7 +1905,7 @@ var sim3=(function(){
     }
     if(phase===1){
       phase=2; slashHeld();
-      ledger('Deadline passed with '+heldN+' withheld, all slashed. The struck seats refill once, along the order the draw already fixed, and the clock restarts.');
+      ledger('Deadline passed with '+heldN+' withheld, all slashed. The struck seats refill once, in the order the draw fixed, and the clock restarts.');
       verdictLine('Burned '+fmt(bribes+bonds)+' so far. The case is still alive.');
       timers.push(setTimeout(function(){ build(); locked=false; startClock(); },reduce?0:1300));
       return;
@@ -1968,6 +2031,124 @@ select(0);
       }
     });
   });
+})();
+</script>
+<script>
+(function(){
+'use strict';
+var sec=document.getElementById('simulations'); if(!sec) return;
+var tab=document.getElementById('simtab4'), panel=document.getElementById('simpanel4'); if(!tab||!panel) return;
+var strip=tab.closest('[role="tablist"]')||tab.parentNode;
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function q(s){ return panel.querySelector(s); }
+function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+
+/* ---- tab wiring: coexist with the page's generic tab handler.
+   The page script enumerates [role=tab] but only knows sims 1-3, so
+   selection of THIS tab is intercepted in the capture phase and
+   handled here; selection of tabs 1-3 passes through untouched. ---- */
+function allTabs(){ return [].slice.call(strip.querySelectorAll('[role="tab"]')); }
+function show4(){
+  allTabs().forEach(function(t){
+    var on=(t===tab), p=document.getElementById(t.getAttribute('aria-controls'));
+    t.setAttribute('aria-selected', on?'true':'false'); t.tabIndex=on?0:-1;
+    if(p) p.hidden=!on;
+  });
+}
+strip.addEventListener('click',function(e){
+  var t=e.target.closest?e.target.closest('[role="tab"]'):null; if(!t) return;
+  if(t===tab){ e.stopPropagation(); show4(); }
+  else { panel.hidden=true; tab.setAttribute('aria-selected','false'); tab.tabIndex=-1; }
+},true);
+strip.addEventListener('keydown',function(e){
+  var t=e.target.closest?e.target.closest('[role="tab"]'):null; if(!t) return;
+  var ts=allTabs(), i=ts.indexOf(t), n=null;
+  if(e.key==='ArrowRight') n=(i+1)%ts.length;
+  else if(e.key==='ArrowLeft') n=(i+ts.length-1)%ts.length;
+  else if(e.key==='Home') n=0; else if(e.key==='End') n=ts.length-1;
+  if(n!==null&&ts[n]===tab){ e.preventDefault(); e.stopPropagation(); show4(); tab.focus(); }
+},true);
+
+/* ---- the sim ---- */
+var TRADE=100, MULT=3, LOCK=100, BONDMAX=400;
+var bond, open_, deps, done, timers=[];
+var kEl=q('#s4k'), depEl=q('#s4dep'), expEl=q('#s4exp'), capEl=q('#s4cap'), bondEl=q('#s4bond'),
+    fill=q('#s4fill'), chips=q('#s4chips'), st=q('#sim4st'),
+    take=q('#s4take'), burn=q('#s4burn'), sub=q('#s4sub'), ver=q('#s4ver'),
+    bOpen=q('#s4open'), opPr=q('#s4op'), bLock=q('#s4lock'), bExit=q('#s4exit'), xPr=q('#s4xp');
+function dep(){ return Math.max(5, Math.round(80-7.5*(+kEl.value))); }
+function cap(){ return bond*MULT; }
+function paint(){
+  depEl.textContent=fmt(dep()); opPr.textContent='−'+fmt(dep());
+  expEl.textContent=fmt(open_*TRADE); capEl.textContent=fmt(cap()); bondEl.textContent=fmt(bond);
+  fill.style.width=Math.min(100,open_*TRADE/cap()*100).toFixed(1)+'%';
+  take.textContent=fmt(open_*TRADE); burn.textContent=fmt(bond+deps);
+  xPr.textContent='+'+fmt(open_*TRADE);
+  var parts=['bond locked '+fmt(bond)];
+  if(deps) parts.push('deposits '+fmt(deps));
+  if(open_) parts.push('open '+open_);
+  sub.textContent=parts.join(' · ');
+  bExit.disabled=done||!open_;
+  bLock.disabled=done||bond>=BONDMAX;
+  bOpen.disabled=done; kEl.disabled=done;
+}
+function refuse(){
+  st.textContent='Counterparty client refuses: cap reached. Lock more bond to open more.';
+  ver.textContent='No signature, no opening. No authority polices the cap: the counterparty’s client reads the record and declines.';
+  if(reduce) return;
+  var c=document.createElement('span');
+  c.className='s4chip refused'; c.textContent='№'+(open_+1)+' · refused';
+  chips.appendChild(c);
+  timers.push(setTimeout(function(){ if(c.parentNode) c.parentNode.removeChild(c); },700));
+}
+function openTrade(){
+  if(done) return;
+  if((open_+1)*TRADE>cap()){ refuse(); return; }
+  open_++; deps+=dep();
+  var c=document.createElement('span');
+  c.className='s4chip'; c.textContent='№'+open_+' · '+fmt(TRADE);
+  chips.appendChild(c);
+  st.textContent='Trade №'+open_+' open · counterparty at risk '+fmt(TRADE)+' · your deposit '+fmt(dep())+'.';
+  ver.textContent='Exit now and the take is '+fmt(open_*TRADE)+', against '+fmt(bond+deps)+' burned, and the account with it.';
+  paint();
+}
+function lock(){
+  if(done||bond>=BONDMAX) return; bond+=LOCK;
+  st.textContent='Bond '+fmt(bond)+' locked past every open deadline. Cap: '+fmt(cap())+'.';
+  ver.textContent='More room cost real capital, not history. Karma never raises the cap.';
+  paint();
+}
+function exitScam(){
+  if(done||!open_) return; done=true;
+  var t=open_*TRADE, b=bond+deps;
+  [].forEach.call(chips.children,function(c,i){
+    if(reduce) c.classList.add('dead');
+    else timers.push(setTimeout(function(){ c.classList.add('dead'); },i*110));
+  });
+  fill.classList.add('seized');
+  paint();
+  st.textContent='Defaulted on '+open_+' trades at once. The pre-signed outcomes fire: the seized bond pays the wronged.';
+  sub.textContent='bond seized '+fmt(bond)+' · deposits lost '+fmt(deps)+' · account written off';
+  ver.textContent='Take '+fmt(t)+'. Burned '+fmt(b)+'. The account is gone. The take is capped at '+MULT+'× the bond, once. A fresh account posts near-full deposits.';
+}
+function reset(){
+  timers.forEach(clearTimeout); timers=[];
+  bond=100; open_=0; deps=0; done=false; kEl.value=10;
+  chips.innerHTML=''; fill.classList.remove('seized');
+  st.textContent='Years of standing. Deposit per trade: '+fmt(dep())+' of '+fmt(TRADE)+'. Cap: '+fmt(cap())+', three times your locked bond.';
+  ver.textContent='Nothing open. Karma opened the door cheap. It is not a credit line.';
+  paint();
+  sub.textContent='bond locked '+fmt(bond);
+}
+kEl.addEventListener('input',function(){
+  if(done) return; paint();
+  st.textContent='Standing prices the deposit: '+fmt(dep())+' per trade. The cap stays '+fmt(cap())+'. Karma never raises it.';
+});
+bOpen.addEventListener('click',openTrade);
+bLock.addEventListener('click',lock);
+bExit.addEventListener('click',exitScam);
+q('#s4reset').addEventListener('click',reset);
+reset();
 })();
 </script>
 </body>
