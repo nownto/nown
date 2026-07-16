@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nown · A Peer-to-Peer Protocol for Portable Trust</title>
+<meta name="description" content="Nown: an ownerless protocol for portable reputation and merit-based dispute resolution. Karma is a reputation you carry; disputes are judged by an anonymous quorum selected at random, acting as a verdict oracle over an escrow held only by the two traders. No owner, no token, no company. Public domain (CC0).">
+<style>
+/* ============ Nown whitepaper · ink and minted bronze on laid paper ============ */
+:root{
+  --paper:#ece7dd; --paper-2:#f3efe6; --paper-3:#e3ddd0;
+  --ink:#1b1a16; --ink-2:#46423a; --ink-3:#726c60;
+  --rule:#d6cfc1; --rule-2:#c4bcac;
+  --bronze:#825f27; --bronze-2:#9c7635; --bronze-tint:rgba(130,95,39,.10);
+  --sel:rgba(130,95,39,.16);
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,"URW Palladio L","Sitka Text",Charter,Cambria,Georgia,serif;
+  --mono:"SFMono-Regular","SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,"Roboto Mono",Consolas,"Liberation Mono",monospace;
+  --measure:38rem;
+  --dim:var(--ink-3); --mut:var(--ink-2);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14130e; --paper-2:#1c1a13; --paper-3:#100f0b;
+    --ink:#e7e1d1; --ink-2:#b4ad9b; --ink-3:#867f6d;
+    --rule:#2b2820; --rule-2:#3a3427;
+    --bronze:#c79b50; --bronze-2:#dcb96f; --bronze-tint:rgba(199,155,80,.13);
+    --sel:rgba(199,155,80,.20);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#ece7dd; --paper-2:#f3efe6; --paper-3:#e3ddd0;
+  --ink:#1b1a16; --ink-2:#46423a; --ink-3:#726c60;
+  --rule:#d6cfc1; --rule-2:#c4bcac;
+  --bronze:#825f27; --bronze-2:#9c7635; --bronze-tint:rgba(130,95,39,.10); --sel:rgba(130,95,39,.16);
+}
+:root[data-theme="dark"]{
+  --paper:#14130e; --paper-2:#1c1a13; --paper-3:#100f0b;
+  --ink:#e7e1d1; --ink-2:#b4ad9b; --ink-3:#867f6d;
+  --rule:#2b2820; --rule-2:#3a3427;
+  --bronze:#c79b50; --bronze-2:#dcb96f; --bronze-tint:rgba(199,155,80,.13); --sel:rgba(199,155,80,.20);
+}
+
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:1.19rem; line-height:1.62;
+  font-feature-settings:"kern" 1,"liga" 1,"onum" 1; text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--sel) }
+a{ color:var(--bronze); text-decoration:none; text-underline-offset:.14em; text-decoration-thickness:.045em }
+a:hover{ color:var(--bronze-2); text-decoration:underline }
+:focus-visible{ outline:2px solid var(--bronze); outline-offset:3px; border-radius:2px }
+
+#progress{ position:fixed; inset:0 auto auto 0; height:2px; width:0; background:var(--bronze); z-index:60; transition:width .08s linear }
+@media (prefers-reduced-motion: reduce){ #progress{transition:none} }
+.topbar{
+  position:fixed; top:0; left:0; right:0; height:46px; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(14px,3vw,26px);
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter:saturate(1.1) blur(8px); -webkit-backdrop-filter:saturate(1.1) blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.brand{ display:flex; align-items:center; gap:.55em; font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); white-space:nowrap }
+.brand a{ color:var(--ink-2); text-decoration:none }
+.brand a:hover{ color:var(--ink) }
+.brand a.bcur{ color:var(--ink); font-weight:600 }
+.bdot{ opacity:.45 }
+@media (max-width:620px) and (orientation:portrait){
+  .btn .blab{ display:none }
+  .btn{ padding:7px 9px }
+  .brand{ font-size:.64rem; letter-spacing:.08em; gap:.4em }
+}
+.tb-r{ display:flex; align-items:center; gap:6px }
+.btn{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); background:transparent; border:1px solid var(--rule-2); border-radius:999px;
+  padding:6px 11px; cursor:pointer; line-height:1; display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+}
+.btn:hover{ color:var(--ink); border-color:var(--bronze); text-decoration:none }
+.btn svg{ width:13px; height:13px; display:block }
+#tocToggle{ display:none }
+
+.wrap{
+  display:grid; grid-template-columns:minmax(210px,244px) minmax(0,var(--measure));
+  justify-content:center; gap:0; padding:46px 0 0;
+}
+.toc{
+  position:sticky; top:46px; align-self:start; height:calc(100vh - 46px);
+  padding:44px 26px 40px 22px; overflow-y:auto;
+  border-right:1px solid var(--rule);
+  box-shadow:inset -13px 0 16px -15px color-mix(in srgb, var(--dim) 45%, transparent);
+  scrollbar-gutter:stable; scrollbar-width:thin; scrollbar-color:transparent transparent;
+}
+.toc:hover,.toc:focus-within{ scrollbar-color:color-mix(in srgb, var(--dim) 60%, transparent) transparent }
+.toc::-webkit-scrollbar{ width:12px; background:transparent }
+.toc::-webkit-scrollbar-track,.toc::-webkit-scrollbar-corner{ background:transparent; border:0 }
+.toc::-webkit-scrollbar-button{ width:0; height:0; display:none }
+.toc::-webkit-scrollbar-thumb{ background-color:transparent; background-clip:padding-box; border:3px solid transparent; border-radius:999px; min-height:40px }
+.toc:hover::-webkit-scrollbar-thumb,.toc:focus-within::-webkit-scrollbar-thumb{ background-color:color-mix(in srgb, var(--dim) 60%, transparent) }
+@media (hover:none){ .toc{ scrollbar-width:auto; scrollbar-color:auto } .toc::-webkit-scrollbar{ width:0 } }
+
+.toc .lbl{ font-family:var(--mono); font-size:.62rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-3); margin:0 0 14px }
+.toc ol{ list-style:none; margin:0; padding:0 }
+.toc li{ margin:0 }
+.toc a{
+  display:flex; gap:9px; align-items:baseline;
+  font-family:var(--serif); font-size:.86rem; line-height:1.32; color:var(--ink-2);
+  padding:4.5px 8px 4.5px 10px; border-left:2px solid transparent; border-radius:0 3px 3px 0;
+}
+.toc a .n{ font-family:var(--mono); font-size:.66rem; color:var(--ink-3); min-width:1.5em; text-align:right; flex:none; padding-top:.12em }
+.toc a:hover{ color:var(--ink); background:var(--bronze-tint); text-decoration:none }
+.toc a.active{ color:var(--ink); border-left-color:var(--bronze) }
+.toc a.active .n{ color:var(--bronze) }
+.toc .sep{ height:1px; background:var(--rule); margin:12px 8px }
+
+main{ padding:0 clamp(18px,4vw,58px) 8rem; min-width:0 }
+section{ scroll-margin-top:70px }
+p{ margin:0 0 1.05em; hanging-punctuation:first }
+main :is(p,li){ max-width:var(--measure) }
+strong{ font-weight:640 }
+em{ font-style:italic }
+
+.title{ padding:clamp(3rem,9vh,6rem) 0 2.4rem; border-bottom:1px solid var(--rule) }
+.eyebrow{ font-family:var(--mono); font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--bronze); margin:0 0 1.3rem }
+h1.name{
+  font-family:var(--serif); font-weight:600; font-size:clamp(3.4rem,11vw,6.2rem);
+  line-height:.94; letter-spacing:-.015em; margin:0; text-wrap:balance;
+}
+.subtitle{ font-family:var(--serif); font-size:clamp(1.15rem,3vw,1.5rem); color:var(--ink-2); margin:.7rem 0 0; font-style:italic; text-wrap:balance }
+.thesis{
+  font-family:var(--serif); font-size:clamp(1.35rem,3.4vw,1.9rem); line-height:1.32;
+  margin:2.2rem 0 0; max-width:33rem; text-wrap:balance; color:var(--ink);
+}
+.thesis b{ font-weight:600; color:var(--bronze); font-style:normal }
+.meta{ display:flex; flex-wrap:wrap; gap:.5rem 1.1rem; margin:2.3rem 0 0; font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink-3); text-transform:uppercase }
+.meta .dot{ color:var(--bronze) }
+.colophon{ display:flex; align-items:center; gap:16px; margin:2.1rem 0 0 }
+.colophon .mark{ flex:none }
+.colophon .cx{ font-family:var(--mono); font-size:.7rem; line-height:1.6; color:var(--ink-3); letter-spacing:.04em }
+.colophon .cx b{ color:var(--ink-2); letter-spacing:.18em; text-transform:uppercase; font-weight:600 }
+
+h2.sec{ display:flex; align-items:baseline; gap:.7em; font-family:var(--serif); font-weight:600; font-size:clamp(1.5rem,3.6vw,2.05rem); line-height:1.14; letter-spacing:-.01em; margin:3.4rem 0 1.1rem; text-wrap:balance }
+h2.sec .num{ font-family:var(--mono); font-size:.8rem; font-weight:500; color:var(--bronze); letter-spacing:.02em; flex:none; padding-top:.15em; min-width:2ch }
+
+.abstract{ margin:2.6rem 0 0 }
+.abstract .lbl{ font-family:var(--mono); font-size:.68rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .9rem }
+.abstract p{ font-size:1.06rem; line-height:1.6; color:var(--ink-2); max-width:var(--measure) }
+
+blockquote.epigraph{ margin:1.6rem 0; padding:.2rem 0 .2rem 1.4rem; border-left:3px solid var(--bronze); color:var(--ink-2); font-style:italic; max-width:var(--measure) }
+blockquote.epigraph p{ margin:0 }
+
+.term{ border-bottom:1px dotted var(--bronze); cursor:help; color:inherit; position:relative }
+.term:focus-visible{ outline:2px solid var(--bronze); outline-offset:2px }
+.term::after{
+  content:attr(data-def); position:absolute; left:50%; bottom:calc(100% + 10px); transform:translateX(-50%) translateY(4px);
+  width:max-content; max-width:280px; background:var(--paper-2); color:var(--ink-2);
+  border:1px solid var(--rule-2); border-radius:7px; padding:9px 12px;
+  font-family:var(--serif); font-style:normal; font-size:.82rem; line-height:1.42; letter-spacing:0;
+  box-shadow:0 8px 30px -12px rgba(0,0,0,.35); opacity:0; visibility:hidden; transition:opacity .16s ease, transform .16s ease;
+  z-index:40; pointer-events:none; text-align:left; hyphens:none;
+}
+.term::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 4px); transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--rule-2); opacity:0; visibility:hidden; transition:opacity .16s ease; z-index:41 }
+.term:hover::after,.term:focus-visible::after{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0) }
+.term:hover::before,.term:focus-visible::before{ opacity:1; visibility:visible }
+@media (prefers-reduced-motion: reduce){ .term::after{transition:none} }
+
+.keystone{
+  margin:2rem 0; padding:1.3rem 1.5rem; background:var(--paper-2);
+  border:1px solid var(--rule); border-left:3px solid var(--bronze); border-radius:0 8px 8px 0;
+}
+.keystone .lbl{ font-family:var(--mono); font-size:.64rem; letter-spacing:.24em; text-transform:uppercase; color:var(--bronze); margin:0 0 .55rem }
+.keystone p{ margin:0; font-size:1.02rem; line-height:1.55; color:var(--ink-2) }
+
+figure{ margin:2.2rem 0; padding:0 }
+figure svg{ display:block; width:100%; height:auto; max-width:100% }
+figcaption{ font-family:var(--mono); font-size:.68rem; letter-spacing:.04em; color:var(--ink-3); margin-top:.85rem; text-align:center; line-height:1.5 }
+.fig-frame{ border:1px solid var(--rule); border-radius:10px; padding:1.6rem 1.4rem 1.2rem; background:var(--paper-2); overflow-x:auto }
+
+.refs h2{ margin-bottom:1.4rem }
+.reflist{ display:grid; gap:1.1rem }
+.refrow{ display:grid; gap:.2rem }
+.refrow .theme{ font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--bronze) }
+.refrow .src{ font-size:.92rem; line-height:1.5; color:var(--ink-2) }
+
+footer{ border-top:1px solid var(--rule); margin-top:4rem; padding:2.4rem clamp(18px,4vw,58px) 4rem }
+footer .line{ font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--ink-3); line-height:1.9 }
+footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-2); margin-top:1.2rem }
+
+@media (max-width: 940px) and (orientation:portrait){
+  #tocToggle{ display:inline-flex }
+  .wrap{ grid-template-columns:minmax(0,var(--measure)); justify-content:center; padding-top:46px }
+  .toc{
+    position:fixed; top:46px; left:0; right:0; height:auto; max-height:70vh; z-index:45;
+    padding:20px clamp(16px,5vw,30px) 26px; background:var(--paper);
+    border-right:0; border-bottom:1px solid var(--rule); box-shadow:0 20px 40px -24px rgba(0,0,0,.4);
+    transform:translateY(-8px); opacity:0; visibility:hidden; transition:opacity .2s ease, transform .2s ease;
+  }
+  .toc.open{ opacity:1; visibility:visible; transform:none }
+  @media (prefers-reduced-motion: reduce){ .toc{transition:none} }
+  main{ padding-left:clamp(16px,5vw,30px); padding-right:clamp(16px,5vw,30px) }
+}
+@media (max-width: 520px) and (orientation:portrait){
+  body{ font-size:1.1rem }
+  :root{ --measure:100% }
+  h1.name{ font-size:3.1rem }
+  .meta{ font-size:.66rem }
+}
+
+@media print{
+  :root{ --paper:#fff; --paper-2:#fff; --ink:#111; --ink-2:#333; --ink-3:#555; --rule:#ccc; --bronze:#6a4a1c }
+  .topbar,#progress,.toc,#tocToggle{ display:none !important }
+  .wrap{ display:block; padding:0 }
+  main{ padding:0; max-width:none }
+  body{ font-size:11pt; line-height:1.4 }
+  h2.sec{ break-after:avoid }
+  figure,.keystone,blockquote{ break-inside:avoid }
+  a{ color:inherit }
+  .title{ padding-top:0 }
+}
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <nav class="brand">
+    <a href="/">NOWN</a><span class="bdot">·</span><a href="nown-whitepaper.html" class="bcur" aria-current="page">Whitepaper</a><span class="bdot">·</span><a href="https://github.com/nownto/nown" rel="noopener">GitHub</a>
+  </nav>
+  <div class="tb-r">
+    <button class="btn" id="tocToggle" aria-expanded="false" aria-controls="toc" title="Contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <span class="blab">Contents</span>
+    </button>
+    <a class="btn" id="pdfBtn" href="nown-whitepaper.pdf" target="_blank" rel="noopener" title="Open the typeset PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
+      <span class="blab">PDF</span>
+    </a>
+    <button class="btn" id="themeBtn" aria-label="Toggle color theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="blab" id="themeLbl">Dark</span>
+    </button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="toc" id="toc" aria-label="Table of contents">
+    <p class="lbl">Contents</p>
+    <ol>
+      <li><a href="#abstract"><span class="n">·</span> Abstract</a></li>
+      <li class="sepli"><span class="sep"></span></li>
+      <li><a href="#s1"><span class="n">1</span> The problem</a></li>
+      <li><a href="#s2"><span class="n">2</span> Karma</a></li>
+      <li><a href="#s3"><span class="n">3</span> The costly signal</a></li>
+      <li><a href="#s4"><span class="n">4</span> The price of time</a></li>
+      <li><a href="#s5"><span class="n">5</span> Sovereignty</a></li>
+      <li><a href="#s6"><span class="n">6</span> Escrow</a></li>
+      <li><a href="#s7"><span class="n">7</span> The quorum</a></li>
+      <li><a href="#s8"><span class="n">8</span> Sortition</a></li>
+      <li><a href="#s9"><span class="n">9</span> The verdict</a></li>
+      <li><a href="#s10"><span class="n">10</span> Economics</a></li>
+      <li><a href="#s11"><span class="n">11</span> Sybil resistance</a></li>
+      <li><a href="#s12"><span class="n">12</span> Adoption</a></li>
+      <li><a href="#s13"><span class="n">13</span> Beyond disputes</a></li>
+      <li><a href="#s14"><span class="n">14</span> Limits</a></li>
+      <li><a href="#s15"><span class="n">15</span> Conclusion</a></li>
+      <li class="sepli"><span class="sep"></span></li>
+      <li><a href="#refs"><span class="n">·</span> References</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section class="title" id="top">
+      <p class="eyebrow">Whitepaper &middot; Draft v0.3</p>
+      <h1 class="name">Nown</h1>
+      <p class="subtitle">A peer-to-peer protocol for portable trust and merit-based arbitration.</p>
+      <p class="thesis">The first way to trust a stranger and settle a dispute with <b>no single party to bribe, subpoena, or switch off</b>.</p>
+      <div class="meta">
+        <span>Draft v0.3</span><span class="dot">·</span>
+        <span>Ownerless</span><span class="dot">·</span>
+        <span>No token</span><span class="dot">·</span>
+        <span>No company</span><span class="dot">·</span>
+        <span>Public domain · CC0</span>
+      </div>
+      <div class="colophon">
+        <span class="mark" aria-hidden="true">
+          <svg width="86" height="52" viewBox="0 0 86 52" fill="none">
+            <g fill="var(--rule-2)">
+              <circle cx="6" cy="6" r="2.6"/><circle cx="22" cy="6" r="2.6"/><circle cx="38" cy="6" r="2.6"/><circle cx="54" cy="6" r="2.6"/><circle cx="70" cy="6" r="2.6"/><circle cx="80" cy="6" r="2.6"/>
+              <circle cx="6" cy="20" r="2.6"/><circle cx="22" cy="20" r="2.6"/><circle cx="38" cy="20" r="2.6"/><circle cx="54" cy="20" r="2.6"/><circle cx="70" cy="20" r="2.6"/><circle cx="80" cy="20" r="2.6"/>
+              <circle cx="6" cy="34" r="2.6"/><circle cx="22" cy="34" r="2.6"/><circle cx="38" cy="34" r="2.6"/><circle cx="54" cy="34" r="2.6"/><circle cx="70" cy="34" r="2.6"/><circle cx="80" cy="34" r="2.6"/>
+              <circle cx="6" cy="48" r="2.6"/><circle cx="22" cy="48" r="2.6"/><circle cx="38" cy="48" r="2.6"/><circle cx="54" cy="48" r="2.6"/><circle cx="70" cy="48" r="2.6"/><circle cx="80" cy="48" r="2.6"/>
+            </g>
+            <g fill="var(--bronze)">
+              <circle cx="22" cy="6" r="3"/><circle cx="70" cy="20" r="3"/><circle cx="6" cy="34" r="3"/><circle cx="38" cy="34" r="3"/><circle cx="54" cy="48" r="3"/>
+            </g>
+          </svg>
+        </span>
+        <span class="cx"><b>Nown</b><br>portable merit &middot; action driven &middot; nown to all</span>
+      </div>
+    </section>
+
+    <section class="abstract" id="abstract">
+      <p class="lbl">Abstract</p>
+      <p>Trade between strangers requires a way to establish trust and a way to resolve disputes. Every market solves both the same way, with a trusted third party: a platform, an escrow agent, a rating bureau, or a court. The third party can be censored, bribed, subpoenaed, or shut down, and it owns the reputations and the verdicts it issues. This protocol removes the third party from both functions. Reputation, called karma, is a portable measure each person earns through costly action and carries between contexts. It proves baseline trustworthiness to any stranger, with no introduction, no identity document, and no platform. Disputes are decided by a quorum of high-karma accounts drawn at random, anonymous to the traders and to each other, judging only the evidence each side submits. The quorum is an oracle. It attests a verdict that a pre-signed escrow executes; it never holds the funds. Honest judgment is made the paying strategy through the structure of the reward, not by an appeal to a higher authority, because there is none. There is no company, no token, and no owner. The protocol charges nothing and rules on the trade, never on the person. It cannot be proven in advance. Its worth is a question for the market, answered by adoption.</p>
+    </section>
+
+    <section id="s1">
+      <h2 class="sec"><span class="num">&sect;1</span> The problem</h2>
+      <p>Two strangers agree to trade. Each must decide whether the other will perform. If one defects, someone must decide who is owed what. Both decisions, trust before the trade and judgment after it, are made today by a trusted third party.</p>
+      <p>Every such party is a single point of control. A platform censors, extracts rent, and dies by regulation. A named arbiter can be bribed, coerced, or subpoenaed, and carries the legal liability alone. A rating bureau owns your reputation and rents it back to you. A vote weighted by tokens sells influence to whoever buys the most. And the reputation you build on one platform stays there, and vanishes when the platform does.</p>
+      <p>The function that has never been decentralized is judgment. Settlement of money became trustless once it was made objective and replicated. Judgment resisted, because a verdict is a matter of preference and there is no sum to check it against. Judgment here stays subjective. The protocol makes honest judgment the paying strategy and removes every party that could be captured.</p>
+    </section>
+
+    <section id="s2">
+      <h2 class="sec"><span class="num">&sect;2</span> Karma</h2>
+      <p>Karma is a reputation a person earns and carries. It is a single measure of demonstrated trustworthiness that a stranger can read at a glance, without knowing the person's name, location, or past. It does for trade between strangers what a credential does inside an institution. It certifies that the holder has, over time and at cost, behaved as someone worth dealing with. A degree says a stranger was taught to behave. Karma says a stranger has behaved.</p>
+      <p>Karma is the product. Dispute resolution is one use of it. Every action on the protocol moves it, up or down: a settled dealing, a vouch that holds, a case judged well add to it; a defection, a broken vouch, a careless verdict take it away. A person accumulates karma through settled conduct and spends its standing wherever trust is priced: buying and selling, borrowing, hiring, joining a community that admits only members above a threshold. A platform that reads karma inherits a user base that is expensive to fake and cheap to filter, and needs no central moderator to do it. The reputation belongs to the person, not the platform, and travels when the person leaves.</p>
+      <p>Karma is held by no one. It is computed from a public record of signed events, the way a balance is computed from a ledger. Two accounts that praise each other in a closed loop earn nothing, because the measure is trust flowing in from the rest of the graph, and an isolated ring has no inflow.</p>
+      <p>How far an action moves karma is set by five things, each a curve rather than a fixed amount. The change scales with what the actor put at risk. Each further unit of standing drawn from the same source is worth less than the one before, so no single stake or relationship can be repeated into dominance. The whole is held under a ceiling set by tenure, which no amount of money lifts. A dealing with a fresh and independent party counts for more than another with a familiar one. And each unit of inflowing trust is weighted by the standing and the independence of its source, so trust routed through a captured cluster arrives discounted. Standing earned broadly and slowly compounds. Volume bought quickly does not.</p>
+    </section>
+
+    <section id="s3">
+      <h2 class="sec"><span class="num">&sect;3</span> The costly signal</h2>
+      <p>A rating is worthless if it costs nothing to give. The reason is older than the protocol.</p>
+      <blockquote class="epigraph"><p>Speech is nearly free. A man may say one thing and do another. Action expends scarce time or capital, and reveals, exactly and irreversibly, what the actor valued at the moment of choosing. What he paid for is who he is.</p></blockquote>
+      <p>Value is shown in action, never in words. A stated opinion is one more cheap act of speech. A choice that costs something is the only evidence of a preference. So karma moves only on paid-for acts. Completing a trade under bond, standing on a verdict, vouching for a stranger: each costs the actor something he cannot recover, and each is therefore worth recording. A profile description, a self-endorsement, a free rating: each is speech, and moves karma by nothing.</p>
+      <p>Giving karma costs the giver. To vouch for another account is to stake your own standing on it. If the account you vouched for is later judged a fraud, your stake is cut. A vouch is a demonstrated preference, priced in the one currency that cannot be printed: reputation you spent real time earning.</p>
+      <p>Endorsement is rationed so it cannot be sprayed. Each further vouch an account gives within a period costs sharply more than the last, so one sincere vouch is cheap and a hundred are not. And because a fraud is charged back along the edges that endorsed it, a careless voucher pays for the account he certified.</p>
+    </section>
+
+    <section id="s4">
+      <h2 class="sec"><span class="num">&sect;4</span> The price of a signal is time</h2>
+      <p>If the only cost were money, justice would favor the rich, who pay it easily, and the protocol would fall to whoever holds the most. Money is a poor measure of commitment for the same reason it is a poor measure of a man.</p>
+      <p>Time is the honest price. No one can buy more of it. A day costs the wealthiest attacker and the poorest honest user exactly the same, and neither can purchase a longer past. Time also cannot be run in parallel inside one identity. A computation that takes a year takes a year on one machine or a million, a fact that can be proven rather than assumed.</p>
+      <p>Karma is therefore bounded by tenure. Standing accrues only as real time passes with the account in good standing, measured against a public clock no participant controls. Money enters as one input, held at risk and with sharply diminishing effect, so that capital buys a fast start and never a commanding position. A wealthy attacker reaches the ceiling the buyable inputs allow within a day, then waits years under the same clock as everyone else. The advantage that remains is seniority, not wealth, which is the milder bias and dilutes as the network grows.</p>
+    </section>
+
+    <section id="s5">
+      <h2 class="sec"><span class="num">&sect;5</span> Sovereignty</h2>
+      <p>The protocol rules on the trade, not on the person. It decides who owes what under an agreement two parties entered freely. It does not decide whether the trade should have been made, whether it was legal, or whether either party is virtuous. Those belong to the individual, who bears the consequences.</p>
+      <p>This is the third commitment, beside karma and the quorum: sovereignty. There is no supervising authority in the protocol and none above it. Rules hold because participants keep them, and hold only over what participants have agreed to, in the way a network keeps a rule its members chose to run.</p>
+      <p>Sovereignty extends to the reputation itself. Karma belongs to the account, and an account can be sold, the way a business or a brand is sold, carrying its standing with it. The protocol cannot verify who holds a key, and does not try. That a key's holder is unknowable is what keeps identity sovereign, the same property that lets money be held without permission. What the protocol can do is mark a sharp change in how an account behaves. It reports the change as evolution, not suspicion, because people do change, and it never claims to know whether the hands changed with the conduct. A recently transferred account carries a visible marker of that transfer, and nothing more.</p>
+      <p>One person may hold many accounts, unlinked, and reveal only what a given dealing requires, because privacy is the power to selectively reveal oneself. And a person may always abandon an account and begin again, at the low standing every new account starts from, carrying none of the old history, good or bad. A fresh start is real, and so is its cost.</p>
+    </section>
+
+    <section id="s6">
+      <h2 class="sec"><span class="num">&sect;6</span> Escrow</h2>
+      <p>A verdict must move funds or it is only an opinion. The trap is to hand the funds to whoever enforces the verdict, which restores a trusted party at the last step. The protocol splits the problem at the line between what is subjective and what is objective. Judging the dispute is subjective, and is left to the quorum. Checking that the quorum ran correctly is objective, and is left to arithmetic anyone can repeat.</p>
+      <p>Funds sit in an output controlled by the buyer and the seller alone, holding the price and both parties' deposits. Its outcomes are signed in advance. If both agree, at the start or once the trade completes, they close it cooperatively and the quorum is never called. If the trade stalls and neither party opens a dispute, a timeout returns the funds. Once either party opens a dispute, the timeout is void, and the only remaining path is the one the quorum's verdict unlocks. The quorum publishes a single signature over its verdict. That signature completes exactly one pre-signed outcome, buyer paid, seller paid, or funds returned, and no other.</p>
+
+      <figure>
+        <div class="fig-frame">
+          <svg viewBox="0 0 720 300" role="img" aria-labelledby="figt figd">
+            <title id="figt">The three outcomes of a Nown escrow</title>
+            <desc id="figd">Funds held by the two traders resolve by cooperative close, timeout refund, or a dispute path in which the quorum's verdict signature completes one pre-signed outcome. The quorum attests but never holds the funds.</desc>
+            <defs>
+              <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink-3)"/></marker>
+              <marker id="arwb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--bronze)"/></marker>
+            </defs>
+            <rect x="14" y="112" width="176" height="76" rx="9" fill="var(--paper-3)" stroke="var(--bronze)" stroke-width="1.4"/>
+            <text x="102" y="142" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink)" letter-spacing="1">ESCROW</text>
+            <text x="102" y="161" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink-3)">held by the two</text>
+            <text x="102" y="175" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink-3)">traders alone</text>
+            <path d="M190 132 H250 V40 H300" stroke="var(--ink-3)" stroke-width="1.3" fill="none" marker-end="url(#arw)"/>
+            <path d="M190 150 H270 V150 H300" stroke="var(--ink-3)" stroke-width="1.3" fill="none" marker-end="url(#arw)"/>
+            <path d="M190 168 H250 V262 H300" stroke="var(--bronze)" stroke-width="1.5" fill="none" marker-end="url(#arwb)"/>
+            <rect x="300" y="18" width="196" height="46" rx="8" fill="none" stroke="var(--rule-2)" stroke-width="1.2"/>
+            <text x="314" y="38" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">COOPERATIVE CLOSE</text>
+            <text x="314" y="54" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">both agree &rarr; funds return</text>
+            <rect x="300" y="127" width="196" height="46" rx="8" fill="none" stroke="var(--rule-2)" stroke-width="1.2"/>
+            <text x="314" y="147" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">TIMEOUT REFUND</text>
+            <text x="314" y="163" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">no dispute &rarr; funds return</text>
+            <rect x="300" y="240" width="196" height="46" rx="8" fill="var(--bronze-tint)" stroke="var(--bronze)" stroke-width="1.2"/>
+            <text x="314" y="260" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">DISPUTE</text>
+            <text x="314" y="276" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">quorum, at random (&sect;7&ndash;8)</text>
+            <path d="M496 263 H528" stroke="var(--bronze)" stroke-width="1.5" fill="none" marker-end="url(#arwb)"/>
+            <rect x="530" y="240" width="176" height="46" rx="8" fill="none" stroke="var(--bronze)" stroke-width="1.2"/>
+            <text x="618" y="258" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink)">verdict signature</text>
+            <text x="618" y="273" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">completes one outcome</text>
+            <path d="M618 240 V206 H360 V190" stroke="var(--bronze)" stroke-width="1.1" fill="none" stroke-dasharray="3 3" marker-end="url(#arwb)"/>
+            <text x="618" y="120" text-anchor="middle" font-family="var(--serif)" font-size="13" font-style="italic" fill="var(--ink-2)">the quorum attests,</text>
+            <text x="618" y="138" text-anchor="middle" font-family="var(--serif)" font-size="13" font-style="italic" fill="var(--ink-2)">never holds</text>
+          </svg>
+        </div>
+        <figcaption>Figure 1 &mdash; A verdict that executes itself. The quorum emits one signature; it completes the matching outcome and no other. It cannot move funds to itself, and the timeout path always exists until a dispute is opened.</figcaption>
+      </figure>
+
+      <p>The quorum attests and never holds. It cannot take the funds, cannot freeze them, and owns no key to the escrow. The two traders are the only signers, so no third party has custody, and the legal exposure that custody carries does not arise.</p>
+      <p>A verdict can rule only on facts that reach the record. A forged image of a bank transfer, set against a claim that nothing arrived, cannot be judged by anyone. The protocol therefore handles disputes over facts that can be shown: proof of payment, delivery committed to a hash, a signed receipt from a carrier. Claims that rest on a private, reversible rail wait for a proof that can be checked.</p>
+    </section>
+
+    <section id="s7">
+      <h2 class="sec"><span class="num">&sect;7</span> The quorum</h2>
+      <p>A dispute empanels a quorum: an odd number of accounts, called stewards, drawn from those above a karma threshold, several steps away from both parties in the trust graph, so that no one who knows either trader can sit. The stewards are anonymous to the traders and to each other. They never speak. Each reads the same case file, the evidence and statements both sides submit, stripped of personal detail, and each votes alone.</p>
+      <p>Within a case the quorum holds all the power, and nothing sits above it. There is no judge to overrule it and no court to appeal to. The absence is deliberate. Every arbitration system before this one ends at an authority that can be captured, and the search for a final, incorruptible authority is the search that has always failed. The protocol puts in that place a crowd that no one can find, bribe by name, or coordinate, and takes the crowd's verdict as final. Finality is itself the value. A dispute settled once, in days, is worth more than one litigated for years through a system backed by force. An appeal path was considered and left out, because any right to reopen a case invites the patient and the rich to grind the poor into surrender.</p>
+      <p>Each side is given time to state its case and submit evidence, and the quorum decides on that alone. Some people argue better than others. The protocol does not correct for this and does not pretend the world is otherwise. It weighs the case as presented, as any reader of evidence must.</p>
+    </section>
+
+    <section id="s8">
+      <h2 class="sec"><span class="num">&sect;8</span> Sortition</h2>
+      <p>The quorum must be unpredictable before it is drawn and unknown after, or it can be bribed, threatened, or packed. Public randomness from an outside committee would restore a party to trust. The randomness is taken instead from the protocol's own activity.</p>
+      <p>Every account carries a seed that changes as the account acts. Each action folds a committed trace of itself into the seed at the moment it happens, on an append-only log, so the trace cannot be altered or chosen after the fact. The seed is the account's own irreversible history, reduced to entropy.</p>
+      <p>When a quorum is due, the seeds of a broad set of active accounts are combined into one value. That value alone is still not safe, because the last account to act before the cutoff could try many actions and keep the one that steers the draw. So the combined value is passed through a <span class="term" tabindex="0" data-def="A computation deliberately built so it takes a fixed amount of wall-clock time to run and an instant to verify, and cannot be sped up by running it on more machines at once.">delay function</span>: a computation that takes a fixed span of wall-clock time to run and an instant to check, and that no amount of parallel hardware can hurry. No one, not even the last actor, can learn the result in time to bias it. Its output is the seed for the draw.</p>
+      <p>Each eligible account then checks, privately, whether it was selected, by evaluating a <span class="term" tabindex="0" data-def="A function of the shared seed and the account's own secret key whose result the account can prove to others without revealing the key. It decides selection with no coordinator and no announced list.">verifiable function</span> of the seed under its own key. Selection proves itself and reveals nothing about the others. An account learns only that it was drawn, and can prove that fact without naming itself. The set that decides a case is a group of pseudonyms that exists for that case alone, unknown to the traders, to each other, and to the operators of any relay. There is no list to subpoena and no colleague to conspire with.</p>
+      <p>No randomness of this kind is perfectly unbiasable, and this is not. The delay function rests on a bound on how fast the fastest hardware can run it, and the draw can be skewed only by an actor who both dominates the activity in the window and holds a decisive speed advantage over everyone else. The design drives that margin small enough that skewing a draw costs more than winning the dispute it would decide. That is the standard the protocol holds, in place of a proof of the impossible.</p>
+      <p>Two further rules keep the draw clean. Karma is frozen the moment a draw opens, so no account can lift its own standing to improve its odds once selection is under way. And the share any single trust cluster can hold, both of the eligible set and of the panel actually drawn, is capped, so a group that certifies itself cannot pack a quorum however large it grows.</p>
+    </section>
+
+    <section id="s9">
+      <h2 class="sec"><span class="num">&sect;9</span> The verdict</h2>
+      <p>The quorum does not find the truth. No crowd can, and the protocol makes no such claim. It aligns the reward with honest reporting, and lets the honest report win.</p>
+      <p>Only the stewards who land with the majority are paid. Those in the minority are not. A steward who votes without reading gambles against everyone who read, so the paying move is to read the evidence, judge it, and expect others who read to judge as he does. Payment for agreement, with a penalty for lazy or dishonest votes, makes honest attention the profitable strategy.</p>
+      <p>Plain majority reward has a known failure. On a small stake, a steward may reason that the safe vote is whatever the crowd will pick, and vote to predict the crowd instead of to weigh the case. The protocol closes this by asking each steward two things: the verdict, and a guess at how the others will vote. The answer that beats its own predicted popularity wins. A steward with private reason to judge against the obvious answer is rewarded for it when the reason is sound, which is the case a plain majority gets wrong. Votes are sealed until all are cast, and there is no deliberation, so there is no channel to coordinate through and no shared error to amplify.</p>
+      <p>Three defenses hold the vote honest under pressure. Ballots are sealed so that only the totals ever open, never any single vote, and a steward who is leaned on can quietly change a vote already cast, so a briber can never confirm how anyone voted and a payment offered for a vote has nothing left to condition on. The panel grows with the stake, a few stewards for a small claim and many for a large one, so the pay for reading always clears the cost of reading and no large sum ever rests on a handful. And a steward serves a batch of cases at once and is scored across all of them, where honest reading beats any lazy or collusive rule whatever the others do, a guarantee that holds only across many cases and never on a single one.</p>
+      <p>The penalty for a wrong verdict rises with how many stewards err together on the same case. An isolated mistake costs little. A bloc that moves the same wrong way pays toward the whole of its stake, because strangers sworn to silence and drawn apart should not fail in unison, and when they do, coordination is the likeliest cause. Punishing correlated error hardest turns the profit of collusion negative before a bloc can form.</p>
+      <p>The ballot is guilty, not guilty, or unresolvable. The last returns the funds. It exists because the most common hard case is ambiguity, not deceit, and forcing a call would reward whoever engineered the ambiguity. On a grave case, and only when a majority of the quorum calls for it and an added bond is posted, the stewards may put written questions that both parties must answer, so a packet built to mislead can be probed. The quorum ranks its own questions with no moderator: each steward spends a fixed budget of weight across the questions at a rising cost per question, so only what matters draws weight, and a question that both sides of a divided quorum press rises above the merely popular one. The few at the top go to the parties. The ordinary dispute carries no such round and stays cheap to settle.</p>
+      <p>A steward is judged in turn. A verdict is an action, recorded, and later verdicts can bear on it. A steward whose verdicts are repeatedly overturned by the quorums that follow loses karma and is drawn less often. A steward who serves well gains standing. No authority reviews the stewards. Their record reviews them, as every account's record governs its standing. This is how the protocol carries personal responsibility into the one role that decides other people's disputes, without appointing anyone to watch the watchers.</p>
+    </section>
+
+    <section id="s10">
+      <h2 class="sec"><span class="num">&sect;10</span> Economics</h2>
+      <p>Both traders post their deposits and the dispute fee into the escrow when the trade is set, so opening a dispute costs no new money and a poor honest party is never priced out of defending itself. Deposits scale down with karma, so an established account posts little and a fresh account posts much, and scale up with the amount in dispute, so corrupting a case always costs more than the case is worth.</p>
+      <p>On resolution, the losing side's deposit and the bonds of stewards who voted against the outcome pay the stewards who voted with it. Attacking and losing burns the attacker's capital. The winner is made whole.</p>
+      <div class="keystone">
+        <p class="lbl">An owner would be the flaw</p>
+        <p>The protocol takes nothing. Every fee flows to the people who did the work of judging. There is no issuer to pay, because there is none. That there is no earning model is a requirement. Anyone who could profit from the court could sell it, and a court that can be sold is a court that will be. A fee-taking company is a standing target for a subpoena and a bribe. A token is judicial power for sale, and turns the court into the property of whoever buys the most. The protocol has neither, and is funded the way shared infrastructure is funded, by grants and by the people who want it to exist. Neutrality is the product.</p>
+      </div>
+    </section>
+
+    <section id="s11">
+      <h2 class="sec"><span class="num">&sect;11</span> Sybil resistance</h2>
+      <p>The security of the protocol is the cost of faking karma. That cost must be real, and cheap neither to a patient attacker nor to a rich one.</p>
+      <p>Creating an account costs an irreversible sacrifice, uniform for everyone, so that a thousand accounts cost a thousand times one and no volume discount exists. Karma is minted only by settled dealings with distinct counterparties, never by self-endorsement, so a ring trading with itself earns nothing. Standing accrues slowly, each further unit from the same source worth less than the last, and decays unless renewed by fresh conduct, so a burst of early activity bleeds away and no account can bank a fortune of karma before the network is populated. Weight flows in from the established graph, so an account is only as trusted as the independent accounts that vouch for it.</p>
+      <p>One problem stays open and is stated plainly. Telling distinct persons apart without an identity document is unsolved at scale, and the protocol's resistance to an attacker who can cheaply create real-seeming humans is only as strong as the best answer to that problem. The protocol raises the cost of an attack. It does not claim to make one impossible.</p>
+    </section>
+
+    <section id="s12">
+      <h2 class="sec"><span class="num">&sect;12</span> Adoption</h2>
+      <p>The protocol cannot be tested in a laboratory. Trust between strangers is a network good, worth little to the first user and much to the millionth, and no simulation produces the thing being tested, which is a large population of real people with real reputations at stake. It will be adopted gradually if it is useful, or not at all. This is the condition faced by every protocol that replaced a trusted party with a network, and no engineering removes it.</p>
+      <p>The path is to earn karma inside systems that already exist. A marketplace, an exchange, or a community that adopts the protocol gives its users a reputation they can carry out, and gains a filter against fraud that no central moderator can match. Where a costly reputation graph already exists, the protocol can read it, so that standing earned elsewhere seeds standing here, and the first quorum is not conjured from nothing. Chronicle Network, an open and ownerless graph of costly, signed reputation built by Luka Dover, is one such source and a companion to this work: it holds the standing, this protocol holds the judgment. One key is a participant in both, so a verdict here can be a marked event there, and a steward who judges well is credited on a graph wider than this one. Where Chronicle already carries a person's standing, the cold start is borrowed rather than bootstrapped.</p>
+    </section>
+
+    <section id="s13">
+      <h2 class="sec"><span class="num">&sect;13</span> Beyond disputes</h2>
+      <p>The quorum is a general instrument. It decides any question that needs an impartial answer and has evidence to decide on, not only who is owed money after a trade. A group can put a decision to it. A community can settle a rule with it. Any process that today relies on a trusted counter, a trusted moderator, or a trusted authority can be handed to a crowd that cannot be found or bought.</p>
+      <p>A question outside trade has no losing deposit to pay the stewards, so it funds itself. Whoever poses it posts a bounty that becomes the reward, and each steward posts a bond of standing to take part. Many such questions have no outcome to check a vote against, so the stewards are scored on one another: each submits a sealed answer and a guess at how the others will answer, and the answer that beats its own predicted support is paid, while the rest is slashed and given to those who were right. The panel is settled against itself, with no outside loser and no owner to subsidize it. Every such decision is recorded as an action, so the standing a person earns in trade is the standing they stake in judgment, and one reputation follows them across everything the protocol touches.</p>
+      <p>The furthest form of this is a way to reach a binding collective decision that no one can quietly corrupt, at a cost of corruption far above the value of any single outcome. A vote fails where the count, the roll, or the authority can be captured. A verdict drawn from an unfindable, bonded, uncoordinated crowd removes each of those targets. Whether it replaces anything is for the people who use it to decide. The protocol only makes it available.</p>
+    </section>
+
+    <section id="s14">
+      <h2 class="sec"><span class="num">&sect;14</span> Limits</h2>
+      <p>The protocol rests on reasoning about how people act, not on evidence that it works, and it keeps the two apart. It cannot be proven in advance, and a correlation in early data would not prove it either. What can be shown is where it must hold and where it cannot.</p>
+      <p>Four limits survive every part of the design and are named rather than buried. An account's signing key can be bribed, and no sealed ballot stops its owner from selling the vote outright. Anonymous stewards who find a channel outside the protocol can coordinate, and the reward for honest reporting weakens when they do; what stands against this is that the stewards know nothing of each other, so coordinating means building a separate conspiracy among people the system keeps apart, against the very system their standing is worth something in. Telling distinct persons apart without an identity document is unsolved, and the defense against mass-produced identities is only as strong as the answer to that problem. And the final defense against an attacker who has bought the whole graph is that the graph is expensive to buy, not that it cannot be.</p>
+    </section>
+
+    <section id="s15">
+      <h2 class="sec"><span class="num">&sect;15</span> Conclusion</h2>
+      <p>Trade between strangers has always rested on someone trusted to vouch and someone trusted to judge, and every such someone has been a point of failure. This protocol earns the vouch from costly action and draws the judgment from a crowd that no one can find, holds the funds with the traders alone, and keeps no power for itself. The pieces are known: reputation from real conduct, selection by lot, sealed votes, an oracle over an escrow, a clock no one owns. What has not been built is their assembly into a whole that no one owns and no one can capture. The result belongs to the public domain, to use, to build on, and to improve, without permission and without an owner, because a thing meant for everyone must be owned by no one.</p>
+    </section>
+
+    <section id="refs" class="refs">
+      <h2 class="sec"><span class="num">&sect;</span> References</h2>
+      <p>Prior art and grounding by theme. A full annotated list is maintained with the source.</p>
+      <div class="reflist">
+        <div class="refrow"><span class="theme">Reputation &amp; sybil resistance</span><span class="src">Cheng &amp; Friedman, the impossibility of a symmetric sybilproof reputation; EigenTrust; personalized web-of-trust flow; the cost of cheap pseudonyms.</span></div>
+        <div class="refrow"><span class="theme">Selection by lot &amp; verifiable randomness</span><span class="src">Cryptographic sortition; verifiable random functions; verifiable delay functions; commit-and-delay randomness beacons.</span></div>
+        <div class="refrow"><span class="theme">Honest reporting</span><span class="src">Peer prediction and the Bayesian truth serum; the surprisingly-popular answer; determinant mutual information; Condorcet's theorem on majority judgment, and its reversal under correlated error.</span></div>
+        <div class="refrow"><span class="theme">Escrow without custody</span><span class="src">Two-party escrow with pre-signed contingent outcomes; adaptor-signature execution; threshold attestation.</span></div>
+        <div class="refrow"><span class="theme">Human action</span><span class="src">Demonstrated preference and the costly signal; value revealed in action, not speech; unforgeable costliness.</span></div>
+        <div class="refrow"><span class="theme">Portable reputation on an open graph</span><span class="src">Chronicle Network (Luka Dover / Cartographers Guild) &mdash; a costly, signed reputation graph, and a natural source of starting standing.</span></div>
+        <div class="refrow"><span class="theme">Privacy</span><span class="src">Eric Hughes (1993): privacy is the power to selectively reveal oneself.</span></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p class="line">
+    Nown &nbsp;·&nbsp; a peer-to-peer protocol for portable trust and merit-based arbitration<br>
+    ownerless &nbsp;·&nbsp; no token &nbsp;·&nbsp; no company &nbsp;·&nbsp; a design and research draft, not running code<br>
+    released to the public domain under CC0 1.0 &nbsp;·&nbsp; no rights reserved &nbsp;·&nbsp; no owner
+  </p>
+  <p class="sig">Portable merit. Action driven. Nown to all.</p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var themeBtn=document.getElementById('themeBtn'),
+      themeLbl=document.getElementById('themeLbl'),
+      themeIcon=document.getElementById('themeIcon');
+  var sun='M12 3v2M12 19v2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M3 12h2M19 12h2M5.6 18.4l1.4-1.4M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z';
+  var moon='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z';
+  function stored(){ try{ return localStorage.getItem('nown-theme'); }catch(e){ return null; } }
+  function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function apply(t){
+    root.setAttribute('data-theme', t);
+    var dark = t==='dark';
+    themeLbl.textContent = dark ? 'Light' : 'Dark';
+    themeIcon.querySelector('path').setAttribute('d', dark ? sun : moon);
+  }
+  apply(stored() || (systemDark() ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    apply(next);
+    try{ localStorage.setItem('nown-theme', next); }catch(e){}
+  });
+
+  var toc=document.getElementById('toc'), tocToggle=document.getElementById('tocToggle');
+  tocToggle.addEventListener('click', function(){
+    var open=toc.classList.toggle('open');
+    tocToggle.setAttribute('aria-expanded', open?'true':'false');
+  });
+  toc.addEventListener('click', function(e){
+    if(e.target.closest('a') && window.matchMedia('(max-width: 940px)').matches){
+      toc.classList.remove('open'); tocToggle.setAttribute('aria-expanded','false');
+    }
+  });
+
+  var bar=document.getElementById('progress');
+  function progress(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    bar.style.width = (max>0 ? (h.scrollTop/max)*100 : 0) + '%';
+  }
+  document.addEventListener('scroll', progress, {passive:true});
+  window.addEventListener('resize', progress); progress();
+
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var map={}; links.forEach(function(a){ var h=a.getAttribute('href'); if(h) map[h.slice(1)]=a; });
+  var sections=[].slice.call(document.querySelectorAll('main section[id]'));
+  var spy=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        var a=map[en.target.id]; if(a) a.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-20% 0px -70% 0px', threshold:0});
+  sections.forEach(function(s){ spy.observe(s); });
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id=a.getAttribute('href').slice(1); if(!id) return;
+    var el=document.getElementById(id); if(!el) return;
+    e.preventDefault();
+    var y = Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - 54);
+    window.scrollTo(0, y);
+    try{ history.replaceState(null,'','#'+id); }catch(err){}
+  });
+})();
+</script>
+</body>
+</html>

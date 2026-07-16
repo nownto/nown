@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Typeset WHITEPAPER.md -> nown-whitepaper.pdf
+# Template: nown.latex, adapted from the Bitcoin whitepaper LaTeX source
+# (github.com/qwinsi/bitcoin-whitepaper-latex): article class, Computer Modern,
+# run-in bold "Abstract:", \maketitle author block. Anonymous author; nown.to + repo links; CC0.
+set -euo pipefail
+cd "$(dirname "$0")"
+
+command -v pandoc >/dev/null || { echo "pandoc missing"; exit 1; }
+export PATH="/Library/TeX/texbin:$PATH"
+command -v pdflatex >/dev/null || { echo "pdflatex missing"; exit 1; }
+
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
+
+# Abstract = the prose between "## Abstract" and the next "## " heading.
+awk '/^## Abstract/{f=1;next} /^## /{f=0} f && NF' WHITEPAPER.md > "$TMP/abstract.txt"
+# Body = everything from the first numbered section ("## 1.") to the end.
+awk '/^## 1\./{p=1} p' WHITEPAPER.md > "$TMP/body.md"
+
+# Feed the abstract to the template's $abstract$ slot via metadata.
+{ echo "---"; echo "abstract: |"; sed 's/^/  /' "$TMP/abstract.txt"; echo "..."; } > "$TMP/meta.yaml"
+
+pandoc "$TMP/body.md" \
+  --template=nown.latex \
+  --metadata-file="$TMP/meta.yaml" \
+  --pdf-engine=pdflatex \
+  --shift-heading-level-by=-1 \
+  -o nown-whitepaper.pdf
+
+echo "OK -> nown-whitepaper.pdf ($(du -h nown-whitepaper.pdf | cut -f1), $(pdfinfo nown-whitepaper.pdf 2>/dev/null | awk '/Pages/{print $2" pages"}'))"
