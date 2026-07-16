@@ -26,6 +26,6 @@ pandoc "$TMP/body.md" \
   --metadata-file="$TMP/meta.yaml" \
   --pdf-engine=pdflatex \
   --shift-heading-level-by=-1 \
-  -o nown-whitepaper.pdf
+  -o public/nown-whitepaper.pdf
 
-echo "OK -> nown-whitepaper.pdf ($(du -h nown-whitepaper.pdf | cut -f1), $(pdfinfo nown-whitepaper.pdf 2>/dev/null | awk '/Pages/{print $2" pages"}'))"
+echo "OK -> nown-whitepaper.pdf ($(du -h public/nown-whitepaper.pdf | cut -f1), $(pdfinfo public/nown-whitepaper.pdf 2>/dev/null | awk '/Pages/{print $2" pages"}'))"
