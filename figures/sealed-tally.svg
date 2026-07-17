@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="Menlo, Consolas, monospace">
+  <defs>
+    <marker id="sealed-tally-arrowP4" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+    </marker>
+    <marker id="sealed-tally-arrowB4" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6" fill="none" stroke="#825f27" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <!-- sealed ballots group -->
+  <text x="115" y="30" font-size="13" fill="#1b1a16" text-anchor="middle">sealed ballots</text>
+  <rect x="40" y="40" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="40" y="100" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="40" y="160" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="115" y="214" font-size="12" fill="#726c60" text-anchor="middle">never opened</text>
+
+  <!-- converging arrows -->
+  <line x1="190" y1="60" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+  <line x1="190" y1="120" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+  <line x1="190" y1="180" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+
+  <!-- add node, still sealed -->
+  <rect x="290" y="100" width="150" height="44" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="365" y="126" font-size="13" fill="#1b1a16" text-anchor="middle">add, still sealed</text>
+
+  <!-- bronze output -->
+  <line x1="440" y1="122" x2="470" y2="122" stroke="#825f27" stroke-width="1.4" marker-end="url(#sealed-tally-arrowB4)"/>
+  <rect x="470" y="100" width="150" height="44" rx="2" fill="none" stroke="#825f27" stroke-width="1.4"/>
+  <text x="545" y="126" font-size="13" fill="#825f27" text-anchor="middle">counts open</text>
+  <text x="545" y="162" font-size="12" fill="#726c60" text-anchor="middle">no ballot opened</text>
+</svg>

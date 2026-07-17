@@ -1,0 +1,14 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize]
+  \definecolor{ink}{HTML}{1B1A16}
+  \definecolor{muted}{HTML}{726C60}
+  \definecolor{bronze}{HTML}{825F27}
+  \node[ink,anchor=west] at (0,3.6) {KARMA IS CONSERVED};
+  \draw[muted,dashed,rounded corners=6pt] (0.3,0) rectangle (7.9,3.0);
+  \node[draw=ink,text=ink,circle,minimum size=1.1cm] (A) at (2.0,1.5) {A};
+  \node[draw=ink,text=ink,circle,minimum size=1.1cm] (B) at (5.6,1.5) {B};
+  \draw[ink,->] (A) to[bend left=35] node[above,pos=0.5,muted] {k moves, total holds} (B);
+  \node[muted] at (3.8,0.45) {sum of karma unchanged};
+  \fill[muted] (-1.10,2.35) circle (2pt) (-0.85,2.35) circle (2pt) (-0.97,2.10) circle (2pt);
+  \draw[bronze,line width=1pt,->] (-0.75,2.20) -- (1.45,1.5);
+  \node[bronze,anchor=west] at (-1.30,2.85) {inflow from the wider graph};
+\end{tikzpicture}

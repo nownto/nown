@@ -5,7 +5,6 @@ A reputation you carry, and a verdict no one can capture. No owner, no token, no
 
 - **Site:** https://nown.to
 - **Whitepaper:** [read online](https://nown.to/nown-whitepaper.html) · source [`WHITEPAPER.md`](WHITEPAPER.md) · [typeset PDF](nown-whitepaper.pdf)
-- **Karma design notes:** [`KARMA.md`](KARMA.md)
 
 ## Status
 

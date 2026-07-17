@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Menlo, Consolas, monospace">
+  <defs>
+    <marker id="where-it-runs-arrowP6" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#1b1a16"/>
+    </marker>
+    <marker id="where-it-runs-arrowB6" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#825f27"/>
+    </marker>
+  </defs>
+
+  <!-- settlement rail (top lane) -->
+  <rect x="40" y="40" width="560" height="56" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="320" y="62" text-anchor="middle" font-size="13" fill="#1b1a16">settlement rail</text>
+  <text x="320" y="80" text-anchor="middle" font-size="12" fill="#726c60">escrows, deposits, bonds, burns</text>
+
+  <!-- record (bottom lane) -->
+  <rect x="40" y="230" width="560" height="56" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="320" y="252" text-anchor="middle" font-size="13" fill="#1b1a16">record (append-only log)</text>
+  <text x="320" y="270" text-anchor="middle" font-size="12" fill="#726c60">many relays, anyone reads</text>
+
+  <!-- public clock (middle) -->
+  <rect x="210" y="138" width="140" height="44" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="280" y="164" text-anchor="middle" font-size="13" fill="#1b1a16">public clock</text>
+
+  <!-- commitment binding: record -> clock -> rail -->
+  <line x1="280" y1="230" x2="280" y2="182" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#where-it-runs-arrowP6)"/>
+  <line x1="280" y1="138" x2="280" y2="96" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#where-it-runs-arrowP6)"/>
+  <text x="200" y="162" text-anchor="end" font-size="12" fill="#726c60">commitment per batch</text>
+
+  <!-- the one crossing: verdict signature, record -> rail -->
+  <line x1="480" y1="230" x2="480" y2="96" stroke="#825f27" stroke-width="1.4" marker-end="url(#where-it-runs-arrowB6)"/>
+  <rect x="416" y="158" width="128" height="38" fill="#ffffff"/>
+  <text x="480" y="174" text-anchor="middle" font-size="13" fill="#825f27">verdict signature</text>
+  <text x="480" y="190" text-anchor="middle" font-size="12" fill="#825f27">one crossing</text>
+</svg>

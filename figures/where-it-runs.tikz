@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=0.62pt,y=0.62pt,>=Stealth]
+  % settlement rail (top lane)
+  \draw[ink,line width=1.4pt,rounded corners=1pt] (40,224) rectangle (600,280);
+  \node[ink,font=\small] at (320,259) {settlement rail};
+  \node[muted,font=\footnotesize] at (320,241) {escrows, deposits, bonds, burns};
+  % record (bottom lane)
+  \draw[ink,line width=1.4pt,rounded corners=1pt] (40,34) rectangle (600,90);
+  \node[ink,font=\small] at (320,68) {record (append-only log)};
+  \node[muted,font=\footnotesize] at (320,50) {many relays, anyone reads};
+  % public clock (middle)
+  \draw[ink,line width=1.4pt,rounded corners=1pt] (210,138) rectangle (350,182);
+  \node[ink,font=\small] at (280,160) {public clock};
+  % commitment binding: record -> clock -> rail
+  \draw[ink,line width=1.4pt,->] (280,90) -- (280,138);
+  \draw[ink,line width=1.4pt,->] (280,182) -- (280,224);
+  \node[muted,font=\footnotesize,anchor=east] at (200,158) {commitment per batch};
+  % the one crossing: verdict signature, record -> rail
+  \draw[bronze,line width=1.4pt] (480,90) -- (480,126);
+  \draw[bronze,line width=1.4pt,->] (480,156) -- (480,224);
+  \node[bronze,font=\small] at (480,150) {verdict signature};
+  \node[bronze,font=\footnotesize] at (480,132) {one crossing};
+\end{tikzpicture}

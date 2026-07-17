@@ -1,0 +1,38 @@
+[
+ {
+  "id": "karma-conservation",
+  "number": 1,
+  "anchor": "A conservation follows: any set of accounts holds exactly the karma its own burns minted, whatever its internal shape, so a ring trading with itself earns no unit an honest merchant would not, and farms nothing by trading in a circle.",
+  "caption": "Trades inside a ring circulate standing but mint none. Karma equals the value an account has burned, so a circle farms nothing."
+ },
+ {
+  "id": "escrow-presigned-outcomes",
+  "number": 2,
+  "anchor": "Failing agreement, the funds move by exactly one pre-signed outcome, buyer paid, seller paid, or funds returned, each completed only by the quorum's single signature.",
+  "caption": "The escrow is a two of two output holding the price and both deposits, its three outcomes signed in advance. The quorum owns no key and completes exactly one with a single signature."
+ },
+ {
+  "id": "commit-first-timeline",
+  "number": 3,
+  "anchor": "Each side seals its exhibits as fingerprints before either unveils, then publishes them in full, so a forgery must be built before the exhibit it rebuts is seen; the file is fixed before a single steward is drawn.",
+  "caption": "Each side seals its exhibits, then the file is fixed before any steward is drawn. Evidence cannot be built to fit the panel, nor the panel picked to fit the evidence."
+ },
+ {
+  "id": "sealed-tally",
+  "number": 4,
+  "anchor": "Each steward casts a ballot sealed under that key, with a short proof that it holds one valid answer; sealed ballots add without opening, so the panel opens the counts alone, never a single ballot.",
+  "caption": "Stewards cast ballots sealed under one shared key, and sealed ballots add without opening. The panel reads the counts alone and opens no single ballot."
+ },
+ {
+  "id": "exposure-cap",
+  "number": 5,
+  "anchor": "Every opening states the value its counterparty could lose if the key defaults, and the sum across a key's open dealings may not exceed a bond it holds locked for the purpose, so the bond bounds the whole of what its counterparties could lose at once.",
+  "caption": "Every open dealing states what a counterparty could lose, and the sum may not exceed the locked bond. A client refuses any opening that would breach it."
+ },
+ {
+  "id": "where-it-runs",
+  "number": 6,
+  "anchor": "One object crosses back to the rail, the verdict signature, on a spending path the traders signed in advance.",
+  "caption": "Value lives on the settlement rail and events live on the record, bound by a public clock. One object crosses back to the rail, the verdict signature, and nothing else on the record moves money."
+ }
+]
