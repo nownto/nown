@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=1pt,y=-1pt,
+    box/.style={draw=ink, rounded corners=1pt, minimum height=22pt, minimum width=68pt, font=\small, inner sep=2pt}]
+  % milestone boxes (dashed = sealed)
+  \node[box] (b1) at (90,84)  {opened};
+  \node[box, dashed] (b2) at (213,84) {exhibits sealed};
+  \node[box] (b3) at (336,84) {file fixed};
+  \node[box] (b4) at (459,84) {quorum drawn};
+  \node[box] (b5) at (582,84) {verdict};
+
+  % ticks from box bottoms to baseline
+  \foreach \x in {90,213,336,459,582} {
+    \draw[muted, line width=1.4pt] (\x,104) -- (\x,150);
+  }
+
+  % time baseline
+  \draw[muted, line width=1.4pt, -{Stealth[length=5pt]}] (30,150) -- (615,150);
+  \node[muted, font=\small, anchor=north east] at (612,152) {settlement};
+
+  % bronze divider
+  \draw[bronze, line width=1.4pt] (398,40) -- (398,132);
+  \node[bronze, font=\small, anchor=south] at (398,38) {seal before draw};
+\end{tikzpicture}

@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nown · A Peer-to-Peer Protocol for Portable Trust</title>
-<meta name="description" content="Nown: an ownerless protocol for portable reputation and merit-based dispute resolution. Karma is a reputation you carry; disputes are judged by an anonymous quorum selected at random, acting as a verdict oracle over an escrow held only by the two traders. No owner, no token, no company. Public domain (CC0).">
+<link rel="canonical" href="https://nown.to/nown-whitepaper.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nown.to/nown-whitepaper.html">
+<meta property="og:title" content="Nown · whitepaper">
+<meta property="og:description" content="A peer-to-peer protocol for portable trust and merit-based arbitration. Public domain (the Unlicense).">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27f%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23c79b50%27%20stop-opacity%3D%27.32%27%2F%3E%3Cstop%20offset%3D%27.8%27%20stop-color%3D%27%23c79b50%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2713%27%20fill%3D%27%231b1a16%27%2F%3E%3Cpath%20d%3D%27M22%2017%20V45%20M22%2029%20C22%2019.5%2042%2019.5%2042%2029%20V45%27%20stroke%3D%27%23c79b50%27%20stroke-width%3D%278.5%27%20fill%3D%27none%27%2F%3E%3Cpath%20d%3D%27M22%2073%20V49.5%20M22%2061%20C22%2070%2042%2070%2042%2061%20V49.5%27%20stroke%3D%27url%28%23f%29%27%20stroke-width%3D%278.5%27%20fill%3D%27none%27%20transform%3D%27translate%280%2C-1.5%29%27%2F%3E%3C%2Fsvg%3E">
+<meta name="description" content="Nown: an ownerless protocol for portable reputation and merit-based dispute resolution. Karma is a reputation you carry; disputes are judged by an anonymous quorum selected at random, acting as a verdict oracle over an escrow held only by the two traders. No owner, no token, no company. Public domain (the Unlicense).">
 <style>
 /* ============ Nown whitepaper · ink and minted bronze on laid paper ============ */
 :root{
@@ -221,6 +228,12 @@ footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; te
   .title{ padding-top:0 }
 }
 </style>
+<style>
+/* preview figures: remap hardcoded inks to theme tokens */
+.fig-frame svg [fill="#1b1a16"]{ fill:var(--ink) }   .fig-frame svg [stroke="#1b1a16"]{ stroke:var(--ink) }
+.fig-frame svg [fill="#726c60"]{ fill:var(--ink-3) } .fig-frame svg [stroke="#726c60"]{ stroke:var(--ink-3) }
+.fig-frame svg [fill="#825f27"]{ fill:var(--bronze) }.fig-frame svg [stroke="#825f27"]{ stroke:var(--bronze) }
+</style>
 </head>
 <body>
 <div id="progress" aria-hidden="true"></div>
@@ -250,41 +263,40 @@ footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; te
   <nav class="toc" id="toc" aria-label="Table of contents">
     <p class="lbl">Contents</p>
     <ol>
-      <li><a href="#abstract"><span class="n">·</span> Abstract</a></li>
+      <li><a href="#abstract"><span class="n">&middot;</span> Abstract</a></li>
       <li class="sepli"><span class="sep"></span></li>
       <li><a href="#s1"><span class="n">1</span> The problem</a></li>
       <li><a href="#s2"><span class="n">2</span> Karma</a></li>
-      <li><a href="#s3"><span class="n">3</span> The costly signal</a></li>
-      <li><a href="#s4"><span class="n">4</span> The price of time</a></li>
-      <li><a href="#s5"><span class="n">5</span> Sovereignty</a></li>
-      <li><a href="#s6"><span class="n">6</span> Escrow</a></li>
-      <li><a href="#s7"><span class="n">7</span> The quorum</a></li>
-      <li><a href="#s8"><span class="n">8</span> Sortition</a></li>
-      <li><a href="#s9"><span class="n">9</span> The verdict</a></li>
+      <li><a href="#s3"><span class="n">3</span> The costly signal and the price of time</a></li>
+      <li><a href="#s4"><span class="n">4</span> Escrow</a></li>
+      <li><a href="#s5"><span class="n">5</span> The quorum</a></li>
+      <li><a href="#s6"><span class="n">6</span> Sortition</a></li>
+      <li><a href="#s7"><span class="n">7</span> The verdict</a></li>
+      <li><a href="#s8"><span class="n">8</span> The deadline</a></li>
+      <li><a href="#s9"><span class="n">9</span> Sovereignty</a></li>
       <li><a href="#s10"><span class="n">10</span> Economics</a></li>
       <li><a href="#s11"><span class="n">11</span> Sybil resistance</a></li>
-      <li><a href="#s12"><span class="n">12</span> Adoption</a></li>
-      <li><a href="#s13"><span class="n">13</span> Beyond disputes</a></li>
-      <li><a href="#s14"><span class="n">14</span> Limits</a></li>
-      <li><a href="#s15"><span class="n">15</span> Conclusion</a></li>
+      <li><a href="#s12"><span class="n">12</span> Where it runs</a></li>
+      <li><a href="#s13"><span class="n">13</span> Limits and the social fork</a></li>
+      <li><a href="#s14"><span class="n">14</span> Conclusion</a></li>
       <li class="sepli"><span class="sep"></span></li>
-      <li><a href="#refs"><span class="n">·</span> References</a></li>
+      <li><a href="#refs"><span class="n">&middot;</span> References</a></li>
     </ol>
   </nav>
 
   <main>
 
     <section class="title" id="top">
-      <p class="eyebrow">Whitepaper &middot; Draft v0.3</p>
+      <p class="eyebrow">Whitepaper &middot; v0.1</p>
       <h1 class="name">Nown</h1>
       <p class="subtitle">A peer-to-peer protocol for portable trust and merit-based arbitration.</p>
-      <p class="thesis">The first way to trust a stranger and settle a dispute with <b>no single party to bribe, subpoena, or switch off</b>.</p>
+      <p class="thesis">A way to trust a stranger and settle a dispute with <b>no single party to bribe, subpoena, or switch off</b>.</p>
       <div class="meta">
-        <span>Draft v0.3</span><span class="dot">·</span>
+        <span>v0.1</span><span class="dot">·</span>
         <span>Ownerless</span><span class="dot">·</span>
         <span>No token</span><span class="dot">·</span>
         <span>No company</span><span class="dot">·</span>
-        <span>Public domain · CC0</span>
+        <span>Public domain · the Unlicense</span>
       </div>
       <div class="colophon">
         <span class="mark" aria-hidden="true">
@@ -300,180 +312,274 @@ footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; te
             </g>
           </svg>
         </span>
-        <span class="cx"><b>Nown</b><br>portable merit &middot; action driven &middot; nown to all</span>
+        <span class="cx"><b>Nown</b></span>
       </div>
     </section>
 
     <section class="abstract" id="abstract">
       <p class="lbl">Abstract</p>
-      <p>Trade between strangers requires a way to establish trust and a way to resolve disputes. Every market solves both the same way, with a trusted third party: a platform, an escrow agent, a rating bureau, or a court. The third party can be censored, bribed, subpoenaed, or shut down, and it owns the reputations and the verdicts it issues. This protocol removes the third party from both functions. Reputation, called karma, is a portable measure each person earns through costly action and carries between contexts. It proves baseline trustworthiness to any stranger, with no introduction, no identity document, and no platform. Disputes are decided by a quorum of high-karma accounts drawn at random, anonymous to the traders and to each other, judging only the evidence each side submits. The quorum is an oracle. It attests a verdict that a pre-signed escrow executes; it never holds the funds. Honest judgment is made the paying strategy through the structure of the reward, not by an appeal to a higher authority, because there is none. There is no company, no token, and no owner. The protocol charges nothing and rules on the trade, never on the person. It cannot be proven in advance. Its worth is a question for the market, answered by adoption.</p>
+      <p>Trade between strangers needs trust before the trade and judgment after it. Markets supply both through a trusted third party: a platform, an escrow agent, a rating bureau, a court. That party can be censored, bribed, subpoenaed, or shut down, and it owns the reputations and verdicts it issues. This protocol removes it from both. Reputation, called karma, is minted only by an irreversible burn tied to a settled dealing, so it proves an account&rsquo;s own conduct, never another&rsquo;s opinion of it, and it carries between contexts with no platform or identity document. Disputes are decided by a quorum of high-karma accounts drawn at random, anonymous to the traders and to each other, judging only the evidence each side submits. The quorum is an oracle: it attests a verdict a pre-signed escrow executes, and never holds the funds. Honest conduct is made the paying strategy by the structure of the reward, not by appeal to a higher authority, because there is none. There is no company, no token, and no owner. The protocol charges nothing, and rules on the trade, never on the person.</p>
     </section>
 
     <section id="s1">
       <h2 class="sec"><span class="num">&sect;1</span> The problem</h2>
-      <p>Two strangers agree to trade. Each must decide whether the other will perform. If one defects, someone must decide who is owed what. Both decisions, trust before the trade and judgment after it, are made today by a trusted third party.</p>
-      <p>Every such party is a single point of control. A platform censors, extracts rent, and dies by regulation. A named arbiter can be bribed, coerced, or subpoenaed, and carries the legal liability alone. A rating bureau owns your reputation and rents it back to you. A vote weighted by tokens sells influence to whoever buys the most. And the reputation you build on one platform stays there, and vanishes when the platform does.</p>
-      <p>The function that has never been decentralized is judgment. Settlement of money became trustless once it was made objective and replicated. Judgment resisted, because a verdict is a matter of preference and there is no sum to check it against. Judgment here stays subjective. The protocol makes honest judgment the paying strategy and removes every party that could be captured.</p>
+      <p>Two strangers agree to trade. Each must decide whether the other will perform. If one defects, someone must decide who is owed what. Today a trusted third party makes both decisions, and each such party is a single point of control. A platform censors, extracts rent, and dies by regulation. A named arbiter can be bribed, coerced, or subpoenaed. A rating bureau owns your reputation and rents it back to you. A vote weighted by tokens sells influence to whoever buys the most. Reputation built on one platform stays there and vanishes with it. Settlement of money became trustless once it was made objective and replicated; judgment resisted, because a verdict is a preference with no sum to check it against. The thesis of this paper is narrow: honest conduct can be made the paying strategy, and every party that could be captured can be removed.</p>
     </section>
 
     <section id="s2">
       <h2 class="sec"><span class="num">&sect;2</span> Karma</h2>
-      <p>Karma is a reputation a person earns and carries. It is a single measure of demonstrated trustworthiness that a stranger can read at a glance, without knowing the person's name, location, or past. It does for trade between strangers what a credential does inside an institution. It certifies that the holder has, over time and at cost, behaved as someone worth dealing with. A degree says a stranger was taught to behave. Karma says a stranger has behaved.</p>
-      <p>Karma is the product. Dispute resolution is one use of it. Every action on the protocol moves it, up or down: a settled dealing, a vouch that holds, a case judged well add to it; a defection, a broken vouch, a careless verdict take it away. A person accumulates karma through settled conduct and spends its standing wherever trust is priced: buying and selling, borrowing, hiring, joining a community that admits only members above a threshold. A platform that reads karma inherits a user base that is expensive to fake and cheap to filter, and needs no central moderator to do it. The reputation belongs to the person, not the platform, and travels when the person leaves.</p>
-      <p>Karma is held by no one. It is computed from a public record of signed events, the way a balance is computed from a ledger. Two accounts that praise each other in a closed loop earn nothing, because the measure is trust flowing in from the rest of the graph, and an isolated ring has no inflow.</p>
-      <p>How far an action moves karma is set by five things, each a curve rather than a fixed amount. The change scales with what the actor put at risk. Each further unit of standing drawn from the same source is worth less than the one before, so no single stake or relationship can be repeated into dominance. The whole is held under a ceiling set by tenure, which no amount of money lifts. A dealing with a fresh and independent party counts for more than another with a familiar one. And each unit of inflowing trust is weighted by the standing and the independence of its source, so trust routed through a captured cluster arrives discounted. Standing earned broadly and slowly compounds. Volume bought quickly does not.</p>
+      <p>Karma is the product, and dispute resolution is one use of it: a single number that rises only when an account pays for it and falls when the account is judged against, spending wherever trust is priced. It belongs to the person, not the platform, and travels when the person leaves.</p>
+      <p>Karma is minted at one source and one posted price: an irreversible burn attached to a dealing the account has settled, a sum paid into a provably unspendable output. Deposits, escrow held at risk, fees, and elapsed time mint nothing, because none of them leaves the world. Endorsement mints nothing either: standing one account can grant another is standing a ring can grant itself, and vouching for a stranger you never dealt with proves nothing about your own conduct, which is the one thing karma exists to prove.</p>
+      <p>The amount minted rises with the value burned, up to a fixed ceiling each period, and each further burn against the same counterparty is worth less than the last. A conservation follows: any set of accounts holds exactly the karma its own burns minted, whatever its internal shape, so a ring trading with itself earns no unit an honest merchant would not, and farms nothing by trading in a circle. Minted karma decays each period and is renewed only by fresh burns, so a parked account bleeds toward zero.</p>
+<figure id="fig-karma-conservation">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" font-family="Menlo, Consolas, 'Courier New', monospace"><title>Karma is conserved</title><defs><marker id="karma-conservation-ah-ink" markerUnits="userSpaceOnUse" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#1b1a16"/></marker><marker id="karma-conservation-ah-bronze" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 Z" fill="#825f27"/></marker></defs><text x="120" y="40" font-size="14" letter-spacing="2" fill="#1b1a16">KARMA IS CONSERVED</text><rect x="150" y="95" width="380" height="150" rx="14" fill="none" stroke="#726c60" stroke-width="1.2" stroke-dasharray="5 4"/><circle cx="250" cy="170" r="26" fill="none" stroke="#1b1a16" stroke-width="1.4"/><circle cx="430" cy="170" r="26" fill="none" stroke="#1b1a16" stroke-width="1.4"/><text x="250" y="176" font-size="15" fill="#1b1a16" text-anchor="middle">A</text><text x="430" y="176" font-size="15" fill="#1b1a16" text-anchor="middle">B</text><path d="M276,158 Q340,118 404,158" fill="none" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#karma-conservation-ah-ink)"/><text x="340" y="110" font-size="12" fill="#726c60" text-anchor="middle">k moves, total holds</text><text x="340" y="228" font-size="12" fill="#726c60" text-anchor="middle">sum of karma unchanged</text><circle cx="70" cy="110" r="4" fill="#726c60"/><circle cx="84" cy="110" r="4" fill="#726c60"/><circle cx="77" cy="122" r="4" fill="#726c60"/><path d="M92,116 L224,158" fill="none" stroke="#825f27" stroke-width="2.4" marker-end="url(#karma-conservation-ah-bronze)"/><text x="60" y="92" font-size="12" fill="#825f27">inflow from the wider graph</text></svg></div>
+  <figcaption>Figure 1. Trades inside a ring circulate standing but mint none. Karma equals the value an account has burned, so a circle farms nothing.</figcaption>
+</figure>
+      <p>Karma is held by no one: it is read from a public record of signed events, as a balance is read from a ledger. An account&rsquo;s standing depends only on the events that name it, so any reader derives one account&rsquo;s karma from its own events alone, and because the weights are fixed by the protocol version, every client computes the same number.</p>
     </section>
 
     <section id="s3">
-      <h2 class="sec"><span class="num">&sect;3</span> The costly signal</h2>
-      <p>A rating is worthless if it costs nothing to give. The reason is older than the protocol.</p>
-      <blockquote class="epigraph"><p>Speech is nearly free. A man may say one thing and do another. Action expends scarce time or capital, and reveals, exactly and irreversibly, what the actor valued at the moment of choosing. What he paid for is who he is.</p></blockquote>
-      <p>Value is shown in action, never in words. A stated opinion is one more cheap act of speech. A choice that costs something is the only evidence of a preference. So karma moves only on paid-for acts. Completing a trade under bond, standing on a verdict, vouching for a stranger: each costs the actor something he cannot recover, and each is therefore worth recording. A profile description, a self-endorsement, a free rating: each is speech, and moves karma by nothing.</p>
-      <p>Giving karma costs the giver. To vouch for another account is to stake your own standing on it. If the account you vouched for is later judged a fraud, your stake is cut. A vouch is a demonstrated preference, priced in the one currency that cannot be printed: reputation you spent real time earning.</p>
-      <p>Endorsement is rationed so it cannot be sprayed. Each further vouch an account gives within a period costs sharply more than the last, so one sincere vouch is cheap and a hundred are not. And because a fraud is charged back along the edges that endorsed it, a careless voucher pays for the account he certified.</p>
+      <h2 class="sec"><span class="num">&sect;3</span> The costly signal and the price of time</h2>
+      <p>A rating that costs nothing to give is worth nothing, because a choice that costs something is the only evidence of a preference. So karma moves only on an act whose cost cannot be recovered: the burn, value destroyed beyond reach and bound to a dealing the account has settled. A free rating, a returned deposit, a stake merely held at risk: none leaves the world, and none moves karma.</p>
+      <p>If the only cost were money, the protocol would fall to whoever holds the most. Time is the honest price no one can buy more of: a day costs the wealthiest attacker and the poorest honest user the same. So karma is bounded by tenure: what an account can express is the smaller of the karma it holds and a ceiling that rises only as real time passes with the account unbroken, against a public clock no participant controls. A wealthy attacker can burn to the period&rsquo;s mint ceiling within a day, then waits years under the same clock as everyone else. The ceiling and the decay narrow the advantage of wealth without erasing it.</p>
     </section>
 
     <section id="s4">
-      <h2 class="sec"><span class="num">&sect;4</span> The price of a signal is time</h2>
-      <p>If the only cost were money, justice would favor the rich, who pay it easily, and the protocol would fall to whoever holds the most. Money is a poor measure of commitment for the same reason it is a poor measure of a man.</p>
-      <p>Time is the honest price. No one can buy more of it. A day costs the wealthiest attacker and the poorest honest user exactly the same, and neither can purchase a longer past. Time also cannot be run in parallel inside one identity. A computation that takes a year takes a year on one machine or a million, a fact that can be proven rather than assumed.</p>
-      <p>Karma is therefore bounded by tenure. Standing accrues only as real time passes with the account in good standing, measured against a public clock no participant controls. Money enters as one input, held at risk and with sharply diminishing effect, so that capital buys a fast start and never a commanding position. A wealthy attacker reaches the ceiling the buyable inputs allow within a day, then waits years under the same clock as everyone else. The advantage that remains is seniority, not wealth, which is the milder bias and dilutes as the network grows.</p>
+      <h2 class="sec"><span class="num">&sect;4</span> Escrow</h2>
+      <p>A verdict must move funds or it is only an opinion, but handing them to whoever enforces it restores a trusted party. So the protocol splits the problem: judging the dispute is left to the quorum; checking that the quorum ran correctly is left to arithmetic anyone can repeat.</p>
+      <p>Funds sit in a two-of-two output controlled by the buyer and the seller alone, holding the price and both deposits, its outcomes signed in advance. If both agree they close it cooperatively and the quorum is never called; if the trade stalls, a timeout returns the funds. Either party alone may open a dispute by a signed opening that consumes the escrow, so the timeout can no longer run. A dispute may open only up to a fixed margin before that timeout matures, sized so a case opened at the last valid moment still concludes first; a later opening is void and the timeout stands, so no one can sit on a grievance until the eligible set drifts his way. Failing agreement, the funds move by exactly one pre-signed outcome, buyer paid, seller paid, or funds returned, each completed only by the quorum&rsquo;s single signature.</p>
+<figure id="fig-escrow-presigned-outcomes">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" font-family="Menlo, Consolas, monospace"><defs><marker id="escrow-presigned-outcomes-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1b1a16"/></marker><marker id="escrow-presigned-outcomes-arrow-bronze" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#825f27"/></marker></defs><rect x="30" y="88" width="160" height="44" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/><text x="110" y="108" font-size="13" fill="#1b1a16" text-anchor="middle">2 of 2 escrow</text><text x="110" y="124" font-size="12" fill="#726c60" text-anchor="middle">price + both deposits</text><line x1="192" y1="110" x2="447" y2="45" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#escrow-presigned-outcomes-arrow)"/><line x1="192" y1="110" x2="447" y2="110" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#escrow-presigned-outcomes-arrow)"/><line x1="192" y1="110" x2="447" y2="175" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#escrow-presigned-outcomes-arrow)"/><rect x="450" y="30" width="155" height="30" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2" stroke-dasharray="5 3"/><text x="527" y="49" font-size="13" fill="#1b1a16" text-anchor="middle">buyer paid</text><rect x="450" y="95" width="155" height="30" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2" stroke-dasharray="5 3"/><text x="527" y="114" font-size="13" fill="#1b1a16" text-anchor="middle">seller paid</text><rect x="450" y="160" width="155" height="30" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2" stroke-dasharray="5 3"/><text x="527" y="179" font-size="13" fill="#1b1a16" text-anchor="middle">funds returned</text><rect x="45" y="200" width="105" height="28" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/><text x="97" y="218" font-size="13" fill="#1b1a16" text-anchor="middle">quorum</text><text x="162" y="218" font-size="12" fill="#726c60" text-anchor="start">holds no key</text><line x1="120" y1="200" x2="320" y2="120" stroke="#825f27" stroke-width="1.4" marker-end="url(#escrow-presigned-outcomes-arrow-bronze)"/><text x="250" y="184" font-size="12" fill="#825f27" text-anchor="middle">one signature</text></svg></div>
+  <figcaption>Figure 2. The escrow is a two of two output holding the price and both deposits, its three outcomes signed in advance. The quorum owns no key and completes exactly one with a single signature.</figcaption>
+</figure>
+      <p>The quorum attests and never holds. It owns no key to the escrow and cannot take or freeze the funds, so no custodial liability arises. A verdict can rule only on facts that reach the record: proof of payment, delivery committed to a fingerprint, a signed receipt. Claims resting on a private, reversible rail wait for a proof that can be checked.</p>
     </section>
 
     <section id="s5">
-      <h2 class="sec"><span class="num">&sect;5</span> Sovereignty</h2>
-      <p>The protocol rules on the trade, not on the person. It decides who owes what under an agreement two parties entered freely. It does not decide whether the trade should have been made, whether it was legal, or whether either party is virtuous. Those belong to the individual, who bears the consequences.</p>
-      <p>This is the third commitment, beside karma and the quorum: sovereignty. There is no supervising authority in the protocol and none above it. Rules hold because participants keep them, and hold only over what participants have agreed to, in the way a network keeps a rule its members chose to run.</p>
-      <p>Sovereignty extends to the reputation itself. Karma belongs to the account, and an account can be sold, the way a business or a brand is sold, carrying its standing with it. The protocol cannot verify who holds a key, and does not try. That a key's holder is unknowable is what keeps identity sovereign, the same property that lets money be held without permission. What the protocol can do is mark a sharp change in how an account behaves. It reports the change as evolution, not suspicion, because people do change, and it never claims to know whether the hands changed with the conduct. A recently transferred account carries a visible marker of that transfer, and nothing more.</p>
-      <p>One person may hold many accounts, unlinked, and reveal only what a given dealing requires, because privacy is the power to selectively reveal oneself. And a person may always abandon an account and begin again, at the low standing every new account starts from, carrying none of the old history, good or bad. A fresh start is real, and so is its cost.</p>
+      <h2 class="sec"><span class="num">&sect;5</span> The quorum</h2>
+      <p>A dispute empanels a quorum: an odd number of accounts, called stewards, drawn from those above a karma threshold, past a minimum tenure, and several steps from both parties in the trust graph, so no one who knows either trader can sit. Each takes its seat by posting a fresh bond, uniform for the tier, so karma buys only the eligibility, never a heavier vote. The share any single cluster can hold, of the eligible set and of the panel drawn, is capped, so a group that certifies itself cannot pack a quorum however large it grows. Stewards are anonymous to the traders and to each other; they never speak, and each reads the same file and votes alone.</p>
+      <p>These filters assume a populated graph. In a young network too thin to fill a panel, the required distance from the parties relaxes on a schedule fixed in advance and the escrow bound tightens in proportion, disclosed to both traders before they commit. Weak protection disclosed is a price a young network can choose; weak protection disguised would be a fraud by the protocol itself.</p>
+      <p>Within a case the quorum holds all the power. There is no judge to overrule it and no court of appeal. Every arbitration system before this one ends at an authority that can be captured; the protocol puts in that place a crowd no one can find, bribe by name, or coordinate, and takes its verdict as final. A right to reopen would only invite the patient and the rich to grind the poor into surrender.</p>
     </section>
 
     <section id="s6">
-      <h2 class="sec"><span class="num">&sect;6</span> Escrow</h2>
-      <p>A verdict must move funds or it is only an opinion. The trap is to hand the funds to whoever enforces the verdict, which restores a trusted party at the last step. The protocol splits the problem at the line between what is subjective and what is objective. Judging the dispute is subjective, and is left to the quorum. Checking that the quorum ran correctly is objective, and is left to arithmetic anyone can repeat.</p>
-      <p>Funds sit in an output controlled by the buyer and the seller alone, holding the price and both parties' deposits. Its outcomes are signed in advance. If both agree, at the start or once the trade completes, they close it cooperatively and the quorum is never called. If the trade stalls and neither party opens a dispute, a timeout returns the funds. Once either party opens a dispute, the timeout is void, and the only remaining path is the one the quorum's verdict unlocks. The quorum publishes a single signature over its verdict. That signature completes exactly one pre-signed outcome, buyer paid, seller paid, or funds returned, and no other.</p>
-
-      <figure>
-        <div class="fig-frame">
-          <svg viewBox="0 0 720 300" role="img" aria-labelledby="figt figd">
-            <title id="figt">The three outcomes of a Nown escrow</title>
-            <desc id="figd">Funds held by the two traders resolve by cooperative close, timeout refund, or a dispute path in which the quorum's verdict signature completes one pre-signed outcome. The quorum attests but never holds the funds.</desc>
-            <defs>
-              <marker id="arw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ink-3)"/></marker>
-              <marker id="arwb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--bronze)"/></marker>
-            </defs>
-            <rect x="14" y="112" width="176" height="76" rx="9" fill="var(--paper-3)" stroke="var(--bronze)" stroke-width="1.4"/>
-            <text x="102" y="142" text-anchor="middle" font-family="var(--mono)" font-size="12.5" fill="var(--ink)" letter-spacing="1">ESCROW</text>
-            <text x="102" y="161" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink-3)">held by the two</text>
-            <text x="102" y="175" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink-3)">traders alone</text>
-            <path d="M190 132 H250 V40 H300" stroke="var(--ink-3)" stroke-width="1.3" fill="none" marker-end="url(#arw)"/>
-            <path d="M190 150 H270 V150 H300" stroke="var(--ink-3)" stroke-width="1.3" fill="none" marker-end="url(#arw)"/>
-            <path d="M190 168 H250 V262 H300" stroke="var(--bronze)" stroke-width="1.5" fill="none" marker-end="url(#arwb)"/>
-            <rect x="300" y="18" width="196" height="46" rx="8" fill="none" stroke="var(--rule-2)" stroke-width="1.2"/>
-            <text x="314" y="38" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">COOPERATIVE CLOSE</text>
-            <text x="314" y="54" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">both agree &rarr; funds return</text>
-            <rect x="300" y="127" width="196" height="46" rx="8" fill="none" stroke="var(--rule-2)" stroke-width="1.2"/>
-            <text x="314" y="147" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">TIMEOUT REFUND</text>
-            <text x="314" y="163" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">no dispute &rarr; funds return</text>
-            <rect x="300" y="240" width="196" height="46" rx="8" fill="var(--bronze-tint)" stroke="var(--bronze)" stroke-width="1.2"/>
-            <text x="314" y="260" font-family="var(--mono)" font-size="11.5" fill="var(--ink)" letter-spacing=".5">DISPUTE</text>
-            <text x="314" y="276" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">quorum, at random (&sect;7&ndash;8)</text>
-            <path d="M496 263 H528" stroke="var(--bronze)" stroke-width="1.5" fill="none" marker-end="url(#arwb)"/>
-            <rect x="530" y="240" width="176" height="46" rx="8" fill="none" stroke="var(--bronze)" stroke-width="1.2"/>
-            <text x="618" y="258" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="var(--ink)">verdict signature</text>
-            <text x="618" y="273" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink-3)">completes one outcome</text>
-            <path d="M618 240 V206 H360 V190" stroke="var(--bronze)" stroke-width="1.1" fill="none" stroke-dasharray="3 3" marker-end="url(#arwb)"/>
-            <text x="618" y="120" text-anchor="middle" font-family="var(--serif)" font-size="13" font-style="italic" fill="var(--ink-2)">the quorum attests,</text>
-            <text x="618" y="138" text-anchor="middle" font-family="var(--serif)" font-size="13" font-style="italic" fill="var(--ink-2)">never holds</text>
-          </svg>
-        </div>
-        <figcaption>Figure 1 &mdash; A verdict that executes itself. The quorum emits one signature; it completes the matching outcome and no other. It cannot move funds to itself, and the timeout path always exists until a dispute is opened.</figcaption>
-      </figure>
-
-      <p>The quorum attests and never holds. It cannot take the funds, cannot freeze them, and owns no key to the escrow. The two traders are the only signers, so no third party has custody, and the legal exposure that custody carries does not arise.</p>
-      <p>A verdict can rule only on facts that reach the record. A forged image of a bank transfer, set against a claim that nothing arrived, cannot be judged by anyone. The protocol therefore handles disputes over facts that can be shown: proof of payment, delivery committed to a hash, a signed receipt from a carrier. Claims that rest on a private, reversible rail wait for a proof that can be checked.</p>
+      <h2 class="sec"><span class="num">&sect;6</span> Sortition</h2>
+      <p>The quorum must be unpredictable before it is drawn and unknown after, or it can be bribed, threatened, or packed. Randomness from an outside committee would restore a trusted party, so it is taken from the protocol&rsquo;s own activity: every account carries a seed that changes as it acts, each action folded into an append-only log where it cannot be altered after the fact.</p>
+      <p>Timing must buy nothing. A dispute opens with a signed record naming one escrow; the first such record counts, and the clock mark under which it lands fixes the moment of opening and freezes eligibility. Entropy for the draw is collected only after the case file closes: the seeds of accounts acting inside a fixed window, the disputants excluded, are combined with the opening and passed through a delay function that takes a fixed span of wall-clock time no parallel hardware can hurry, and runs longer than the window can extend, so no one holds its output, the draw seed, before the window closes.</p>
+      <p>Each eligible account then checks privately, under its own key, whether the seed selected it. Selection proves itself and reveals nothing about the others, so the panel is a set of pseudonyms that exists for that case alone, unknown to the traders, to each other, and to any relay. No such draw is perfectly unbiasable; the design prices the remaining margin so that skewing a draw costs more than winning the dispute it would decide. The construction of the entropy, the delay function, and the selection proof belongs to the companion article.</p>
     </section>
 
     <section id="s7">
-      <h2 class="sec"><span class="num">&sect;7</span> The quorum</h2>
-      <p>A dispute empanels a quorum: an odd number of accounts, called stewards, drawn from those above a karma threshold, several steps away from both parties in the trust graph, so that no one who knows either trader can sit. The stewards are anonymous to the traders and to each other. They never speak. Each reads the same case file, the evidence and statements both sides submit, stripped of personal detail, and each votes alone.</p>
-      <p>Within a case the quorum holds all the power, and nothing sits above it. There is no judge to overrule it and no court to appeal to. The absence is deliberate. Every arbitration system before this one ends at an authority that can be captured, and the search for a final, incorruptible authority is the search that has always failed. The protocol puts in that place a crowd that no one can find, bribe by name, or coordinate, and takes the crowd's verdict as final. Finality is itself the value. A dispute settled once, in days, is worth more than one litigated for years through a system backed by force. An appeal path was considered and left out, because any right to reopen a case invites the patient and the rich to grind the poor into surrender.</p>
-      <p>Each side is given time to state its case and submit evidence, and the quorum decides on that alone. Some people argue better than others. The protocol does not correct for this and does not pretend the world is otherwise. It weighs the case as presented, as any reader of evidence must.</p>
+      <h2 class="sec"><span class="num">&sect;7</span> The verdict</h2>
+      <p>Each side seals its exhibits as fingerprints before either unveils, then publishes them in full, so a forgery must be built before the exhibit it rebuts is seen; the file is fixed before a single steward is drawn.</p>
+<figure id="fig-commit-first-timeline">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 210" font-family="Menlo, Consolas, monospace">
+  <defs>
+    <marker id="commit-first-timeline-arrowP3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6" fill="none" stroke="#726c60" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <!-- boxes -->
+  <rect x="42"  y="64" width="96" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <rect x="165" y="64" width="96" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="288" y="64" width="96" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <rect x="411" y="64" width="96" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <rect x="534" y="64" width="96" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+
+  <!-- box labels -->
+  <text x="90"  y="88" font-size="13" fill="#1b1a16" text-anchor="middle">opened</text>
+  <text x="213" y="88" font-size="13" fill="#1b1a16" text-anchor="middle">exhibits sealed</text>
+  <text x="336" y="88" font-size="13" fill="#1b1a16" text-anchor="middle">file fixed</text>
+  <text x="459" y="88" font-size="13" fill="#1b1a16" text-anchor="middle">quorum drawn</text>
+  <text x="582" y="88" font-size="13" fill="#1b1a16" text-anchor="middle">verdict</text>
+
+  <!-- ticks from box bottoms to baseline -->
+  <line x1="90"  y1="104" x2="90"  y2="150" stroke="#726c60" stroke-width="1.4"/>
+  <line x1="213" y1="104" x2="213" y2="150" stroke="#726c60" stroke-width="1.4"/>
+  <line x1="336" y1="104" x2="336" y2="150" stroke="#726c60" stroke-width="1.4"/>
+  <line x1="459" y1="104" x2="459" y2="150" stroke="#726c60" stroke-width="1.4"/>
+  <line x1="582" y1="104" x2="582" y2="150" stroke="#726c60" stroke-width="1.4"/>
+
+  <!-- time baseline -->
+  <line x1="30" y1="150" x2="615" y2="150" stroke="#726c60" stroke-width="1.4" marker-end="url(#commit-first-timeline-arrowP3)"/>
+  <text x="612" y="170" font-size="12" fill="#726c60" text-anchor="end">settlement</text>
+
+  <!-- bronze divider: seal before draw -->
+  <line x1="398" y1="40" x2="398" y2="132" stroke="#825f27" stroke-width="1.4"/>
+  <text x="398" y="30" font-size="13" fill="#825f27" text-anchor="middle">seal before draw</text>
+</svg></div>
+  <figcaption>Figure 3. Each side seals its exhibits, then the file is fixed before any steward is drawn. Evidence cannot be built to fit the panel, nor the panel picked to fit the evidence.</figcaption>
+</figure>
+      <p>The quorum does not find the truth; it aligns the reward with honest reporting. Only stewards who land with the majority are paid. But a plain majority pays a good guess about the crowd as much as a good judgment of the case, so a steward is scored across a batch of cases for agreement above what the panel&rsquo;s voting habits would produce by coincidence. Reading the evidence is then the only strategy that pays, whatever the others do.</p>
+      <p>The seal needs no trusted opener, because the panel opens its own tally. Its members jointly build one key for the case that never wholly exists, so there is no holder to subpoena. Each steward casts a ballot sealed under that key, with a short proof that it holds one valid answer; sealed ballots add without opening, so the panel opens the counts alone, never a single ballot. A steward may re-post its sealed ballot at random moments, so a vote changed under coercion looks the same as one that changed nothing. Pay and penalty settle later by nameless proofs: a majority seat proves only that its hidden vote sat with the majority and collects an equal share through a ticket that names no seat, so no steward is ever linked to a case.</p>
+<figure id="fig-sealed-tally">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" font-family="Menlo, Consolas, monospace">
+  <defs>
+    <marker id="sealed-tally-arrowP4" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+    </marker>
+    <marker id="sealed-tally-arrowB4" markerWidth="8" markerHeight="8" refX="6.5" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6" fill="none" stroke="#825f27" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <!-- sealed ballots group -->
+  <text x="115" y="30" font-size="13" fill="#1b1a16" text-anchor="middle">sealed ballots</text>
+  <rect x="40" y="40" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="40" y="100" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <rect x="40" y="160" width="150" height="40" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="115" y="214" font-size="12" fill="#726c60" text-anchor="middle">never opened</text>
+
+  <!-- converging arrows -->
+  <line x1="190" y1="60" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+  <line x1="190" y1="120" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+  <line x1="190" y1="180" x2="290" y2="122" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#sealed-tally-arrowP4)"/>
+
+  <!-- add node, still sealed -->
+  <rect x="290" y="100" width="150" height="44" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3"/>
+  <text x="365" y="126" font-size="13" fill="#1b1a16" text-anchor="middle">add, still sealed</text>
+
+  <!-- bronze output -->
+  <line x1="440" y1="122" x2="470" y2="122" stroke="#825f27" stroke-width="1.4" marker-end="url(#sealed-tally-arrowB4)"/>
+  <rect x="470" y="100" width="150" height="44" rx="2" fill="none" stroke="#825f27" stroke-width="1.4"/>
+  <text x="545" y="126" font-size="13" fill="#825f27" text-anchor="middle">counts open</text>
+  <text x="545" y="162" font-size="12" fill="#726c60" text-anchor="middle">no ballot opened</text>
+</svg></div>
+  <figcaption>Figure 4. Stewards cast ballots sealed under one shared key, and sealed ballots add without opening. The panel reads the counts alone and opens no single ballot.</figcaption>
+</figure>
+      <p>The penalty for a wrong verdict rises with how many stewards err together, so a bloc that moves the same wrong way pays toward the whole of its stake, since strangers drawn apart and sworn to silence should not fail in unison. The ballot reads guilty, not guilty, or unresolvable, the last returning the funds, because the common hard case is ambiguity, not deceit. No reward rule catches a mistake every steward makes honestly; against evidence built to deceive the whole panel stands only the bound on what may rest on a single verdict while the network is young. A verdict stays open to review, and a later quorum can overturn it at the erring seats&rsquo; expense. The sealed tally and the nameless claims belong to the companion article.</p>
     </section>
 
     <section id="s8">
-      <h2 class="sec"><span class="num">&sect;8</span> Sortition</h2>
-      <p>The quorum must be unpredictable before it is drawn and unknown after, or it can be bribed, threatened, or packed. Public randomness from an outside committee would restore a party to trust. The randomness is taken instead from the protocol's own activity.</p>
-      <p>Every account carries a seed that changes as the account acts. Each action folds a committed trace of itself into the seed at the moment it happens, on an append-only log, so the trace cannot be altered or chosen after the fact. The seed is the account's own irreversible history, reduced to entropy.</p>
-      <p>When a quorum is due, the seeds of a broad set of active accounts are combined into one value. That value alone is still not safe, because the last account to act before the cutoff could try many actions and keep the one that steers the draw. So the combined value is passed through a <span class="term" tabindex="0" data-def="A computation deliberately built so it takes a fixed amount of wall-clock time to run and an instant to verify, and cannot be sped up by running it on more machines at once.">delay function</span>: a computation that takes a fixed span of wall-clock time to run and an instant to check, and that no amount of parallel hardware can hurry. No one, not even the last actor, can learn the result in time to bias it. Its output is the seed for the draw.</p>
-      <p>Each eligible account then checks, privately, whether it was selected, by evaluating a <span class="term" tabindex="0" data-def="A function of the shared seed and the account's own secret key whose result the account can prove to others without revealing the key. It decides selection with no coordinator and no announced list.">verifiable function</span> of the seed under its own key. Selection proves itself and reveals nothing about the others. An account learns only that it was drawn, and can prove that fact without naming itself. The set that decides a case is a group of pseudonyms that exists for that case alone, unknown to the traders, to each other, and to the operators of any relay. There is no list to subpoena and no colleague to conspire with.</p>
-      <p>No randomness of this kind is perfectly unbiasable, and this is not. The delay function rests on a bound on how fast the fastest hardware can run it, and the draw can be skewed only by an actor who both dominates the activity in the window and holds a decisive speed advantage over everyone else. The design drives that margin small enough that skewing a draw costs more than winning the dispute it would decide. That is the standard the protocol holds, in place of a proof of the impossible.</p>
-      <p>Two further rules keep the draw clean. Karma is frozen the moment a draw opens, so no account can lift its own standing to improve its odds once selection is under way. And the share any single trust cluster can hold, both of the eligible set and of the panel actually drawn, is capped, so a group that certifies itself cannot pack a quorum however large it grows.</p>
+      <h2 class="sec"><span class="num">&sect;8</span> The deadline</h2>
+      <p>A court that can hang is a hostage taker: if a verdict could be withheld forever, the power to withhold would be worth money, and a party facing loss would pay for delay instead of judgment. Every dispute therefore ends, on a clock no participant can hurry, through one of four exits: the parties&rsquo; late agreement, a verdict, a tie read as unresolvable, or a default that needs no signer.</p>
+      <p>The deadline passes only when a public clock and a delay function have both run their course. The delay cannot be hurried by adding machines, only by outrunning the fastest one anyone holds, so the deadline cannot meaningfully be brought forward. It can be pushed back only by slowing the public clock, which delays every path equally, including the attacker&rsquo;s own exit.</p>
+      <p>The draw seats more stewards than the quorate threshold, so absences are absorbed. If a panel fails, it refills once along the order the seed fixed, under the same frozen eligibility, so it cannot be shopped for a better one. If the second also fails, the funds move anyway: at setup the parties pre-sign a ladder of long-stop outcomes that spend the funds after a generous delay with no signer, ordered by what the record objectively committed, so the last rung, a symmetric refund, becomes valid only where the record commits nothing. Funds can wait; they cannot be imprisoned.</p>
     </section>
 
     <section id="s9">
-      <h2 class="sec"><span class="num">&sect;9</span> The verdict</h2>
-      <p>The quorum does not find the truth. No crowd can, and the protocol makes no such claim. It aligns the reward with honest reporting, and lets the honest report win.</p>
-      <p>Only the stewards who land with the majority are paid. Those in the minority are not. A steward who votes without reading gambles against everyone who read, so the paying move is to read the evidence, judge it, and expect others who read to judge as he does. Payment for agreement, with a penalty for lazy or dishonest votes, makes honest attention the profitable strategy.</p>
-      <p>Plain majority reward has a known failure. On a small stake, a steward may reason that the safe vote is whatever the crowd will pick, and vote to predict the crowd instead of to weigh the case. The protocol closes this by asking each steward two things: the verdict, and a guess at how the others will vote. The answer that beats its own predicted popularity wins. A steward with private reason to judge against the obvious answer is rewarded for it when the reason is sound, which is the case a plain majority gets wrong. Votes are sealed until all are cast, and there is no deliberation, so there is no channel to coordinate through and no shared error to amplify.</p>
-      <p>Three defenses hold the vote honest under pressure. Ballots are sealed so that only the totals ever open, never any single vote, and a steward who is leaned on can quietly change a vote already cast, so a briber can never confirm how anyone voted and a payment offered for a vote has nothing left to condition on. The panel grows with the stake, a few stewards for a small claim and many for a large one, so the pay for reading always clears the cost of reading and no large sum ever rests on a handful. And a steward serves a batch of cases at once and is scored across all of them, where honest reading beats any lazy or collusive rule whatever the others do, a guarantee that holds only across many cases and never on a single one.</p>
-      <p>The penalty for a wrong verdict rises with how many stewards err together on the same case. An isolated mistake costs little. A bloc that moves the same wrong way pays toward the whole of its stake, because strangers sworn to silence and drawn apart should not fail in unison, and when they do, coordination is the likeliest cause. Punishing correlated error hardest turns the profit of collusion negative before a bloc can form.</p>
-      <p>The ballot is guilty, not guilty, or unresolvable. The last returns the funds. It exists because the most common hard case is ambiguity, not deceit, and forcing a call would reward whoever engineered the ambiguity. On a grave case, and only when a majority of the quorum calls for it and an added bond is posted, the stewards may put written questions that both parties must answer, so a packet built to mislead can be probed. The quorum ranks its own questions with no moderator: each steward spends a fixed budget of weight across the questions at a rising cost per question, so only what matters draws weight, and a question that both sides of a divided quorum press rises above the merely popular one. The few at the top go to the parties. The ordinary dispute carries no such round and stays cheap to settle.</p>
-      <p>A steward is judged in turn. A verdict is an action, recorded, and later verdicts can bear on it. A steward whose verdicts are repeatedly overturned by the quorums that follow loses karma and is drawn less often. A steward who serves well gains standing. No authority reviews the stewards. Their record reviews them, as every account's record governs its standing. This is how the protocol carries personal responsibility into the one role that decides other people's disputes, without appointing anyone to watch the watchers.</p>
+      <h2 class="sec"><span class="num">&sect;9</span> Sovereignty</h2>
+      <p>The protocol rules on the trade, not on the person. It decides who owes what under an agreement two parties entered freely, not whether the trade was wise or legal. No authority sits in the protocol or above it, and rules hold only over what participants have agreed to.</p>
+      <p>Karma belongs to the account, and an account can be sold as a business is sold. The protocol cannot verify who holds a key; that a key&rsquo;s holder is unknowable is what keeps identity sovereign. But standing does not pass silently with a key: a change of hands, a transfer or a sharp break in conduct alike, resets the account&rsquo;s tenure to zero and collapses what it can express, though the karma it paid for and its history carry over. So a bought reputation buys the history, never the seniority, and must earn its ceiling again under the public clock.</p>
+      <p>A key can be lost or stolen. An account may retire its key by signing a successor after a public delay, and may register a hidden recovery key published only as a commitment; the older commitment displaces a compromised key and wins any contest, so a thief cannot outrun a commitment made before the theft, and such a recovery does not reset tenure. An account that loses every key is gone, because anyone who could restore it would be an authority the protocol refuses to hold. What remains is a fresh start at zero, real and with its cost.</p>
     </section>
 
     <section id="s10">
       <h2 class="sec"><span class="num">&sect;10</span> Economics</h2>
-      <p>Both traders post their deposits and the dispute fee into the escrow when the trade is set, so opening a dispute costs no new money and a poor honest party is never priced out of defending itself. Deposits scale down with karma, so an established account posts little and a fresh account posts much, and scale up with the amount in dispute, so corrupting a case always costs more than the case is worth.</p>
-      <p>On resolution, the losing side's deposit and the bonds of stewards who voted against the outcome pay the stewards who voted with it. Attacking and losing burns the attacker's capital. The winner is made whole.</p>
-      <div class="keystone">
-        <p class="lbl">An owner would be the flaw</p>
-        <p>The protocol takes nothing. Every fee flows to the people who did the work of judging. There is no issuer to pay, because there is none. That there is no earning model is a requirement. Anyone who could profit from the court could sell it, and a court that can be sold is a court that will be. A fee-taking company is a standing target for a subpoena and a bribe. A token is judicial power for sale, and turns the court into the property of whoever buys the most. The protocol has neither, and is funded the way shared infrastructure is funded, by grants and by the people who want it to exist. Neutrality is the product.</p>
-      </div>
+      <p>Both traders post their deposits and the dispute fee into the escrow when the trade is set, so opening a dispute costs no new money and a poor honest party is never priced out of defending itself. Karma opens doors and never carries the money: standing decides who may steward, not the size of a dealing, which the bond alone bounds. The capital that makes fraud unprofitable is the fresh deposit posted for this trade, lost on it if the account defects. Good conduct prices the deposit down to a floor, never to where defection turns profitable, so a bought reputation buys only the discount: the stake that must be lost is posted fresh by whoever holds the key today.</p>
+      <p>A deposit prices one dealing; nothing yet bounds how many a key holds open at once, so a patient fraud could open many and vanish owing on all. The protocol therefore caps a key&rsquo;s total open exposure. Every opening states the value its counterparty could lose if the key defaults, and the sum across a key&rsquo;s open dealings may not exceed a bond it holds locked for the purpose, so the bond bounds the whole of what its counterparties could lose at once. The bond is reclaimable only after a timeout that outlasts every dealing it backs, is the same for every key, and karma never lifts it, because anyone who plans to disappear has already written off his standing, and only capital a verdict can seize changes the arithmetic of an exit. The cap enforces itself: a counterparty&rsquo;s client sums the other key&rsquo;s open exposure and refuses to sign an opening that would breach it.</p>
+<figure id="fig-exposure-cap">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="Menlo, Consolas, monospace">
+  <!-- baseline -->
+  <line x1="90" y1="260" x2="560" y2="260" stroke="#726c60" stroke-width="1.4"/>
+
+  <!-- stacked exposure bar (primary) -->
+  <rect x="120" y="218" width="100" height="42" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/>
+  <rect x="120" y="176" width="100" height="42" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/>
+  <rect x="120" y="134" width="100" height="42" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/>
+  <text x="170" y="239" font-size="13" fill="#1b1a16" text-anchor="middle" dominant-baseline="middle">deal 1</text>
+  <text x="170" y="197" font-size="13" fill="#1b1a16" text-anchor="middle" dominant-baseline="middle">deal 2</text>
+  <text x="170" y="155" font-size="13" fill="#1b1a16" text-anchor="middle" dominant-baseline="middle">deal 3</text>
+
+  <!-- proposed opening (dashed = not yet) -->
+  <rect x="120" y="92" width="100" height="42" fill="none" stroke="#1b1a16" stroke-width="1.4" stroke-dasharray="5 3" rx="2"/>
+  <text x="170" y="113" font-size="13" fill="#1b1a16" text-anchor="middle" dominant-baseline="middle">deal 4</text>
+
+  <!-- bronze bond ceiling (the one element) -->
+  <line x1="90" y1="118" x2="470" y2="118" stroke="#825f27" stroke-width="1.4"/>
+  <text x="476" y="122" font-size="13" fill="#825f27" text-anchor="start">bond (locked)</text>
+
+  <!-- muted leader to breach note -->
+  <line x1="220" y1="105" x2="300" y2="100" stroke="#726c60" stroke-width="1.4"/>
+  <text x="305" y="100" font-size="12" fill="#726c60" text-anchor="start" dominant-baseline="middle">would breach</text>
+
+  <!-- right rule box -->
+  <rect x="330" y="188" width="230" height="40" fill="none" stroke="#1b1a16" stroke-width="1.4" rx="2"/>
+  <text x="445" y="208" font-size="13" fill="#1b1a16" text-anchor="middle" dominant-baseline="middle">sum of open exposure ≤ bond</text>
+</svg></div>
+  <figcaption>Figure 5. Every open dealing states what a counterparty could lose, and the sum may not exceed the locked bond. A client refuses any opening that would breach it.</figcaption>
+</figure>
+      <p>The protocol takes nothing: every fee flows to the people who did the work of judging, and there is no issuer to pay, because there is none. The absence of an earning model is a requirement, not a preference: anyone who could profit from the court could sell it, and a court that can be sold is a court that will be. Neutrality is the product; an owner would be the flaw.</p>
     </section>
 
     <section id="s11">
       <h2 class="sec"><span class="num">&sect;11</span> Sybil resistance</h2>
-      <p>The security of the protocol is the cost of faking karma. That cost must be real, and cheap neither to a patient attacker nor to a rich one.</p>
-      <p>Creating an account costs an irreversible sacrifice, uniform for everyone, so that a thousand accounts cost a thousand times one and no volume discount exists. Karma is minted only by settled dealings with distinct counterparties, never by self-endorsement, so a ring trading with itself earns nothing. Standing accrues slowly, each further unit from the same source worth less than the last, and decays unless renewed by fresh conduct, so a burst of early activity bleeds away and no account can bank a fortune of karma before the network is populated. Weight flows in from the established graph, so an account is only as trusted as the independent accounts that vouch for it.</p>
-      <p>One problem stays open and is stated plainly. Telling distinct persons apart without an identity document is unsolved at scale, and the protocol's resistance to an attacker who can cheaply create real-seeming humans is only as strong as the best answer to that problem. The protocol raises the cost of an attack. It does not claim to make one impossible.</p>
+      <p>The security of the protocol is the cost of faking karma, cheap neither to the patient nor to the rich. Creating an account costs an irreversible sacrifice, uniform for everyone, so a thousand accounts cost a thousand times one. Karma itself is minted only by burning value against a settled dealing, and standing decays unless renewed by fresh burns with distinct counterparties, so there is no inflow to capture and no loop to farm.</p>
+      <p>The mint cannot be farmed, so an attacker&rsquo;s only path is to hold standing he never earns back through honest trade, and one inequality prices it. A threshold key held purely to exploit the protocol costs an irreversible burn and a forced wait under the tenure ceiling to build, and every period after costs the decay it must replace out of fresh burns, which service cannot repay, because service cannot remint the decay that keeps a key eligible. Against that stands the most such a key can earn inside the protocol in a period: a steward margin capped at or below an automated reader&rsquo;s cost, plus the interest saved on its own locked deposits. The decay constant is chosen so that, for any ring size and any budget, holding the threshold costs more each period than the threshold can return each period inside the protocol.</p>
+      <p>One problem stays open. Telling distinct persons apart without an identity document is unsolved at scale, and the defense against an attacker who can cheaply create real-seeming humans is only as strong as the best answer to that problem. The protocol raises the cost of an attack; it does not claim to make one impossible.</p>
     </section>
 
     <section id="s12">
-      <h2 class="sec"><span class="num">&sect;12</span> Adoption</h2>
-      <p>The protocol cannot be tested in a laboratory. Trust between strangers is a network good, worth little to the first user and much to the millionth, and no simulation produces the thing being tested, which is a large population of real people with real reputations at stake. It will be adopted gradually if it is useful, or not at all. This is the condition faced by every protocol that replaced a trusted party with a network, and no engineering removes it.</p>
-      <p>The path is to earn karma inside systems that already exist. A marketplace, an exchange, or a community that adopts the protocol gives its users a reputation they can carry out, and gains a filter against fraud that no central moderator can match. Where a costly reputation graph already exists, the protocol can read it, so that standing earned elsewhere seeds standing here, and the first quorum is not conjured from nothing. Chronicle Network, an open and ownerless graph of costly, signed reputation built by Luka Dover, is one such source and a companion to this work: it holds the standing, this protocol holds the judgment. One key is a participant in both, so a verdict here can be a marked event there, and a steward who judges well is credited on a graph wider than this one. Where Chronicle already carries a person's standing, the cold start is borrowed rather than bootstrapped.</p>
+      <h2 class="sec"><span class="num">&sect;12</span> Where it runs</h2>
+      <p>The protocol lives in two places. Value lives on a settlement rail: escrows, deposits, bonds, burns, and account sacrifices are outputs on the rail, their spending paths signed before they are needed. Everything else lives on the record: an append-only log of signed events, held in full by many independent relays that anyone may read and copy. A public clock binds the two: events are gathered into batches, each reduced to one commitment placed on the rail under a clock mark, so the order the rail carries becomes an order over the record. One object crosses back to the rail, the verdict signature, on a spending path the traders signed in advance. Money never appears on the record, and nothing on the record moves money except that one signature.</p>
+<figure id="fig-where-it-runs">
+  <div class="fig-frame"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" font-family="Menlo, Consolas, monospace">
+  <defs>
+    <marker id="where-it-runs-arrowP6" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#1b1a16"/>
+    </marker>
+    <marker id="where-it-runs-arrowB6" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#825f27"/>
+    </marker>
+  </defs>
+
+  <!-- settlement rail (top lane) -->
+  <rect x="40" y="40" width="560" height="56" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="320" y="62" text-anchor="middle" font-size="13" fill="#1b1a16">settlement rail</text>
+  <text x="320" y="80" text-anchor="middle" font-size="12" fill="#726c60">escrows, deposits, bonds, burns</text>
+
+  <!-- record (bottom lane) -->
+  <rect x="40" y="230" width="560" height="56" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="320" y="252" text-anchor="middle" font-size="13" fill="#1b1a16">record (append-only log)</text>
+  <text x="320" y="270" text-anchor="middle" font-size="12" fill="#726c60">many relays, anyone reads</text>
+
+  <!-- public clock (middle) -->
+  <rect x="210" y="138" width="140" height="44" rx="2" fill="none" stroke="#1b1a16" stroke-width="1.4"/>
+  <text x="280" y="164" text-anchor="middle" font-size="13" fill="#1b1a16">public clock</text>
+
+  <!-- commitment binding: record -> clock -> rail -->
+  <line x1="280" y1="230" x2="280" y2="182" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#where-it-runs-arrowP6)"/>
+  <line x1="280" y1="138" x2="280" y2="96" stroke="#1b1a16" stroke-width="1.4" marker-end="url(#where-it-runs-arrowP6)"/>
+  <text x="200" y="162" text-anchor="end" font-size="12" fill="#726c60">commitment per batch</text>
+
+  <!-- the one crossing: verdict signature, record -> rail -->
+  <line x1="480" y1="230" x2="480" y2="96" stroke="#825f27" stroke-width="1.4" marker-end="url(#where-it-runs-arrowB6)"/>
+  <rect x="416" y="158" width="128" height="38" fill="#ffffff"/>
+  <text x="480" y="174" text-anchor="middle" font-size="13" fill="#825f27">verdict signature</text>
+  <text x="480" y="190" text-anchor="middle" font-size="12" fill="#825f27">one crossing</text>
+</svg></div>
+  <figcaption>Figure 6. Value lives on the settlement rail and events live on the record, bound by a public clock. One object crosses back to the rail, the verdict signature, and nothing else on the record moves money.</figcaption>
+</figure>
+      <p>No machine is trusted for correctness. A relay stores the log and serves it; relays are assumed hostile, and the answer is redundancy, since the same event rests on many. A client verifies the log by replay, or checks one account&rsquo;s standing from only the events that name it. A summary publisher posts a bond and publishes signed totals, so a client reads an aggregate without gathering it; any client that proves a discrepancy from the log takes the bond, so a false total is corrected by arithmetic, not by a judge.</p>
+      <p>Relays are caches, not gatekeepers: any machine may carry any event, and an actor whom every relay refuses can anchor his own commitment on the rail, so censorship degrades to delay. The full architecture, what the record keeps and forgets and who pays to carry it, belongs to the companion article.</p>
     </section>
 
     <section id="s13">
-      <h2 class="sec"><span class="num">&sect;13</span> Beyond disputes</h2>
-      <p>The quorum is a general instrument. It decides any question that needs an impartial answer and has evidence to decide on, not only who is owed money after a trade. A group can put a decision to it. A community can settle a rule with it. Any process that today relies on a trusted counter, a trusted moderator, or a trusted authority can be handed to a crowd that cannot be found or bought.</p>
-      <p>A question outside trade has no losing deposit to pay the stewards, so it funds itself. Whoever poses it posts a bounty that becomes the reward, and each steward posts a bond of standing to take part. Many such questions have no outcome to check a vote against, so the stewards are scored on one another: each submits a sealed answer and a guess at how the others will answer, and the answer that beats its own predicted support is paid, while the rest is slashed and given to those who were right. The panel is settled against itself, with no outside loser and no owner to subsidize it. Every such decision is recorded as an action, so the standing a person earns in trade is the standing they stake in judgment, and one reputation follows them across everything the protocol touches.</p>
-      <p>The furthest form of this is a way to reach a binding collective decision that no one can quietly corrupt, at a cost of corruption far above the value of any single outcome. A vote fails where the count, the roll, or the authority can be captured. A verdict drawn from an unfindable, bonded, uncoordinated crowd removes each of those targets. Whether it replaces anything is for the people who use it to decide. The protocol only makes it available.</p>
+      <h2 class="sec"><span class="num">&sect;13</span> Limits and the social fork</h2>
+      <p>The protocol rests on reasoning about how people act, not on evidence that it works: it cannot be proven in advance, and a correlation in early data would not prove it either. Four limits survive every part of the design, and are named rather than buried. A signing key can be bribed, and no sealed ballot stops its owner from selling the vote; what the sale cannot deliver is a score, since a bought vote fails the batch&rsquo;s bar and forfeits its bond. Stewards who find a channel outside the protocol can coordinate, and the reward for honest reporting weakens when they do; against this stands only that they know nothing of each other. Telling distinct persons apart without an identity document is unsolved. And the final defense against an attacker who has bought the whole graph is that the graph is expensive to buy, not that it cannot be.</p>
+      <p>One defense stands behind that last limit. Karma is a computation over a public log, not an instrument an attacker can own. If a set of accounts is shown to be a fabrication ring, clients can adopt a new version of the rules that discounts those accounts and denies them standing, recomputed by everyone from the same log. Nothing is confiscated and nothing is voted on; within any version everyone still derives one number, and what forks is only the choice of version. The attacker keeps his entries and loses his audience, so the prize for capturing the graph is a graph whose readers have left.</p>
     </section>
 
     <section id="s14">
-      <h2 class="sec"><span class="num">&sect;14</span> Limits</h2>
-      <p>The protocol rests on reasoning about how people act, not on evidence that it works, and it keeps the two apart. It cannot be proven in advance, and a correlation in early data would not prove it either. What can be shown is where it must hold and where it cannot.</p>
-      <p>Four limits survive every part of the design and are named rather than buried. An account's signing key can be bribed, and no sealed ballot stops its owner from selling the vote outright. Anonymous stewards who find a channel outside the protocol can coordinate, and the reward for honest reporting weakens when they do; what stands against this is that the stewards know nothing of each other, so coordinating means building a separate conspiracy among people the system keeps apart, against the very system their standing is worth something in. Telling distinct persons apart without an identity document is unsolved, and the defense against mass-produced identities is only as strong as the answer to that problem. And the final defense against an attacker who has bought the whole graph is that the graph is expensive to buy, not that it cannot be.</p>
-    </section>
-
-    <section id="s15">
-      <h2 class="sec"><span class="num">&sect;15</span> Conclusion</h2>
-      <p>Trade between strangers has always rested on someone trusted to vouch and someone trusted to judge, and every such someone has been a point of failure. This protocol earns the vouch from costly action and draws the judgment from a crowd that no one can find, holds the funds with the traders alone, and keeps no power for itself. The pieces are known: reputation from real conduct, selection by lot, sealed votes, an oracle over an escrow, a clock no one owns. What has not been built is their assembly into a whole that no one owns and no one can capture. The result belongs to the public domain, to use, to build on, and to improve, without permission and without an owner, because a thing meant for everyone must be owned by no one.</p>
+      <h2 class="sec"><span class="num">&sect;14</span> Conclusion</h2>
+      <p>Trade between strangers has rested on someone trusted to attest and someone trusted to judge, and each such someone has been a point of failure. This protocol earns the attestation from a costly burn tied to real conduct, draws the judgment from a crowd no one can find, holds the funds with the traders alone, and keeps no power for itself. The pieces are known; what is new is their assembly into a whole no one owns and no one can capture. The protocol does not claim to be unstoppable. It claims to make honest conduct the paying strategy, and to remove every party a bribe, a subpoena, or a switch could reach. The result belongs to the public domain, to use, to build on, and to improve, without permission and without an owner, because a thing meant for everyone must be owned by no one.</p>
     </section>
 
     <section id="refs" class="refs">
       <h2 class="sec"><span class="num">&sect;</span> References</h2>
-      <p>Prior art and grounding by theme. A full annotated list is maintained with the source.</p>
+      <p>A companion long-form article develops, with interactive simulations, the deep construction this paper only states: the endogenous entropy and delay function of the draw, the sealed tally and nameless claims of the verdict, the full record architecture, and the anti-farming arithmetic of karma.</p>
       <div class="reflist">
-        <div class="refrow"><span class="theme">Reputation &amp; sybil resistance</span><span class="src">Cheng &amp; Friedman, the impossibility of a symmetric sybilproof reputation; EigenTrust; personalized web-of-trust flow; the cost of cheap pseudonyms.</span></div>
-        <div class="refrow"><span class="theme">Selection by lot &amp; verifiable randomness</span><span class="src">Cryptographic sortition; verifiable random functions; verifiable delay functions; commit-and-delay randomness beacons.</span></div>
-        <div class="refrow"><span class="theme">Honest reporting</span><span class="src">Peer prediction and the Bayesian truth serum; the surprisingly-popular answer; determinant mutual information; Condorcet's theorem on majority judgment, and its reversal under correlated error.</span></div>
-        <div class="refrow"><span class="theme">Escrow without custody</span><span class="src">Two-party escrow with pre-signed contingent outcomes; adaptor-signature execution; threshold attestation.</span></div>
-        <div class="refrow"><span class="theme">Human action</span><span class="src">Demonstrated preference and the costly signal; value revealed in action, not speech; unforgeable costliness.</span></div>
-        <div class="refrow"><span class="theme">Portable reputation on an open graph</span><span class="src">Chronicle Network (Luka Dover / Cartographers Guild) &mdash; a costly, signed reputation graph, and a natural source of starting standing.</span></div>
-        <div class="refrow"><span class="theme">Privacy</span><span class="src">Eric Hughes (1993): privacy is the power to selectively reveal oneself.</span></div>
+        <div class="refrow"><span class="theme">[1]</span><span class="src">J. R. Douceur. The Sybil Attack. 2002.</span></div>
+        <div class="refrow"><span class="theme">[2]</span><span class="src">E. Friedman, P. Resnick. The Social Cost of Cheap Pseudonyms. 2001.</span></div>
+        <div class="refrow"><span class="theme">[3]</span><span class="src">S. Micali, M. Rabin, S. Vadhan. Verifiable Random Functions. 1999.</span></div>
+        <div class="refrow"><span class="theme">[4]</span><span class="src">D. Boneh, J. Bonneau, B. Bunz, B. Fisch. Verifiable Delay Functions. 2018.</span></div>
+        <div class="refrow"><span class="theme">[5]</span><span class="src">D. Prelec, H. S. Seung, J. McCoy. A Solution to the Single-Question Crowd Wisdom Problem. Nature, 2017.</span></div>
+        <div class="refrow"><span class="theme">[6]</span><span class="src">V. Shnayder, A. Agarwal, R. Frongillo, D. C. Parkes. Informed Truthfulness in Multi-Task Peer Prediction. 2016.</span></div>
+        <div class="refrow"><span class="theme">[7]</span><span class="src">C. Komlo, I. Goldberg. FROST: Flexible Round-Optimized Schnorr Threshold Signatures. 2020.</span></div>
+        <div class="refrow"><span class="theme">[8]</span><span class="src">T. Dryja. Discreet Log Contracts. 2017.</span></div>
+        <div class="refrow"><span class="theme">[9]</span><span class="src">L. von Mises. Human Action. 1949.</span></div>
+        <div class="refrow"><span class="theme">[10]</span><span class="src">E. Hughes. A Cypherpunk&rsquo;s Manifesto. 1993.</span></div>
       </div>
     </section>
 
@@ -484,9 +590,8 @@ footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; te
   <p class="line">
     Nown &nbsp;·&nbsp; a peer-to-peer protocol for portable trust and merit-based arbitration<br>
     ownerless &nbsp;·&nbsp; no token &nbsp;·&nbsp; no company &nbsp;·&nbsp; a design and research draft, not running code<br>
-    released to the public domain under CC0 1.0 &nbsp;·&nbsp; no rights reserved &nbsp;·&nbsp; no owner
+    released into the public domain under the Unlicense &nbsp;·&nbsp; no rights reserved &nbsp;·&nbsp; no owner
   </p>
-  <p class="sig">Portable merit. Action driven. Nown to all.</p>
 </footer>
 
 <script>

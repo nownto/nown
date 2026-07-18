@@ -5,7 +5,6 @@ A reputation you carry, and a verdict no one can capture. No owner, no token, no
 
 - **Site:** https://nown.to
 - **Whitepaper:** [read online](https://nown.to/nown-whitepaper.html) · source [`WHITEPAPER.md`](WHITEPAPER.md) · [typeset PDF](nown-whitepaper.pdf)
-- **Karma design notes:** [`KARMA.md`](KARMA.md)
 
 ## Status
 
@@ -35,6 +34,6 @@ contribute because it should exist.
 
 ## License
 
-Released to the public domain. The repository is under the **Unlicense** ([`LICENSE`](LICENSE)); the
-whitepaper text is additionally dedicated **CC0 1.0**. Nothing here is owned, so there is nothing to
+Released into the public domain. Everything in the repository, the whitepaper included, is under
+the **Unlicense** ([`LICENSE`](LICENSE)). Nothing here is owned, so there is nothing to
 capture. See [`NOTICE`](NOTICE).

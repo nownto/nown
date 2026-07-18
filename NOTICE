@@ -1,13 +1,9 @@
-Nown — licensing notice
+Nown
+====
 
-Documents (the whitepaper and repository documentation):
-  Released to the public domain under CC0 1.0 Universal. See LICENSE.
+Everything in this repository is released into the public domain under the
+Unlicense. See LICENSE. This covers the whitepaper, the site, the build
+tooling, and all code, present and future. Use it for any purpose, with no
+conditions and no attribution required.
 
-Code (when it exists in this repository):
-  Released under the Zero-Clause BSD (0BSD) license. Use it for any purpose, with no
-  conditions and no attribution required. When the first code lands, add its full 0BSD
-  text as LICENSE-CODE (or a per-directory LICENSE), and reference it here.
-
-Rationale: the project is meant to belong to everyone, so it is owned by no one. Both
-licenses are maximally permissive; there is deliberately no copyleft and nothing to
-enforce, because there is no owner to enforce it.
+No rights reserved. No owner.

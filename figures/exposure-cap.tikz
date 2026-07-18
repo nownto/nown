@@ -1,0 +1,25 @@
+\begin{tikzpicture}[x=1pt,y=-1pt,
+    dealbox/.style={draw=ink,line width=1.4pt,rounded corners=1pt,font=\small,inner sep=0pt},
+    font=\small]
+  % baseline
+  \draw[muted,line width=1.4pt] (90,260) -- (560,260);
+
+  % stacked exposure bar
+  \node[dealbox,minimum width=100pt,minimum height=42pt,anchor=north west] at (120,218) {deal 1};
+  \node[dealbox,minimum width=100pt,minimum height=42pt,anchor=north west] at (120,176) {deal 2};
+  \node[dealbox,minimum width=100pt,minimum height=42pt,anchor=north west] at (120,134) {deal 3};
+
+  % proposed opening (dashed = not yet)
+  \node[dealbox,dash pattern=on 5pt off 3pt,minimum width=100pt,minimum height=42pt,anchor=north west] at (120,92) {deal 4};
+
+  % bronze bond ceiling (the one element)
+  \draw[bronze,line width=1.4pt] (90,118) -- (470,118);
+  \node[bronze,font=\small,anchor=west] at (476,120) {bond (locked)};
+
+  % muted leader to breach note
+  \draw[muted,line width=1.4pt] (220,105) -- (300,100);
+  \node[muted,font=\footnotesize,anchor=west] at (305,100) {would breach};
+
+  % right rule box
+  \node[draw=ink,line width=1.4pt,rounded corners=1pt,minimum width=230pt,minimum height=40pt,font=\small,anchor=north west,inner sep=0pt] at (330,188) {sum of open exposure $\leq$ bond};
+\end{tikzpicture}

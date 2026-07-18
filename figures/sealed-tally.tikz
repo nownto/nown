@@ -1,0 +1,25 @@
+\begin{tikzpicture}[x=1pt,y=-1pt,
+    >={Stealth[length=4pt]},
+    seal/.style={draw=ink, dashed, rounded corners=1pt, font=\small, inner sep=0pt},
+    open/.style={draw=bronze, rounded corners=1pt, font=\small, inner sep=0pt}]
+
+  % sealed ballots
+  \node[font=\small, ink] at (115,30) {sealed ballots};
+  \node[seal, minimum width=150pt, minimum height=40pt] (b1) at (115,60) {};
+  \node[seal, minimum width=150pt, minimum height=40pt] (b2) at (115,120) {};
+  \node[seal, minimum width=150pt, minimum height=40pt] (b3) at (115,180) {};
+  \node[font=\small, muted] at (115,214) {never opened};
+
+  % add node, still sealed
+  \node[seal, minimum width=150pt, minimum height=44pt] (add) at (365,122) {add, still sealed};
+
+  % converging arrows
+  \draw[ink, thick, ->, line width=1pt] (190,60) -- (290,122);
+  \draw[ink, thick, ->, line width=1pt] (190,120) -- (290,122);
+  \draw[ink, thick, ->, line width=1pt] (190,180) -- (290,122);
+
+  % bronze output
+  \node[open, minimum width=150pt, minimum height=44pt, bronze] (cnt) at (545,122) {counts open};
+  \draw[bronze, ->, line width=1pt] (440,122) -- (470,122);
+  \node[font=\small, muted] at (545,162) {no ballot opened};
+\end{tikzpicture}
