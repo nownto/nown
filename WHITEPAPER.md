@@ -1,6 +1,6 @@
 # Nown: A Peer-to-Peer Protocol for Portable Trust and Merit-Based Arbitration
 
-**v0.5.** Released into the public domain (the Unlicense).
+**v0.1.** Released into the public domain (the Unlicense).
 
 ## Abstract
 

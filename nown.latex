@@ -42,7 +42,7 @@
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \title{Nown: A Peer-to-Peer Protocol for\\[2pt] Portable Trust and Merit-Based Arbitration}
-\author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.5 \quad Released into the public domain (the Unlicense)}
+\author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.1 \quad Released into the public domain (the Unlicense)}
 \date{}
 
 \begin{document}
