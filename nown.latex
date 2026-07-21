@@ -23,7 +23,7 @@
 \newcommand{\figcap}[1]{\caption{\small #1}}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=linkblue, citecolor=black,
-  pdftitle={Nown: A Peer-to-Peer Protocol for Portable Trust and Merit-Based Arbitration},
+  pdftitle={Nown: A Protocol for Portable Trust},
   pdfauthor={Anonymous}, pdfcreator={}, pdfproducer={}}
 % Strip identifying metadata: no creation/mod dates, deterministic trailer ID.
 \ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
@@ -41,7 +41,7 @@
 \setcounter{secnumdepth}{0} % headings carry their own "1.", "2." numbers; no LaTeX auto-numbering
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\title{Nown: A Peer-to-Peer Protocol for\\[2pt] Portable Trust and Merit-Based Arbitration}
+\title{Nown: A Protocol for Portable Trust}
 \author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.1 \quad Released into the public domain (the Unlicense)}
 \date{}
 

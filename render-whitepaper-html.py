@@ -20,6 +20,53 @@ def enc(t):
     return t
 
 
+def _anchor(url, text):
+    ext = '' if 'nown.to' in url else ' target="_blank" rel="noopener noreferrer"'
+    return f'<a href="{url}"{ext}>{text}</a>'
+
+
+def _linkify_bare(escaped):
+    # wrap bare http(s) urls in already-escaped text
+    return re.sub(r'(https?://[^\s<)\]]+)', lambda m: _anchor(m.group(1), m.group(1)), escaped)
+
+
+def render_text(t):
+    # markdown [text](url) links first, then bare urls in the surrounding escaped text
+    out, pos = [], 0
+    for m in re.finditer(r'\[([^\]]+)\]\((https?://[^)]+)\)', t):
+        out.append(_linkify_bare(enc(t[pos:m.start()])))
+        out.append(_anchor(m.group(2), enc(m.group(1))))
+        pos = m.end()
+    out.append(_linkify_bare(enc(t[pos:])))
+    return re.sub(r'\[\^(\w+)\]', lambda m: _fn_markup(m.group(1)), ''.join(out))
+
+
+# Footnotes: [^id] markers become click/hover popups; [^id]: text lines define them.
+_FN = {}
+
+
+def _fn_markup(fid):
+    if fid not in _FN:
+        return f'[^{fid}]'
+    n, text = _FN[fid]
+    return (f'<sup class="fn"><button type="button" class="fnr" aria-label="Note {n}">{n}</button>'
+            f'<span class="fnpop" role="note">{enc(text)}</span></sup>')
+
+
+def extract_footnotes(md):
+    defs = dict(re.findall(r'(?m)^\[\^(\w+)\]:[ \t]*(.+)$', md))
+    md = re.sub(r'(?m)^\[\^\w+\]:[ \t]*.+\n?', '', md)
+    _FN.clear()
+    seen = []
+    for mm in re.finditer(r'\[\^(\w+)\]', md):
+        fid = mm.group(1)
+        if fid in defs and fid not in seen:
+            seen.append(fid)
+    for n, fid in enumerate(seen, 1):
+        _FN[fid] = (n, defs[fid])
+    return md
+
+
 def parse_md(md):
     title = next(l[2:].strip() for l in md.split('\n') if l.startswith('# '))
     mver = re.search(r'\*\*v([0-9.]+)\.\*\*', md)
@@ -45,7 +92,7 @@ def parse_md(md):
 
 
 def build(md_path, html_path):
-    md = open(md_path).read()
+    md = extract_footnotes(open(md_path).read())
     title, ver, abstract, secs, note, refs = parse_md(md)
     h = open(html_path).read()
 
@@ -68,21 +115,21 @@ def build(md_path, html_path):
     parts.append('    <section class="abstract" id="abstract">')
     parts.append('      <p class="lbl">Abstract</p>')
     for p in abstract:
-        parts.append(f'      <p>{enc(p)}</p>')
+        parts.append(f'      <p>{render_text(p)}</p>')
     parts.append('    </section>')
     for num, ttl, paras in secs:
         parts.append(f'\n    <section id="s{num}">')
         parts.append(f'      <h2 class="sec"><span class="num">&sect;{num}</span> {enc(ttl)}</h2>')
         for p in paras:
-            parts.append(f'      <p>{enc(p)}</p>')
+            parts.append(f'      <p>{render_text(p)}</p>')
         parts.append('    </section>')
     parts.append('\n    <section id="refs" class="refs">')
     parts.append('      <h2 class="sec"><span class="num">&sect;</span> References</h2>')
     if note:
-        parts.append(f'      <p>{enc(note)}</p>')
+        parts.append(f'      <p>{render_text(note)}</p>')
     parts.append('      <div class="reflist">')
     for i, r in enumerate(refs, 1):
-        parts.append(f'        <div class="refrow"><span class="theme">[{i}]</span><span class="src">{enc(r)}</span></div>')
+        parts.append(f'        <div class="refrow"><span class="theme">[{i}]</span><span class="src">{render_text(r)}</span></div>')
     parts.append('      </div>')
     parts.append('    </section>')
     content = '\n'.join(parts)

@@ -17,10 +17,12 @@ trap 'rm -rf "$TMP"' EXIT
 
 # Figures: inject TikZ blocks from figures/manifest.json into a working copy.
 SRC="WHITEPAPER.md"
-if [ -f figures/manifest.json ]; then
-  python3 inject-figures.py md WHITEPAPER.md "$TMP/wp-fig.md"
-  SRC="$TMP/wp-fig.md"
-fi
+# Figures frozen 2026-07-20 (with the sims) pending protocol finalization; PDF builds without them.
+# To restore: re-add figure anchors to WHITEPAPER.md and uncomment below.
+# if [ -f figures/manifest.json ]; then
+#   python3 inject-figures.py md WHITEPAPER.md "$TMP/wp-fig.md"
+#   SRC="$TMP/wp-fig.md"
+# fi
 
 # Abstract = the prose between "## Abstract" and the next "## " heading.
 awk '/^## Abstract/{f=1;next} /^## /{f=0} f && NF' "$SRC" > "$TMP/abstract.txt"
