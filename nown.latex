@@ -1,0 +1,58 @@
+% Pandoc LaTeX template for the Nown whitepaper.
+% Adapted from the Bitcoin whitepaper LaTeX source (qwinsi/bitcoin-whitepaper-latex):
+% article class, Computer Modern, run-in bold "Abstract:", \maketitle author block.
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{letterpaper, margin=1in}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{microtype}
+\usepackage[svgnames]{xcolor}
+\definecolor{linkblue}{HTML}{1A4D8F}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing}
+% Figures: TikZ only, generated from figures/manifest.json by inject-figures.py.
+% The three-ink palette the figures use (must match the SVG palette).
+\definecolor{ink}{HTML}{1B1A16}
+\definecolor{muted}{HTML}{726C60}
+\definecolor{bronze}{HTML}{825F27}
+\newcommand{\figcap}[1]{\caption{\small #1}}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=linkblue, citecolor=black,
+  pdftitle={Nown: A Protocol for Portable Trust},
+  pdfauthor={Anonymous}, pdfcreator={}, pdfproducer={}}
+% Strip identifying metadata: no creation/mod dates, deterministic trailer ID.
+\ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
+\ifdefined\pdftrailerid\pdftrailerid{}\fi
+\ifdefined\pdfsuppressptexinfo\pdfsuppressptexinfo=-1\fi
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[L]{\footnotesize\textsc{Nown}}
+\fancyfoot[C]{\footnotesize\thepage}
+\fancyfoot[R]{\footnotesize\texttt{nown.to}}
+% Bitcoin-style run-in abstract: bold "Abstract:" then the text inline.
+\renewenvironment{abstract}{\noindent\bfseries\abstractname:\normalfont\hspace{0.35em}}{\par\vspace{0.9em}}
+\setlength{\parindent}{1.3em}
+\setcounter{secnumdepth}{0} % headings carry their own "1.", "2." numbers; no LaTeX auto-numbering
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\title{Nown: A Protocol for Portable Trust}
+\author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.1 \quad Released into the public domain (the Unlicense)}
+\date{}
+
+\begin{document}
+\maketitle
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$body$
+
+\end{document}

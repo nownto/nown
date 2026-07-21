@@ -1,0 +1,8 @@
+backups/
+dist/
+legacy/
+node_modules/
+.DS_Store
+*.aux
+*.log
+missfont.log

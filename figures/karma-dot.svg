@@ -1,0 +1,51 @@
+<svg viewBox="0 0 680 384" role="img" aria-label="How Karma DOT is formed: the average of a key's karma over its whole life." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .axis{ stroke:var(--ink-3,#726c60); stroke-width:1.3 }
+    .grid{ stroke:var(--rule,#d6cfc1); stroke-width:1 }
+    .kA{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.6 }
+    .kAfill{ fill:var(--bronze,#9c7635); opacity:.10 }
+    .kB{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:2.2; stroke-dasharray:2 4 }
+    .mean{ stroke-width:1.4; stroke-dasharray:6 5; fill:none }
+    .mA{ stroke:var(--bronze,#9c7635) }
+    .mB{ stroke:var(--ink-3,#726c60) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:14px; fill:var(--ink-2,#46423a) }
+    .lblq{ font-family:var(--serif,Georgia,serif); font-size:13px; fill:var(--ink-3,#726c60) }
+    .lblk{ font-family:var(--serif,Georgia,serif); font-size:13.5px; font-style:italic }
+    .dot{ fill:var(--ink,#1b1a16) }
+    .form{ font-family:var(--mono,monospace); font-size:12.5px; fill:var(--ink-2,#46423a) }
+  </style>
+
+  <!-- formula -->
+  <text x="70" y="34" class="form">Karma DOT  =  area under the curve  ÷  time alive</text>
+
+  <!-- axes -->
+  <line class="axis" x1="70" y1="60" x2="70" y2="300"/>
+  <line class="axis" x1="70" y1="300" x2="628" y2="300"/>
+  <polygon class="dot" points="70,52 66,62 74,62"/>
+  <polygon class="dot" points="636,300 626,296 626,304"/>
+  <text x="40" y="184" class="lblq" transform="rotate(-90 40 184)" text-anchor="middle">karma</text>
+  <text x="350" y="356" class="lblq" text-anchor="middle">time a key has been alive &#8594;</text>
+
+  <!-- area under the steady curve -->
+  <path class="kAfill" d="M70,300 C110,150 150,120 200,118 C320,114 460,120 620,110 L620,300 Z"/>
+
+  <!-- key A: steady dealer (solid bronze) -->
+  <path class="kA" d="M70,300 C110,150 150,120 200,118 C320,114 460,120 620,110"/>
+  <!-- key B: idle for years, then deals (dashed) -->
+  <path class="kB" d="M70,300 L332,296 L372,152 C444,120 528,114 620,110"/>
+
+  <!-- shared endpoint -->
+  <circle class="dot" cx="620" cy="110" r="3.6"/>
+  <text x="612" y="98" class="lblq" text-anchor="end">same karma today</text>
+
+  <!-- mean (DOT) lines -->
+  <line class="mean mA" x1="70" y1="138" x2="620" y2="138"/>
+  <text x="150" y="132" class="lblk" fill="var(--bronze,#9c7635)">DOT of the steady dealer</text>
+
+  <line class="mean mB" x1="70" y1="214" x2="620" y2="214"/>
+  <text x="150" y="230" class="lblk" fill="var(--ink-3,#726c60)">DOT of the late starter</text>
+
+  <!-- key labels -->
+  <text x="250" y="112" class="lbl" fill="var(--bronze,#9c7635)">steady</text>
+  <text x="200" y="288" class="lblq">idle</text>
+</svg>

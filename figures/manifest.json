@@ -1,0 +1,14 @@
+[
+  {
+    "id": "karma-dot",
+    "number": 1,
+    "anchor": "",
+    "caption": "How Karma DOT is formed."
+  },
+  {
+    "id": "quorum-scaling",
+    "number": 2,
+    "anchor": "",
+    "caption": "Quorum size and collusion cost vs network size."
+  }
+]

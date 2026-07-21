@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nown: The Full Construction &middot; companion article</title>
+<link rel="canonical" href="https://nown.to/nown-article.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nown.to/nown-article.html">
+<meta property="og:title" content="Nown · whitepaper">
+<meta property="og:description" content="A peer-to-peer protocol for portable trust between strangers. Public domain (the Unlicense).">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27f%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%270%27%20y2%3D%271%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23c79b50%27%20stop-opacity%3D%27.32%27%2F%3E%3Cstop%20offset%3D%27.8%27%20stop-color%3D%27%23c79b50%27%20stop-opacity%3D%270%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2713%27%20fill%3D%27%231b1a16%27%2F%3E%3Cpath%20d%3D%27M22%2017%20V45%20M22%2029%20C22%2019.5%2042%2019.5%2042%2029%20V45%27%20stroke%3D%27%23c79b50%27%20stroke-width%3D%278.5%27%20fill%3D%27none%27%2F%3E%3Cpath%20d%3D%27M22%2073%20V49.5%20M22%2061%20C22%2070%2042%2070%2042%2061%20V49.5%27%20stroke%3D%27url%28%23f%29%27%20stroke-width%3D%278.5%27%20fill%3D%27none%27%20transform%3D%27translate%280%2C-1.5%29%27%2F%3E%3C%2Fsvg%3E">
+<meta name="description" content="Nown: an ownerless protocol for portable trust between strangers. Karma is a reputation you build by dealing well and carry under a key no one can revoke. Settling a dispute is one use of it, judged by an anonymous quorum drawn at random over an escrow held only by the two traders. No owner, no company. Public domain (the Unlicense).">
+<style>
+/* ============ Nown whitepaper · ink and minted bronze on laid paper ============ */
+:root{
+  --paper:#ece7dd; --paper-2:#f3efe6; --paper-3:#e3ddd0;
+  --ink:#1b1a16; --ink-2:#46423a; --ink-3:#726c60;
+  --rule:#d6cfc1; --rule-2:#c4bcac;
+  --bronze:#825f27; --bronze-2:#9c7635; --bronze-tint:rgba(130,95,39,.10);
+  --sel:rgba(130,95,39,.16);
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,"URW Palladio L","Sitka Text",Charter,Cambria,Georgia,serif;
+  --mono:"SFMono-Regular","SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,"Roboto Mono",Consolas,"Liberation Mono",monospace;
+  --measure:38rem;
+  --dim:var(--ink-3); --mut:var(--ink-2);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14130e; --paper-2:#1c1a13; --paper-3:#100f0b;
+    --ink:#e7e1d1; --ink-2:#b4ad9b; --ink-3:#867f6d;
+    --rule:#2b2820; --rule-2:#3a3427;
+    --bronze:#c79b50; --bronze-2:#dcb96f; --bronze-tint:rgba(199,155,80,.13);
+    --sel:rgba(199,155,80,.20);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#ece7dd; --paper-2:#f3efe6; --paper-3:#e3ddd0;
+  --ink:#1b1a16; --ink-2:#46423a; --ink-3:#726c60;
+  --rule:#d6cfc1; --rule-2:#c4bcac;
+  --bronze:#825f27; --bronze-2:#9c7635; --bronze-tint:rgba(130,95,39,.10); --sel:rgba(130,95,39,.16);
+}
+:root[data-theme="dark"]{
+  --paper:#14130e; --paper-2:#1c1a13; --paper-3:#100f0b;
+  --ink:#e7e1d1; --ink-2:#b4ad9b; --ink-3:#867f6d;
+  --rule:#2b2820; --rule-2:#3a3427;
+  --bronze:#c79b50; --bronze-2:#dcb96f; --bronze-tint:rgba(199,155,80,.13); --sel:rgba(199,155,80,.20);
+}
+
+/* ---- reader typography controls (features ported from the classic reader) ----
+   Driven by data-* attributes + --font-scale on :root, wired by the reader script,
+   persisted to localStorage. Furniture stays mono; only reading type responds. */
+:root{
+  --sans:"Inter","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Roboto,Arial,sans-serif;
+  --font-scale:1;
+}
+:root[data-reader-font="sans"]{ --serif:var(--sans) }
+:root[data-reader-measure="narrow"]{ --measure:32rem }
+:root[data-reader-measure="wide"]{ --measure:46rem }
+:root[data-reader-justify="1"] main p{ text-align:justify; -webkit-hyphens:auto; hyphens:auto }
+
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100% }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:calc(1.19rem * var(--font-scale,1)); line-height:1.62;
+  font-feature-settings:"kern" 1,"liga" 1,"onum" 1; text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{ background:var(--sel) }
+a{ color:var(--bronze); text-decoration:none; text-underline-offset:.14em; text-decoration-thickness:.045em }
+a:hover{ color:var(--bronze-2); text-decoration:underline }
+:focus-visible{ outline:2px solid var(--bronze); outline-offset:3px; border-radius:2px }
+
+#progress{ position:fixed; inset:0 auto auto 0; height:2px; width:0; background:var(--bronze); z-index:60; transition:width .08s linear }
+@media (prefers-reduced-motion: reduce){ #progress{transition:none} }
+.topbar{
+  position:fixed; top:0; left:0; right:0; height:46px; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(14px,3vw,26px);
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter:saturate(1.1) blur(8px); -webkit-backdrop-filter:saturate(1.1) blur(8px);
+  border-bottom:1px solid var(--rule);
+}
+.brand{ display:flex; align-items:center; gap:.55em; font-family:var(--mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2); white-space:nowrap }
+.brand a{ color:var(--ink-2); text-decoration:none }
+.brand a:hover{ color:var(--ink) }
+.brand a.bcur{ color:var(--ink); font-weight:600 }
+.bdot{ opacity:.45 }
+@media (max-width:620px) and (orientation:portrait){
+  .btn .blab{ display:none }
+  .btn{ padding:7px 9px }
+  .brand{ font-size:.64rem; letter-spacing:.08em; gap:.4em }
+}
+.tb-r{ display:flex; align-items:center; gap:6px }
+.btn{
+  font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-2); background:transparent; border:1px solid var(--rule-2); border-radius:999px;
+  padding:6px 11px; cursor:pointer; line-height:1; display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+}
+.btn:hover{ color:var(--ink); border-color:var(--bronze); text-decoration:none }
+.btn svg{ width:13px; height:13px; display:block }
+#tocToggle{ display:none }
+
+.wrap{
+  display:grid; grid-template-columns:minmax(210px,244px) minmax(0,var(--measure));
+  justify-content:center; gap:0; padding:46px 0 0;
+}
+.toc{
+  position:sticky; top:46px; align-self:start; height:calc(100vh - 46px);
+  padding:44px 26px 40px 22px; overflow-y:auto;
+  border-right:1px solid var(--rule);
+  box-shadow:inset -13px 0 16px -15px color-mix(in srgb, var(--dim) 45%, transparent);
+  scrollbar-gutter:stable; scrollbar-width:thin; scrollbar-color:transparent transparent;
+}
+.toc:hover,.toc:focus-within{ scrollbar-color:color-mix(in srgb, var(--dim) 60%, transparent) transparent }
+.toc::-webkit-scrollbar{ width:12px; background:transparent }
+.toc::-webkit-scrollbar-track,.toc::-webkit-scrollbar-corner{ background:transparent; border:0 }
+.toc::-webkit-scrollbar-button{ width:0; height:0; display:none }
+.toc::-webkit-scrollbar-thumb{ background-color:transparent; background-clip:padding-box; border:3px solid transparent; border-radius:999px; min-height:40px }
+.toc:hover::-webkit-scrollbar-thumb,.toc:focus-within::-webkit-scrollbar-thumb{ background-color:color-mix(in srgb, var(--dim) 60%, transparent) }
+@media (hover:none){ .toc{ scrollbar-width:auto; scrollbar-color:auto } .toc::-webkit-scrollbar{ width:0 } }
+
+.toc .lbl{ font-family:var(--mono); font-size:.62rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-3); margin:0 0 14px }
+.toc ol{ list-style:none; margin:0; padding:0 }
+.toc li{ margin:0 }
+.toc a{
+  display:flex; gap:9px; align-items:baseline;
+  font-family:var(--serif); font-size:.86rem; line-height:1.32; color:var(--ink-2);
+  padding:4.5px 8px 4.5px 10px; border-left:2px solid transparent; border-radius:0 3px 3px 0;
+}
+.toc a .n{ font-family:var(--mono); font-size:.66rem; color:var(--ink-3); min-width:1.5em; text-align:right; flex:none; padding-top:.12em }
+.toc a:hover{ color:var(--ink); background:var(--bronze-tint); text-decoration:none }
+.toc a.active{ color:var(--ink); border-left-color:var(--bronze) }
+.toc a.active .n{ color:var(--bronze) }
+.toc .sep{ height:1px; background:var(--rule); margin:12px 8px }
+
+main{ padding:0 clamp(18px,4vw,58px) 8rem; min-width:0 }
+section{ scroll-margin-top:70px }
+p{ margin:0 0 1.05em; hanging-punctuation:first }
+main :is(p,li){ max-width:var(--measure) }
+strong{ font-weight:640 }
+em{ font-style:italic }
+
+.title{ padding:clamp(3rem,9vh,6rem) 0 2.4rem; border-bottom:1px solid var(--rule) }
+.eyebrow{ font-family:var(--mono); font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--bronze); margin:0 0 1.3rem }
+h1.name{
+  font-family:var(--serif); font-weight:600; font-size:clamp(3.4rem,11vw,6.2rem);
+  line-height:.94; letter-spacing:-.015em; margin:0; text-wrap:balance;
+}
+.subtitle{ font-family:var(--serif); font-size:clamp(1.15rem,3vw,1.5rem); color:var(--ink-2); margin:.7rem 0 0; font-style:italic; text-wrap:balance }
+.thesis{
+  font-family:var(--serif); font-size:clamp(1.35rem,3.4vw,1.9rem); line-height:1.32;
+  margin:2.2rem 0 0; max-width:33rem; text-wrap:balance; color:var(--ink);
+}
+.thesis b{ font-weight:600; color:var(--bronze); font-style:normal }
+.meta{ display:flex; flex-wrap:wrap; gap:.5rem 1.1rem; margin:2.3rem 0 0; font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink-3); text-transform:uppercase }
+.meta .dot{ color:var(--bronze) }
+.colophon{ display:flex; align-items:center; gap:16px; margin:2.1rem 0 0 }
+.colophon .mark{ flex:none }
+.colophon .cx{ font-family:var(--mono); font-size:.7rem; line-height:1.6; color:var(--ink-3); letter-spacing:.04em }
+.colophon .cx b{ color:var(--ink-2); letter-spacing:.18em; text-transform:uppercase; font-weight:600 }
+
+h2.sec{ display:flex; align-items:baseline; gap:.7em; font-family:var(--serif); font-weight:600; font-size:clamp(1.5rem,3.6vw,2.05rem); line-height:1.14; letter-spacing:-.01em; margin:3.4rem 0 1.1rem; text-wrap:balance }
+h2.sec .num{ font-family:var(--mono); font-size:.8rem; font-weight:500; color:var(--bronze); letter-spacing:.02em; flex:none; padding-top:.15em; min-width:2ch }
+
+.abstract{ margin:2.6rem 0 0 }
+.abstract .lbl{ font-family:var(--mono); font-size:.68rem; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-3); margin:0 0 .9rem }
+.abstract p{ font-size:calc(1.06rem * var(--font-scale,1)); line-height:1.6; color:var(--ink-2); max-width:var(--measure) }
+
+blockquote.epigraph{ margin:1.6rem 0; padding:.2rem 0 .2rem 1.4rem; border-left:3px solid var(--bronze); color:var(--ink-2); font-style:italic; max-width:var(--measure) }
+blockquote.epigraph p{ margin:0 }
+
+.term{ border-bottom:1px dotted var(--bronze); cursor:help; color:inherit; position:relative }
+.term:focus-visible{ outline:2px solid var(--bronze); outline-offset:2px }
+.term::after{
+  content:attr(data-def); position:absolute; left:50%; bottom:calc(100% + 10px); transform:translateX(-50%) translateY(4px);
+  width:max-content; max-width:280px; background:var(--paper-2); color:var(--ink-2);
+  border:1px solid var(--rule-2); border-radius:7px; padding:9px 12px;
+  font-family:var(--serif); font-style:normal; font-size:.82rem; line-height:1.42; letter-spacing:0;
+  box-shadow:0 8px 30px -12px rgba(0,0,0,.35); opacity:0; visibility:hidden; transition:opacity .16s ease, transform .16s ease;
+  z-index:40; pointer-events:none; text-align:left; hyphens:none;
+}
+.term::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 4px); transform:translateX(-50%); border:6px solid transparent; border-top-color:var(--rule-2); opacity:0; visibility:hidden; transition:opacity .16s ease; z-index:41 }
+.term:hover::after,.term:focus-visible::after{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0) }
+.term:hover::before,.term:focus-visible::before{ opacity:1; visibility:visible }
+@media (prefers-reduced-motion: reduce){ .term::after{transition:none} }
+
+.keystone{
+  margin:2rem 0; padding:1.3rem 1.5rem; background:var(--paper-2);
+  border:1px solid var(--rule); border-left:3px solid var(--bronze); border-radius:0 8px 8px 0;
+}
+.keystone .lbl{ font-family:var(--mono); font-size:.64rem; letter-spacing:.24em; text-transform:uppercase; color:var(--bronze); margin:0 0 .55rem }
+.keystone p{ margin:0; font-size:calc(1.02rem * var(--font-scale,1)); line-height:1.55; color:var(--ink-2) }
+
+figure{ margin:2.2rem 0; padding:0 }
+figure svg{ display:block; width:100%; height:auto; max-width:100% }
+figcaption{ font-family:var(--mono); font-size:.68rem; letter-spacing:.04em; color:var(--ink-3); margin-top:.85rem; text-align:center; line-height:1.5 }
+.fig-frame{ border:1px solid var(--rule); border-radius:10px; padding:1.6rem 1.4rem 1.2rem; background:var(--paper-2); overflow-x:auto }
+
+.refs h2{ margin-bottom:1.4rem }
+.reflist{ display:grid; gap:1.1rem }
+.refrow{ display:grid; gap:.2rem }
+.refrow .theme{ font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--bronze) }
+.refrow .src{ font-size:calc(.92rem * var(--font-scale,1)); line-height:1.5; color:var(--ink-2) }
+
+footer{ border-top:1px solid var(--rule); margin-top:4rem; padding:2.4rem clamp(18px,4vw,58px) 4rem }
+footer .line{ font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--ink-3); line-height:1.9 }
+footer .sig{ font-family:var(--mono); font-size:.68rem; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-2); margin-top:1.2rem }
+
+@media (max-width: 940px) and (orientation:portrait){
+  #tocToggle{ display:inline-flex }
+  .wrap{ grid-template-columns:minmax(0,var(--measure)); justify-content:center; padding-top:46px }
+  .toc{
+    position:fixed; top:46px; left:0; right:0; height:auto; max-height:70vh; z-index:45;
+    padding:20px clamp(16px,5vw,30px) 26px; background:var(--paper);
+    border-right:0; border-bottom:1px solid var(--rule); box-shadow:0 20px 40px -24px rgba(0,0,0,.4);
+    transform:translateY(-8px); opacity:0; visibility:hidden; transition:opacity .2s ease, transform .2s ease;
+  }
+  .toc.open{ opacity:1; visibility:visible; transform:none }
+  @media (prefers-reduced-motion: reduce){ .toc{transition:none} }
+  main{ padding-left:clamp(16px,5vw,30px); padding-right:clamp(16px,5vw,30px) }
+}
+@media (max-width: 520px) and (orientation:portrait){
+  body{ font-size:calc(1.1rem * var(--font-scale,1)) }
+  :root,:root[data-reader-measure]{ --measure:100% }
+  h1.name{ font-size:3.1rem }
+  .meta{ font-size:.66rem }
+}
+
+/* ---- Aa reading-settings popover (Nown-styled, opened from the topbar) ---- */
+#rdPop{
+  position:fixed; top:52px; right:clamp(14px,3vw,26px); z-index:55;
+  width:min(300px, calc(100vw - 24px));
+  background:var(--paper-2); border:1px solid var(--rule-2); border-radius:12px;
+  padding:14px 15px 15px;
+  box-shadow:0 18px 48px -18px color-mix(in srgb, var(--ink) 55%, transparent);
+}
+#rdPop[hidden]{ display:none }
+.rdrow{ display:flex; align-items:center; gap:10px; margin:0 0 11px }
+.rdrow:last-child{ margin-bottom:0 }
+.rdlbl{ flex:none; width:3.6rem; font-family:var(--mono); font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; color:var(--ink-3) }
+.rdgrp{ display:flex; gap:5px; flex-wrap:wrap; flex:1 }
+.rdb{
+  font-family:var(--mono); font-size:.64rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-2); background:var(--paper); border:1px solid var(--rule-2); border-radius:7px;
+  padding:6px 9px; cursor:pointer; line-height:1; min-width:34px; text-align:center;
+}
+.rdb:hover{ color:var(--ink); border-color:var(--bronze) }
+.rdb.on{ color:var(--bronze); border-color:var(--bronze); font-weight:600 }
+.rdb:focus-visible{ outline:2px solid var(--bronze); outline-offset:2px }
+#rdSize{ min-width:3.4em; font-variant-numeric:tabular-nums }
+
+@media print{
+  :root{ --paper:#fff; --paper-2:#fff; --ink:#111; --ink-2:#333; --ink-3:#555; --rule:#ccc; --bronze:#6a4a1c }
+  .topbar,#progress,.toc,#tocToggle,#rdPop{ display:none !important }
+  .wrap{ display:block; padding:0 }
+  main{ padding:0; max-width:none }
+  body{ font-size:11pt; line-height:1.4 }
+  h2.sec{ break-after:avoid }
+  figure,.keystone,blockquote{ break-inside:avoid }
+  a{ color:inherit }
+  .title{ padding-top:0 }
+}
+.math{ font-family:var(--mono); text-align:center; font-size:1rem; color:var(--ink); margin:1.1rem auto; letter-spacing:.02em }
+.subsec{ font-family:var(--serif); font-weight:600; font-size:1.16rem; color:var(--ink); margin:2.1rem 0 .3rem; letter-spacing:-.01em }
+.wpfig{ margin:2rem 0; }
+.wpfig .fig-frame svg{ display:block; width:100%; height:auto; max-width:560px; margin:0 auto }
+</style>
+<style>
+/* preview figures: remap hardcoded inks to theme tokens */
+.fig-frame svg [fill="#1b1a16"]{ fill:var(--ink) }   .fig-frame svg [stroke="#1b1a16"]{ stroke:var(--ink) }
+.fig-frame svg [fill="#726c60"]{ fill:var(--ink-3) } .fig-frame svg [stroke="#726c60"]{ stroke:var(--ink-3) }
+.fig-frame svg [fill="#825f27"]{ fill:var(--bronze) }.fig-frame svg [stroke="#825f27"]{ stroke:var(--bronze) }
+.fnw{position:relative}.fnw.on .fna{background:var(--sel,rgba(130,95,39,.20));border-radius:.14em;box-shadow:0 0 0 .1em var(--sel,rgba(130,95,39,.20))}.fn{line-height:0;white-space:nowrap}.fn .fnr{font:600 .62em var(--mono,monospace);color:var(--bronze,#9c7635);background:none;border:none;cursor:pointer;padding:0 .14em;vertical-align:super}.fn .fnr:hover,.fn .fnr:focus-visible{text-decoration:underline;outline:none}.fnpop{display:none}.fnpop.on{display:block;position:fixed;left:50%;bottom:1.1rem;transform:translateX(-50%);z-index:200;width:min(34rem,92vw);max-height:46vh;overflow-y:auto;font:400 .9rem/1.6 var(--serif,Georgia,serif);text-align:left;letter-spacing:0;color:var(--ink);background:var(--paper-2,#f3efe6);border:1px solid var(--rule,#d6cfc1);border-radius:.7rem;padding:.9rem 1.05rem 1rem;box-shadow:0 16px 48px rgba(0,0,0,.32)}
+.wpfig{ margin:2rem 0 }
+.wpfig .fig-frame svg{ display:block; width:100%; height:auto; max-width:560px; margin:0 auto }
+
+/* --- embedded simulations --- */
+
+#simulations .math{ display:none }
+</style>
+</head>
+<body>
+<div id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <nav class="brand">
+    <a href="/">NOWN</a><span class="bdot">·</span><a href="nown-whitepaper.html">Whitepaper</a><span class="bdot">·</span><a href="nown-article.html" class="bcur" aria-current="page">Article</a><span class="bdot">·</span><a href="https://github.com/nownto/nown" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </nav>
+  <div class="tb-r">
+    <button class="btn" id="tocToggle" aria-expanded="false" aria-controls="toc" title="Contents">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <span class="blab">Contents</span>
+    </button>
+    <button class="btn" id="rdMenu" aria-haspopup="true" aria-expanded="false" aria-controls="rdPop" title="Reading settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2.3"/><circle cx="8" cy="17" r="2.3"/></svg>
+      <span class="blab">Aa</span>
+    </button>
+    <button class="btn" id="printBtn" type="button" title="Print this article" aria-label="Print this article">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
+      <span class="blab">Print</span>
+    </button>
+    <button class="btn" id="themeBtn" aria-label="Toggle color theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <span class="blab" id="themeLbl">Dark</span>
+    </button>
+  </div>
+</header>
+
+<div id="rdPop" hidden role="group" aria-label="Reading settings">
+  <div class="rdrow">
+    <span class="rdlbl">Size</span>
+    <div class="rdgrp">
+      <button class="rdb" id="rdMinus" type="button" aria-label="Smaller text">A&minus;</button>
+      <button class="rdb" id="rdSize" type="button" aria-label="Reset text size" title="Reset text size">100%</button>
+      <button class="rdb" id="rdPlus" type="button" aria-label="Larger text">A+</button>
+    </div>
+  </div>
+  <div class="rdrow">
+    <span class="rdlbl">Width</span>
+    <div class="rdgrp" id="rdWidth">
+      <button class="rdb" type="button" data-rd-measure="narrow" aria-label="Narrow column">Narrow</button>
+      <button class="rdb" type="button" data-rd-measure="default" aria-label="Default column">Default</button>
+      <button class="rdb" type="button" data-rd-measure="wide" aria-label="Wide column">Wide</button>
+    </div>
+  </div>
+  <div class="rdrow">
+    <span class="rdlbl">Font</span>
+    <div class="rdgrp" id="rdFont">
+      <button class="rdb" type="button" data-rd-font="serif" aria-label="Serif reading font">Serif</button>
+      <button class="rdb" type="button" data-rd-font="sans" aria-label="Sans-serif reading font">Sans</button>
+    </div>
+  </div>
+  <div class="rdrow">
+    <span class="rdlbl">Align</span>
+    <div class="rdgrp" id="rdJustify">
+      <button class="rdb" type="button" data-rd-justify="0" aria-label="Ragged right">Ragged</button>
+      <button class="rdb" type="button" data-rd-justify="1" aria-label="Justified">Justified</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <nav class="toc" id="toc" aria-label="Table of contents">
+    <p class="lbl">Contents</p>
+    <ol>
+      <li><a href="#abstract"><span class="n">&middot;</span> Abstract</a></li>
+      <li class="sepli"><span class="sep"></span></li>
+      <li><a href="#s1"><span class="n">1</span> The keeper is the flaw</a></li>
+      <li><a href="#s2"><span class="n">2</span> The key and the record</a></li>
+      <li><a href="#s3"><span class="n">3</span> Karma density</a></li>
+      <li><a href="#s4"><span class="n">4</span> How karma flows</a></li>
+      <li><a href="#s5"><span class="n">5</span> What counts as true</a></li>
+      <li><a href="#s6"><span class="n">6</span> The oracle</a></li>
+      <li><a href="#s7"><span class="n">7</span> The quorum</a></li>
+      <li><a href="#s8"><span class="n">8</span> The record and the clock</a></li>
+      <li><a href="#s9"><span class="n">9</span> Where the record lives</a></li>
+      <li><a href="#s10"><span class="n">10</span> A key is property</a></li>
+      <li><a href="#s11"><span class="n">11</span> Proving without showing</a></li>
+      <li><a href="#s12"><span class="n">12</span> One record, many readings</a></li>
+      <li><a href="#s13"><span class="n">13</span> What it is for</a></li>
+      <li><a href="#s14"><span class="n">14</span> The killer app: reading people by their record</a></li>
+      <li><a href="#s15"><span class="n">15</span> Clustering is not cheating</a></li>
+      <li><a href="#s16"><span class="n">16</span> Seals and ownership</a></li>
+      <li><a href="#s17"><span class="n">17</span> Open problems</a></li>
+      <li><a href="#s18"><span class="n">18</span> The end of the keeper</a></li>
+      <li class="sepli"><span class="sep"></span></li>
+      <li><a href="#refs"><span class="n">&middot;</span> References</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <section class="title" id="top">
+      <p class="eyebrow">Companion article &middot; full construction</p>
+      <h1 class="name">Nown</h1>
+      <p class="subtitle">The full construction</p>
+      <p class="thesis">The construction the short paper states in brief, built here <b>in full</b>.</p>
+      <div class="meta"><span>v0.1</span><span class="dot">&middot;</span><span>companion to the whitepaper</span><span class="dot">&middot;</span><span>Public domain &middot; the Unlicense</span></div>
+      <p style="margin-top:1.4rem"><a href="nown-whitepaper.html">Read the short whitepaper first &rsaquo;</a></p>
+    </section>
+
+    <section class="abstract" id="abstract">
+      <p class="lbl">Abstract</p>
+      <p>Nown is a protocol for trust between strangers with no trusted third party. A person acts under a keypair, and the public record of how that key has dealt becomes his standing, which anyone can read and no one can revoke. That standing is karma: a density of good dealing over time, held under a key that is his to keep or sell, flowing to him from the keys that stake their own standing to deal with him, confirmed by an oracle. A dispute settled by a drawn panel of strangers is one use. A worker hired on his record, a student vouched for by his teacher, and a certificate notarized without a notary are others. The parts that are not solved are named, each with a place to work on it.</p>
+    </section>
+
+    <section id="s1">
+      <h2 class="sec"><span class="num">&sect;1</span> The keeper is the flaw</h2>
+      <p>Two strangers cannot deal until each believes the other will keep his word. For as long as there has been trade, a third party has supplied that belief: a guild, a court, a bank, a platform. Each can be bribed, coerced, shut down, or quietly corrupted. Each owns the reputation it keeps, so your standing lives on its servers, under its rules, and dies when it does. The stranger you want to deal with is trusting the keeper, not you.</p>
+      <p>Remove the keeper and the trust has to come from somewhere else. It comes from the record of what you have done, kept by everyone and owned by no one, and from the standing that other people put at risk when they choose to deal with you. Nown is the construction that makes those two things carry the weight the keeper used to carry.</p>
+    </section>
+
+    <section id="s2">
+      <h2 class="sec"><span class="num">&sect;2</span> The key and the record</h2>
+      <p>A person acts under a <span class="fnw"><span class="fna">key.</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 1">1</button></sup><span class="fnpop" role="note">A keypair: two matched numbers. The private one is a secret only its holder knows, used to sign; the public one is shared and lets anyone check those signatures. Holding the private key is owning everything the key carries, its history and its standing.</span></span> The private half he holds and never shows. The public half is the name everyone sees. Whoever holds the private half is the person, as far as the protocol can tell, and no registrar stands between a man and the key he made. A key carries no legal name unless he attaches one, and he may hold as many keys as he likes, each with its own standing and its own history, each blind to the others.</p>
+      <p>Holding many keys buys less than it seems. Each starts from nothing and must build its own standing from its own dealings, so a crowd of keys is a crowd of separate lives to live, not a shortcut to a larger one. Most people will want a few: a public key, a private one, perhaps a working key for business and a quiet one for what they would rather not tie to their name, and past those the use of another falls away fast. A double life is allowed and, as in the flesh, costly to keep, which is the honest arrangement rather than a fault to correct. One thing falls out of it for nothing: since a real history is dear to build, keys spun up to fake or to flood stand out against a graph of genuine human dealing, and any app can strain them out without the protocol banning a soul.</p>
+      <p>A fresh key is worth nothing. It holds no standing, exactly like a bitcoin address that has never been used: it exists, but there is nothing to see and no reason for anyone to look. A key is meant to be kept and used. Throw one away after each dealing and you build nothing a counterparty can weigh; keep one and it gathers a history, and the history is the only thing that makes a key worth reading. Two empty keys cannot even be told apart, so a browser that reads the record lists only keys that have done something. Until a key deals, it is invisible.</p>
+      <p>Every key&rsquo;s history sits on one public record that only grows. A dealing closed, a dispute lost, a mark of standing gained: each is written once and never unwritten. Nothing is edited, nothing is deleted, nothing is hidden. The record is the ground the protocol stands on, and making it tamper-proof without a company to guarantee it is the hardest problem Nown has. Its answer is the timechain.</p>
+    </section>
+
+    <section id="s3">
+      <h2 class="sec"><span class="num">&sect;3</span> Karma density</h2>
+      <p><span class="fnw"><span class="fna">Karma</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 2">2</button></sup><span class="fnpop" role="note">A person&rsquo;s standing, computed by anyone from the public record of how his key has dealt. The word is borrowed from the idea that a person&rsquo;s actions accumulate into what he is. It is not a number the key holds; each reader derives the same figure from the record.</span></span> is the standing a reader computes from a key&rsquo;s record. No balance of karma sits anywhere, on the key or in the network, waiting to be spent. There is only the record of what a key did, and a figure each reader derives from it under rules everyone shares, so two readers running the same rules reach the same number. Karma is not held. It is read, recomputed from the record by whoever cares to look.</p>
+      <p>Seniority by itself counts for nothing. A key ten years old that has done little is worth less than a key a month old that has dealt well and often, because trust follows conduct, not age. The years are not thrown away, though. They are the span the density is measured across. A dull fifty-year-old and a sharp twenty-year-old have both lived every one of their years; what parts them is what they did with them. Karma reads a key the same way, weighing not how long it has existed but how much good dealing it packed into the time it has.</p>
+      <p>So karma is a density. Each event is a signed weight, positive for a success, negative for a failure, scaled by the stake behind it. Karma is the sum of those weights over a trailing window, with older events fading as the window moves on. Leave a key idle and its karma thins toward zero, with no bad mark against it, because the window keeps moving while the conduct does not.</p>
+      <p>Two things follow, and they are the whole point of measuring density instead of a total. Climbing is quick: deal well and often and fresh weight piles up faster than the old weight fades. Holding is slow: to keep a high figure you must keep dealing, replacing what the window drops, the way a business keeps its position only by continuing to serve. A key that has held a high density across many years has shown the one thing money cannot buy in a hurry, which is that it lasts.</p>
+      <p>The figure a reader wants has a plain shape. Take the whole span a key has been alive, from its first mark on the record to now, and average its karma across that span. That average is <b>Karma DOT</b><span class="fnw"><span class="fna">,</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 3">3</button></sup><span class="fnpop" role="note">Delta over time: karma read as a rate, the change in standing across a span of blocks, rather than a lifetime total. Recent, sustained conduct counts for more than an old and idle history.</span></span> delta over time: the area under a key&rsquo;s karma curve, divided by the time it has been alive.</p>
+      <figure class="wpfig">
+        <div class="fig-frame"><svg viewBox="0 0 680 384" role="img" aria-label="How Karma DOT is formed: the average of a key's karma over its whole life." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .axis{ stroke:var(--ink-3,#726c60); stroke-width:1.3 }
+    .grid{ stroke:var(--rule,#d6cfc1); stroke-width:1 }
+    .kA{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.6 }
+    .kAfill{ fill:var(--bronze,#9c7635); opacity:.10 }
+    .kB{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:2.2; stroke-dasharray:2 4 }
+    .mean{ stroke-width:1.4; stroke-dasharray:6 5; fill:none }
+    .mA{ stroke:var(--bronze,#9c7635) }
+    .mB{ stroke:var(--ink-3,#726c60) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:14px; fill:var(--ink-2,#46423a) }
+    .lblq{ font-family:var(--serif,Georgia,serif); font-size:13px; fill:var(--ink-3,#726c60) }
+    .lblk{ font-family:var(--serif,Georgia,serif); font-size:13.5px; font-style:italic }
+    .dot{ fill:var(--ink,#1b1a16) }
+    .form{ font-family:var(--mono,monospace); font-size:12.5px; fill:var(--ink-2,#46423a) }
+  </style>
+
+  <!-- formula -->
+  <text x="70" y="34" class="form">Karma DOT  =  area under the curve  ÷  time alive</text>
+
+  <!-- axes -->
+  <line class="axis" x1="70" y1="60" x2="70" y2="300"/>
+  <line class="axis" x1="70" y1="300" x2="628" y2="300"/>
+  <polygon class="dot" points="70,52 66,62 74,62"/>
+  <polygon class="dot" points="636,300 626,296 626,304"/>
+  <text x="40" y="184" class="lblq" transform="rotate(-90 40 184)" text-anchor="middle">karma</text>
+  <text x="350" y="356" class="lblq" text-anchor="middle">time a key has been alive &#8594;</text>
+
+  <!-- area under the steady curve -->
+  <path class="kAfill" d="M70,300 C110,150 150,120 200,118 C320,114 460,120 620,110 L620,300 Z"/>
+
+  <!-- key A: steady dealer (solid bronze) -->
+  <path class="kA" d="M70,300 C110,150 150,120 200,118 C320,114 460,120 620,110"/>
+  <!-- key B: idle for years, then deals (dashed) -->
+  <path class="kB" d="M70,300 L332,296 L372,152 C444,120 528,114 620,110"/>
+
+  <!-- shared endpoint -->
+  <circle class="dot" cx="620" cy="110" r="3.6"/>
+  <text x="612" y="98" class="lblq" text-anchor="end">same karma today</text>
+
+  <!-- mean (DOT) lines -->
+  <line class="mean mA" x1="70" y1="138" x2="620" y2="138"/>
+  <text x="150" y="132" class="lblk" fill="var(--bronze,#9c7635)">DOT of the steady dealer</text>
+
+  <line class="mean mB" x1="70" y1="214" x2="620" y2="214"/>
+  <text x="150" y="230" class="lblk" fill="var(--ink-3,#726c60)">DOT of the late starter</text>
+
+  <!-- key labels -->
+  <text x="250" y="112" class="lbl" fill="var(--bronze,#9c7635)">steady</text>
+  <text x="200" y="288" class="lblq">idle</text>
+</svg></div>
+        <figcaption>Karma DOT is the average height of a key&rsquo;s karma over its whole life. Two keys can reach the same karma today and still be worth very different amounts. The steady dealer built its standing early and held it, so its average runs high. The late starter sat idle for years, and that dead span averages in and drags its figure down, no matter how well it deals now.</figcaption>
+      </figure>
+      <p>Read this way, two keys with the very same karma today can be worth quite different amounts. A key that built its standing early and held it has a curve that runs high across its whole life, so its average is high. A key that sat idle for years and only lately began has that dead stretch flat on the floor of its average, and no burst of recent dealing lifts it back.</p>
+      <p>Idle time does not merely fail to help; it bleeds. Because the average divides the area under the curve by the whole time a key has been alive, every block a key sits idle is a block of nothing added to the denominator, so its DOT falls the longer it waits. There is no banking a key. Generating one early and holding it in reserve buys no seniority and, the moment it is on the record, quietly costs DOT for every idle block, which is the exact reverse of what a reputation should do. The only road to a high DOT is to keep dealing well across the time you have, and the clock that time is counted on is the timechain.</p>
+    </section>
+
+    <section id="s4">
+      <h2 class="sec"><span class="num">&sect;4</span> How karma flows</h2>
+      <p>Karma is minted by dealing, never handed out at birth. A fresh key holds nothing, and it stays at nothing until it deals. It carries no seniority to trade on and no standing to spend, so a thousand fresh keys are a thousand separate climbs from zero, which is exactly why minting keys by the thousand buys a faker nothing.</p>
+      <p>Karma comes into being when two keys deal and the dealing succeeds. To deal, a key stakes a measure of its own standing on the outcome, and a good outcome mints new standing for both, bounded by the standing staked. What the mint reads is standing, never the worth of the trade, because the worth of a trade cannot be read: the same exchange is precious to one man and trifling to another, and no number the protocol could see would rank one dealing above another. So Nown mints in the one currency it can measure, standing itself, and a dealing between two proven keys lifts both, while a dealing between a proven key and an unknown lifts the unknown more, because the proven key put more of itself at risk. The network&rsquo;s karma grows with the honest dealing done in it, never locked to whoever arrived first. What no key can do is mint standing alone: two keys with nothing, dealing only with each other, stake nothing and mint almost nothing. How the very first standing enters a network where everyone begins at zero, when the worth of a dealing cannot be measured to seed it, is the hardest of the open problems.</p>
+      <p>A key that deals with you puts its standing behind the outcome. A proven key dealing with you says more than an unknown, because the proven key had more to lose, and a good dealing between two strong keys lifts both, while a good dealing between a strong key and a weak one lifts the weak one more.</p>
+      <p>Failure runs the other way. The key that broke the dealing takes a mark that never leaves its record. The key that vouched by dealing loses the standing it staked, because it trusted someone who failed. That second loss is the discipline of the whole system. A high-standing key that deals carelessly bleeds its standing into the failures it backed, so it learns to deal only where it believes the other side will perform. Its willingness to deal with you is worth something precisely because it is not given away.</p>
+      <p>This is why an assertion moves nothing. A key that merely says another is trustworthy has staked nothing and risked nothing, and standing a key can hand out for free is standing a ring can hand itself. Karma is earned only when a real dealing, with something at stake, comes out right.</p>
+    </section>
+
+    <section id="s5">
+      <h2 class="sec"><span class="num">&sect;5</span> What counts as true</h2>
+      <p>A dealing is any exchange two keys put something behind: a trade, a job, a contract, a document to certify, a course taught. Whether it went well, whether a party dealt fairly or lied, is not something Nown can see from the outside, and it does not try to. Nown makes no claim about the truth of the world. It produces a verdict, through the oracle a context chose, and that verdict is the only truth it records.</p>
+      <p>This is a narrower thing than justice, and stronger for being narrow. The parties may play a deal however they like, with charm or cunning or hard bargaining or any means each thinks will serve him. Nown passes no judgment on how a man plays, because his reasons are his own and appointing someone to weigh them is not a thing worth building. A deal one side rigged can still come out true in the eyes of the counterparty who accepted it, or of a quorum that read the evidence and ruled, and if it does, then for Nown it is true, because the oracle said so and no higher court sits above it.</p>
+      <p>What Nown does instead is make losing cost you. A lost dealing writes a mark that never leaves your record, moves the money you staked to the other side, and burns the standing anyone put behind you. The game is worth playing straight not because Nown forbids the alternative but because the verdict is real and the loss is permanent. Make losing expensive enough, and honest dealing becomes the paying move on its own, with no one set over the players to judge their hearts.</p>
+    </section>
+
+    <section id="s6">
+      <h2 class="sec"><span class="num">&sect;6</span> The oracle</h2>
+      <p>The <span class="fnw"><span class="fna">oracle</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 4">4</button></sup><span class="fnpop" role="note">An oracle is an agreed source that reports whether something is true, feeding a fact the system cannot check for itself into a decision, the way an oracle in antiquity was consulted for an answer taken as final. In Nown the parties, a quorum, or a reading of karma can each serve as one.</span></span> that renders the verdict is one of three kinds, and which one serves is the context&rsquo;s to choose.</p>
+      <p>The parties can attest. Both sign that the dealing closed as agreed, and silence once the agreed time has run out reads as success. Most dealings end here, cheaply, with no one else ever looking. An honest trade that goes right needs no judge.</p>
+      <p>A <span class="fnw"><span class="fna">quorum</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 5">5</button></sup><span class="fnpop" role="note">A quorum is the number of members who must take part for a body&rsquo;s decision to count, and by extension the panel itself. In Nown it is the group of strangers drawn to settle one case by majority.</span></span> can judge. This is the answer when one party disputes the outcome, or when a context needs a fact certified that the parties cannot settle between themselves.</p>
+      <p>Karma can be its own oracle. A context reads standing directly and lets the outcome follow. An employer sets the karma a role demands, and the keys that clear the bar are the ones he considers. A gate opens when a key passes a threshold. No panel is called; the reading settles the matter, and the dealing resolves the instant it is done.</p>
+      <p>A context could also borrow an oracle it already trusts, but not on the main network. It might lean on an outside authority, a court, a registry, an exchange, and have Nown record what that authority ruled. The convenience is real, and so is the cost: a corruptible party in the loop dilutes the trust the main record exists to keep clean. So a use that needs a trusted or changeable oracle does not run on the main net. It runs as a fork, a separate Nown with its own rules and its own web of trust, worth spinning up when enough people need it. The main record admits only oracles no one owns: the parties, a drawn quorum, or a reading of karma. That a fork can wrap an old bureaucracy and give its rulings a portable, permanent home is how Nown reaches a world that has not adopted it, without letting that world&rsquo;s weaknesses back into the core.</p>
+    </section>
+
+    <section id="s7">
+      <h2 class="sec"><span class="num">&sect;7</span> The quorum</h2>
+      <p>When a dispute needs a stranger to settle it, Nown draws a panel and asks it a plain question. The design is simple on purpose, and every part of it exists to keep the panel honest without an authority standing over it.</p>
+      <p>The panel is drawn at random from keys of high standing, several steps removed on the record from both parties, so no one who has dealt with either can sit. It is drawn for the one case and dissolves when the case ends. Its members are pseudonymous to the parties, to each other, and to anyone relaying the traffic. No one can find the panel to bribe it, and no one can pack it, because no one chooses it.</p>
+      <p>Each <span class="fnw"><span class="fna">steward</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 6">6</button></sup><span class="fnpop" role="note">A steward is someone who holds a duty in trust for others and answers for it without owning it. In Nown, a steward is one of the strangers drawn onto a quorum to judge a case.</span></span> reads the same evidence and answers one question in private: which party does the evidence favor. The answer that carries is the one most of them give. That is the whole rule. The quorum does not find the truth and does not pretend to. It is a guessing game whose focal point is the evidence: each steward is really answering what he believes most other honest readers of the same evidence will conclude, and on clear evidence that is simply what the evidence shows. Strangers drawn apart, who cannot coordinate, converge on the reading the evidence best supports, because that is the only answer each can expect the others to reach.</p>
+      <p>The votes are secret, and only the count is ever published. No one can show afterward how a given steward voted. A vote that could be proven is a vote that can be bought or punished, so the protocol makes each ballot unprovable and leaves a briber with nothing to verify and a thug with no one to blame. What the panel reveals is a number, never a name.</p>
+      <p>A steward earns for answering with the majority, enough to cover the cost of reading the evidence with care. The reward asks no knowledge of the truth, only the public count: match the crowd and you are paid. There is no cleverer scoring than that, and none is wanted.</p>
+      <p>What stops a briber is not a detector but a price. To swing a verdict he must reach a majority of a panel he cannot find, drawn at random from a large pool, and the larger the network the larger and more scattered the panel he would have to buy. Collusion is not caught after the fact; it is priced out of reach, and the price rises as the network grows.</p>
+      <p>The case cannot hang forever, because a ruling that could be stalled would be worth money to stall. A deadline runs from the moment the case opens. If too few stewards answer in time, the panel does not fail, it grows, drawing more stewards, which both replaces the silent and makes the panel harder still to have captured. How large it may grow scales with the network, so a bigger Nown fields bigger, harder-to-buy panels; only if a much-enlarged panel still cannot reach a count do the stakes return to the parties along terms they signed before the dealing began. When the panel does rule, the ruling is written like any other outcome: the money the two of them set aside moves to the party upheld, and a karma event is written for each, a success for the one and a failure for the other, flowing standing exactly as a settled dealing does.</p>
+      <p>No appeal follows, and no later panel reopens the record. Finality is the value. A judgment that could be revisited is a judgment no one can rely on, and the point of the quorum is to end the matter.</p>
+    </section>
+
+    <section id="s8">
+      <h2 class="sec"><span class="num">&sect;8</span> The record and the clock</h2>
+      <p>Karma is a density over time, so the record needs two things it cannot fake: an order that cannot be rewritten, and a clock that reads the same for everyone. A company could provide both and would then own both. Nown cannot use a company, so it borrows from the one system that already solved this without an owner.</p>
+      <p>The <span class="fnw"><span class="fna">timechain,</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 7">7</button></sup><span class="fnpop" role="note">The timechain is bitcoin&rsquo;s public ledger: a chain of blocks, each built on the one before and ordered by proof of work, which cannot be rewritten without redoing all the work since. Nown uses it as a record no one owns and a clock that ticks the same for everyone.</span></span> bitcoin&rsquo;s public ledger of blocks, is a record no one can rewrite: each block builds on the last, ordered by proof of work, and undoing one means redoing all the work since. It is also a clock. Every block is a tick, the same tick for everyone who reads the chain, owned by no one and stoppable by no one. Its ticks are coarse, roughly one every ten minutes, and that is fine, because karma density does not need the second, it needs a shared and permanent measure of when. Pin a key&rsquo;s first block and read the latest, and the span between them, counted in blocks, is the denominator that turns a tally into a density. Finer time is a matter of presentation, not protocol: readers already localize block times to the second from their own settings, the way a timechain browser shows a human date beside a block height. The protocol commits to blocks. A client may dress them up however it likes.</p>
+      <p>The borrowing has a cost. Proof of work is often called wasteful, which misses the point. It is impractical: a network of miners guards a record only because they are paid in the coin their work secures, and that coin is the incentive that keeps the record honest. Nown has no coin of its own and wants none, so it cannot run its own proof of work. That leaves two ways out. It can anchor its record to a proof-of-work chain strong enough to borrow, and only bitcoin&rsquo;s is, which ties Nown&rsquo;s permanence to bitcoin&rsquo;s. Or it can find an incentive that keeps a record honest with no coin at all.</p>
+      <p>The second path is open research, and the shape of the answer is already visible in an older idea. When Phil Zimmermann built <span class="fnw"><span class="fna">PGP,</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 8">8</button></sup><span class="fnpop" role="note">Pretty Good Privacy, Phil Zimmermann&rsquo;s 1991 email-encryption software. Its web of trust let each user judge a key&rsquo;s authenticity from signatures collected from other people, with no central authority, on a good-enough rather than perfect standard.</span></span> he did not promise perfect privacy, and he did not build a central authority to grant it. He let every user be his own authority, choosing whom to trust and computing, from signatures he had collected, whether a key was good enough to rely on. Zimmermann called the result a "decentralized fault-tolerant web of <span class="fnw"><span class="fna">confidence."</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 9">9</button></sup><span class="fnpop" role="note">Zimmermann, PGP User&rsquo;s Guide, Volume I, 1994.</span></span> It was never perfect, and it never had to be. It was pretty good, and pretty good was usable where perfect was unavailable.</p>
+      <p>Human action runs on the same currency. A man does not need perfect trust to deal with a stranger; he needs pretty good trust, enough to act on, priced for the risk he is taking. Call it PGT, by the plain descent from Zimmermann&rsquo;s phrase. Fiat money needs trust in an issuer and bitcoin abolished that need, but trust between people was never going to be abolished, only made portable, computable, and owned by the person who earned it. A record kept honest by the incentives of the people who read and write it, rather than by an outside coin, is the standalone answer if one exists. Nown does not claim to have built it. It claims that the problem is the right one, that the timechain solves it today by borrowing, and that PGT is the shape a native solution would take.</p>
+      <p>PGP is a precedent, not a template. PGP signs that a key belongs to a person, a narrow and near-binary fact. Nown signs conduct across dealings, which is graded and never finished. What Nown takes from PGP is the shape, decentralized, reader-computed, honestly imperfect. Signing a key and scoring a life are not the same act, and Nown does not pretend they are.</p>
+    </section>
+
+    <section id="s9">
+      <h2 class="sec"><span class="num">&sect;9</span> Where the record lives</h2>
+      <p>The timechain keeps the record honest, but it does not hold it. A key&rsquo;s whole history, every dealing, every ruling, every seal, is far more than a chain small enough for anyone to keep could ever carry. So the record itself lives elsewhere, on a network of machines, and the timechain&rsquo;s only part is to keep them honest: at intervals the network commits a fingerprint of the whole record to a block, and any copy can be checked against that fingerprint, so a machine that quietly altered the past would fail a check anyone can run.</p>
+      <p>The hard part is not correctness but persistence. A record no one is paid to keep is a record that rots, as every attempt at storage without a reward has found: people store what they are using and drop what they are not, and the past slips away. Proof of work solved this for money by paying its miners in a coin, but Nown has no coin and cannot move money without becoming the thing it is not. So it pays in the only currency it mints, standing, and it splits the work of holding the record in two.</p>
+      <p>The first layer is the swarm. Every client that reads Nown also keeps a shard of it, a small slice of the whole, held as the price of taking part, the way a reader of a shared library lends a shelf of it back. No one is paid for this and no one needs to be, because the cost to each is slight and the slices overlap many thousands deep, so the record is spread across every device that touches it and no ordinary loss can dent it. The swarm gives breadth and redundancy for free, but it guarantees nothing: a shard is kept only as long as its holder stays.</p>
+      <p>The second layer is the paid node, and here standing does the paying. A node that pledges to hold the whole record and serve it can be made to prove, at any moment, that it still has every part, by answering a challenge that only a machine holding the data could answer against the timechain&rsquo;s fingerprint. A node that proves itself, reliably and over time, earns standing for it, exactly as any dealing well kept earns standing, and a node that goes dark or fails a challenge loses what it staked to take the pledge. Standing is worth holding, so there is a real wage for keeping the record alive, paid in reputation rather than money, and a node&rsquo;s own karma comes to reflect how faithfully it has served.</p>
+      <p>Between the two, the record is both wide and deep: spread thin across every user&rsquo;s device so it cannot be wiped, and held whole by proven nodes that answer for its keeping and are paid, in standing, to do so. What the exact challenge is, how often it runs, how much standing faithful service earns, and how the two layers hand off between them, is a construction to be worked out, and it is among the open problems.</p>
+    </section>
+
+    <section id="s10">
+      <h2 class="sec"><span class="num">&sect;10</span> A key is property</h2>
+      <p>A key is owned by whoever holds its private half, and it can be kept, lent, or sold like anything else a man owns, because holding the private half is holding everything the key carries, its history and its standing alike.</p>
+      <p>This makes standing portable in a second sense. A reputation built under one key can pass to a buyer, so a business that has dealt well for years can be sold with the key that carries its name, and the buyer steps into a going concern instead of starting from nothing. A key is worth what someone will pay for it, and a market in keys prices reputations the way a market in businesses prices goodwill. Nown carries monetary value for this reason, with no coin of its own: the value rides on the keys.</p>
+      <p>No sale can be forced onto the record, and none can be stopped off it. A change of hands is written only if someone chooses to write it, and there is no way to make a man announce that he sold a key or bought one. So the network may never learn a key changed owner. It learns soon enough from conduct. A buyer who keeps dealing well keeps the standing he paid for, and the density he inherited carries him only as far as his own dealings sustain it, since the window fades an inherited history like any other. A buyer who cashes the standing out in one last scam spends it, and the record keeps the exit for the next reader to see. Both the patient buyer and the fast one already exist wherever businesses change hands, and Nown records both without preventing either.</p>
+    </section>
+
+    <section id="s11">
+      <h2 class="sec"><span class="num">&sect;11</span> Proving without showing</h2>
+      <p>A man&rsquo;s whole dealing history is his own business, and a counterparty usually needs one fact from it, not the ledger behind it. Nown lets a key prove the fact and reveal nothing more.</p>
+      <p>A key can prove that its karma, under a stated set of rules, clears a bar, without opening the events the figure was computed from. It can prove that a success it claims was with a counterparty above some standing, without naming the counterparty. It can prove that an oracle ruled as it says. In each case the reader checks a short proof and learns the one fact the context asked for. A man can walk up to a market that demands a karma of a thousand and prove he has it, while the market learns neither whom he dealt with nor how far past the bar he sits.</p>
+      <p>The simplest proof of all is a signature. A key that signs a fresh message proves, to anyone, that its holder is present and in control, right now. Attach that signature to a public karma profile and it becomes a claim the reader can check himself: this living person holds this key, and this key holds this record. That is the seed of the uses that follow.</p>
+    </section>
+
+    <section id="s12">
+      <h2 class="sec"><span class="num">&sect;12</span> One record, many readings</h2>
+      <p>No one issues a key&rsquo;s karma. Each reader computes it, running the shared rules over the shared record, so two readers who run the same rules reach the same figure. Standing is settled by a computation anyone can repeat, not by an authority anyone must trust.</p>
+      <p>This is what lets a thousand applications sit on one Nown. A Nown browser is a client. It reads the one record, under the one protocol, and shows a user whatever slice of it he asks for. One browser weights recent dealing and forgets fast; another rewards long, steady histories; a hiring app reads only the dealings that bear on work; a lender reads only the record of debts paid. These are not different Nowns. They are different views of the same record, extracted on the reader&rsquo;s own machine, and none can lie about what a key did, because the record beneath them is one and the same. The protocol holds the record and the rules of the flow; everything above is a filter someone wrote for a use of his own.</p>
+      <p>A genuinely separate Nown is a rarer thing: a fork, a new network with its own rules, for a use the main one will not serve, such as one that admits a trusted outside oracle. A fork is its own web of trust, worth starting only when enough people need what it offers. The common case is not many Nowns but one Nown read a thousand ways.</p>
+    </section>
+
+    <section id="s13">
+      <h2 class="sec"><span class="num">&sect;13</span> What it is for</h2>
+      <p>Karma is the product, and its uses run as wide as trust has prices. Four show the range.</p>
+      <p><b>A dispute, settled.</b> Two strangers escrow a trade in an output only the two of them control, and deal. If it goes right they attest and the escrow releases. If it goes wrong they open a dispute, the quorum rules, and the ruling moves the escrowed money and marks each key. This is the use where the teeth show clearest, because real money hangs on the answer.</p>
+      <p><b>A worker, hired.</b> An application that runs Nown lets an employer describe the karma a role demands: this much standing, in dealings of this kind, held this steadily. It finds the keys that match and, where a key has published a way to reach its holder, reaches out; or it lets those keys raise a hand. A candidate proves he clears the bar by signing a fresh message with his private key, and that signature, beside his public profile, is proof of eligibility the employer can check without a resume, a reference, or a school. The signature and the key together are the oracle the hiring context resolves on: any holder who signs and clears the bar is a valid answer, and the employer picks among them.</p>
+      <p><b>A degree, replaced.</b> A man wants to prove he knows a field. Instead of paying a university for a certificate, he studies under a master of the field, a working expert who takes students. The teaching is a dealing: the master is paid, and at the end he fixes a <span class="fnw"><span class="fna">seal</span><sup class="fn"><button type="button" class="fnr" aria-expanded="false" aria-label="Footnote 10">10</button></sup><span class="fnpop" role="note">A seal is a signed or quorum-ratified mark fixed to a key and carried with it on the record, standing for a fact about its holder: a skill shown, a document certified, a membership held, ownership of a firm. A key&rsquo;s history is what it did; its seals are what others have certified about it.</span></span> to the student&rsquo;s key, a signed mark that says this man learned the craft under me. The master stakes his own standing to seal it, because a seal on a student who cannot do the work costs the master the standing he vouched with, exactly as a failed dealing costs any voucher. Years later the student applies for a post, and the employer reads on the key that a prominent name in the field put his own reputation behind this man, at his own risk. The master vouched by teaching and sealing, which is a real dealing with a real stake, not a free endorsement. A credential becomes a chain of people who staked their names, readable end to end.</p>
+      <p><b>A certificate, notarized without a notary.</b> Two people marry and want it on a record that outlives any registry. A translator swears his translation is faithful and wants that on record too. A context sets a quorum, or a single trusted checker, to certify the fact, and the certification is written like any other outcome. No state office holds the paper, no notary holds the stamp. The record holds the fact, the standing of whoever certified it stands behind it, and anyone can read both. Trust reaches a plain human need, with no money changing hands and no authority in the middle.</p>
+      <p>In every case the shape is the same. Someone defines a context and its oracle for a use of trust. Other keys step in under their own keys. The outcome, however it is decided, writes a karma event that flows standing by the one rule that governs all of them. The protocol supplies the trust. People supply the uses.</p>
+    </section>
+
+    <section id="s14">
+      <h2 class="sec"><span class="num">&sect;14</span> The killer app: reading people by their record</h2>
+      <p>A permanent, portable, unfakeable record of how a person has dealt sits under a whole class of problems that share one shape: a stranger must be trusted, misjudging him is costly, and the only party who can vouch for him today is a corruptible silo that owns his reputation and can be gamed or bought. Wherever that shape appears, a karma browser, a client that reads the one record and filters people by the conduct that matters, is pretty good trust made concrete.</p>
+      <p>The shape recurs everywhere. An employer reads a resume the applicant wrote and calls references the applicant chose, a signal so self-refereed that one federal case uncovered thousands of fabricated nursing diplomas, a third of whose buyers passed the national licensing exam regardless. A buyer reads star ratings the platform owns and the seller can buy, and fake reviews are reckoned to sway on the order of a hundred and fifty billion dollars of spending a year. A lender must price a stranger&rsquo;s promise to repay while the bureau that scores him is central, gameable by invented identities, and simply blank for tens of millions it holds no file on. A person online can no longer tell an accountable human from one of the machines that now make up half of internet traffic, or from the day-old identity behind a romance scam that took billions last year. Each is a stranger to be trusted, at real cost, vouched for only by a silo.</p>
+      <p>A karma browser answers them the same way. It issues no badge and grants no credential. It lets whoever must decide read, for himself, an unerasable history of how a key has dealt, filtered to what he cares about: contracts honored, for a hire; debts paid, for a loan; years of real dealing, for a stranger who claims to be real. The applicant cannot curate it, the seller cannot wipe it by opening a new account, the impostor cannot fake the years his fresh key does not have. And because the reading happens on the reader&rsquo;s own machine against a record no platform owns, the reputation is portable across every app at once and captive to none, which is the second thing the silos get wrong.</p>
+      <p>The honesty is in the edges. A record of past conduct says nothing about a first dealing, so an honest newcomer starts indistinguishable from a fresh fake, and that cold start recurs in every one of these uses. Cost and permanence raise the price of faking a history without making it impossible. The record is blind to harm nobody reports, and to the man who was trustworthy until the moment he was not. And a permanent public ledger of a person&rsquo;s dealings is itself a thing to handle with care, which is why he keeps more than one key and shows only the standing a dealing needs. Karma reads the recurring, high-stakes deal between strangers whose conduct accrues. Where the deal is one-shot, or the fact is private, or what is wanted is whether a claim is true rather than whether a person is reliable, it says so and stays out.</p>
+    </section>
+
+    <section id="s15">
+      <h2 class="sec"><span class="num">&sect;15</span> Clustering is not cheating</h2>
+      <p>A worry raised against every reputation system is the closed ring: a group that deals only with itself and votes each other up. In Nown it is not a hole to plug, because it is not an attack. People and firms deal inside their own circles all the time. A company is a cluster by definition, its people dealing with each other far more than with the world; a family, a guild, a town are the same. Banding together to get more done is not a flaw in civilization, it is civilization, and a reputation system that fought clustering would be fighting the thing reputation is for.</p>
+      <p>What a circle cannot do is conjure standing from nothing. Karma flows from the standing put at risk, and a group starting near zero has little to flow to itself; dealing in a ring moves small amounts around a small pool without enlarging it. Standing grows when the circle deals well with the world outside, and the world stakes its own standing to deal back. So Nown lets the circle form, lets it deal inside itself freely, and simply reflects what it is: a tight group with a deep internal history and, until it earns more, little standing past its own edge. A reader sees that for what it is and weighs it as he likes.</p>
+      <p>A cluster can also become a thing in its own right: a company that holds a key of its own and deals under it as a person would.</p>
+    </section>
+
+    <section id="s16">
+      <h2 class="sec"><span class="num">&sect;16</span> Seals and ownership</h2>
+      <p>A key carries two kinds of thing. The first is its history, the record of what it did. The second is its seals, the marks others have fixed to it to certify a fact about its holder. History is earned by dealing; a seal is granted by someone who stakes his own standing on the granting. The two are read together, and they are read differently: a history is a pattern a reader weighs for himself, a seal is a single claim by a named certifier who answers for it.</p>
+      <p>A seal is made the way any outcome is made, through an oracle. A teacher who has taught a student signs a seal for the skill the student showed; a body that certifies a trade signs a seal for the certification; a fact two parties cannot settle alone is put to a quorum, and the quorum&rsquo;s ruling is fixed to the key as a seal. Whoever seals stakes standing on it, so a false seal costs the sealer exactly as a failed dealing costs a voucher, and a seal is therefore worth what its sealer&rsquo;s standing is worth. Some seals are permanent, a schooling completed, a degree conferred. Others carry a term and lapse when it ends, a membership for a year, a ticket for a season. The record keeps a lapsed seal as it keeps everything, but a reader sees that its term has run.</p>
+      <p>Seals are not free to grant. Whoever seals stakes standing on it, which is the natural check on the granting: a body that hands out a thousand seals has staked its name on all thousand, and pays for every one that proves false. So the granting side needs no rate limit, and it should not have one, since a school graduates a class at once and a club admits its members together.</p>
+      <p>The trouble is on the receiving side. A key that collects seals without limit dilutes them all, until the record of what others have certified about it is noise a reader learns to skip. A seal is meant to be read and acted on, and a key wearing a hundred says less than a key wearing three. So the cap belongs to the key that receives, not the one that grants: a key can carry only so many live seals before new ones crowd out old, and the holder must choose which to keep shown. Setting that cap so it curbs dilution without turning away a person who has honestly earned many marks is not solved, and it is one of the open problems.</p>
+      <p>Ownership is written as a seal, and this is where seals do their heaviest work. A company is not a person and earns no history of its own, but it can carry a key. Someone inside the firm with the authority to bind it signs a key into being and ties the firm to it; from then on that key is the firm&rsquo;s reputation, and its dealings build a history exactly as a person&rsquo;s do. Who owns the firm is written on the key as a seal: the firm draws up a binding document of ownership, a quorum ratifies it, and the ratified fact rides with the key. To transfer the business is to hand over the key and re-seal its ownership to the buyer, ratified again, so that the chain of owners is readable end to end and proving who owns a company is as plain as reading the last seal on its key.</p>
+      <p>This turns a problem that has always needed registries and courts into a matter of reading a record. A share is the same idea divided: a cap table becomes a set of ownership seals on a key, and a sale of shares becomes a re-sealing. A dispute over who owns what goes where every dispute goes, to a quorum, and its ruling is written like any other. The exact way a firm binds to a key, how fractional ownership is sealed, and how an ownership dispute is drawn and ruled, is a construction still to be worked out, and one of the more promising doors Nown opens.</p>
+    </section>
+
+    <section id="s17">
+      <h2 class="sec"><span class="num">&sect;17</span> Open problems</h2>
+      <p>Nown rests on reasoning about how people act, not on a record of it running. Some parts are settled in shape but not in detail, and naming them plainly is the honest course.</p>
+      <p><b>Measuring a dealing.</b> This is the deepest of them. To mint karma in proportion to a dealing, the protocol would need to know how much the dealing was worth, and worth cannot be measured. The same exchange is precious to one man and trifling to another; even a price in money is only what these two agreed, not a common yardstick that ranks their dealing against anyone else&rsquo;s. So there is no honest way to say one dealing earned more than another by its value. Nown works around this by minting in standing rather than worth, since standing is the one quantity it can read, but that leaves the genesis unsolved: the mint bounds a gain by the standing staked, and at the start no one has any standing to stake. How the first standing enters a network where everyone begins at zero, without a measure of worth to seed it and without opening a door a faker walks through, is the hardest problem Nown has.</p>
+      <p><b>The mint&rsquo;s rates.</b> Even granting a measure, the amount minted per dealing cannot be the client&rsquo;s to set, or anyone could print karma. It is fixed in the protocol, one rate per kind of dealing, and held in percentages rather than raw numbers. What those percentages should be, and how they keep the supply growing with real dealing without cheapening what everyone before has earned, is design work still to be done.</p>
+      <p><b>Paying the nodes.</b> The record is held by a swarm of user devices and a layer of proven nodes paid in standing, and the exact terms of that wage, the challenge that proves a node still holds the record, how often it runs, how much faithful service earns, and how the two layers hand off, are unsettled. That reputation alone can pay for a network of nodes is the bet the design rests on, and it is load-bearing.</p>
+      <p><b>Seal dilution.</b> A key that collects seals without limit dilutes them all. The granting side needs no cap, since a sealer stakes standing on every mark and a school may graduate a class at once, but the receiving side does, or the record of what a key was certified to be becomes noise. Setting a cap on the receiving end that curbs dilution without turning away a person who has honestly earned many marks is unsolved.</p>
+      <p><b>The default metrics.</b> Karma DOT is computed under constants: how fast idle standing fades, how a success is weighed, how the mean is taken. The base protocol fixes a default set so every reader reaches the same figure, with apps free to layer their own on top. This is design work, not a guard against anyone; a key that deals more, and so climbs faster, has earned it.</p>
+      <p><b>Sizing the quorum.</b> Collusion is priced out by the size and randomness of the panel, and a stalled case is answered by a larger one. The function that ties a network&rsquo;s size to its quorum&rsquo;s size and growth is a parameter still to be derived.</p>
+      <p><b>Sealing a company.</b> How a firm binds to a key, how fractional ownership is sealed and re-sealed on a sale, and how an ownership dispute is drawn and ruled, is a construction still to be worked out.</p>
+    </section>
+
+    <section id="s18">
+      <h2 class="sec"><span class="num">&sect;18</span> The end of the keeper</h2>
+      <p>Trade between strangers has always rested on someone trusted to vouch and someone trusted to judge, and each of them has been a place to capture the whole. Nown takes the vouching from the standing that keys stake on each other when they deal, draws the judging from a crowd no one can find, holds the money with the two parties alone, and keeps no power for itself. A man&rsquo;s standing becomes his own, built by his conduct, carried under his key, read by anyone, held by no one who can take it back. It does not make people good and does not catch every liar, because nothing can. Nothing should. It puts conduct on one honest record, so a stranger can be judged by what he has done rather than by whose permission he carries, and it leaves the uses of that record to the people who need them. The result belongs to everyone, because a thing meant for everyone must be owned by no one.</p>
+    </section>
+
+    <section id="refs" class="refs">
+      <h2 class="sec"><span class="num">&sect;</span> References</h2>
+      <div class="reflist">
+        <div class="refrow"><span class="theme">[1]</span><span class="src">J. R. Douceur. The Sybil Attack. IPTPS, 2002.</span></div>
+        <div class="refrow"><span class="theme">[2]</span><span class="src">E. J. Friedman, P. Resnick. The Social Cost of Cheap Pseudonyms. Journal of Economics and Management Strategy, 2001.</span></div>
+        <div class="refrow"><span class="theme">[3]</span><span class="src">S. Micali, M. O. Rabin, S. P. Vadhan. Verifiable Random Functions. FOCS, 1999.</span></div>
+        <div class="refrow"><span class="theme">[4]</span><span class="src">C. Komlo, I. Goldberg. FROST: Flexible Round-Optimized Schnorr Threshold Signatures. SAC, 2020.</span></div>
+        <div class="refrow"><span class="theme">[5]</span><span class="src">J. Groth, M. Kohlweiss. One-Out-of-Many Proofs: Or How to Leak a Secret and Spend a Coin. Advances in Cryptology, 2015.</span></div>
+        <div class="refrow"><span class="theme">[6]</span><span class="src">T. Dryja. Discreet Log Contracts. MIT Digital Currency Initiative (manuscript), 2017.</span></div>
+        <div class="refrow"><span class="theme">[7]</span><span class="src">P. R. Zimmermann. PGP User&rsquo;s Guide, Volume I: Essential Topics. Version 2.6.2. Phil&rsquo;s Pretty Good Software, 1994.</span></div>
+        <div class="refrow"><span class="theme">[8]</span><span class="src">P. Zimmermann, J. Callas. The Evolution of PGP&rsquo;s Web of Trust. In Beautiful Security, O&rsquo;Reilly Media, 2009.</span></div>
+        <div class="refrow"><span class="theme">[9]</span><span class="src">J. Callas, L. Donnerhacke, H. Finney, D. Shaw, R. Thayer. OpenPGP Message Format. RFC 4880. IETF, 2007.</span></div>
+        <div class="refrow"><span class="theme">[10]</span><span class="src">E. Hughes. A Cypherpunk&rsquo;s Manifesto. 1993 (essay, activism.net).</span></div>
+        <div class="refrow"><span class="theme">[11]</span><span class="src">L. Dover. Chronicle: An Open Protocol for Public Trust and Accountability on the Web. Cartographers Guild, https://chronicle-network.org (accessed 2026). Related work.</span></div>
+        <div class="refrow"><span class="theme">[12]</span><span class="src">U.S. Department of Justice. Operation Nightingale: fraudulent nursing diploma scheme (7,600 diplomas/transcripts). USAO Southern District of Florida, 2023.</span></div>
+        <div class="refrow"><span class="theme">[13]</span><span class="src">World Economic Forum. Fake online reviews are a $152 billion problem. 2021.</span></div>
+        <div class="refrow"><span class="theme">[14]</span><span class="src">Imperva. 2024 Bad Bot Report (bots 49.6% of internet traffic in 2023). 2024.</span></div>
+        <div class="refrow"><span class="theme">[15]</span><span class="src">Consumer Financial Protection Bureau. Data Point: Credit Invisibles (26M credit-invisible, ~45M unscorable). 2015.</span></div>
+        <div class="refrow"><span class="theme">[16]</span><span class="src">Federal Bureau of Investigation, IC3. 2024 Internet Crime Report ($16.6B losses; $5.8B crypto relationship-investment fraud). 2025.</span></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <p class="line">
+    Nown &nbsp;·&nbsp; a peer-to-peer protocol for portable trust between strangers<br>
+    ownerless &nbsp;·&nbsp; no company &nbsp;·&nbsp; no owner &nbsp;·&nbsp; a design and research draft, not running code<br>
+    released into the public domain under the Unlicense &nbsp;·&nbsp; no rights reserved &nbsp;·&nbsp; no owner
+  </p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var themeBtn=document.getElementById('themeBtn'),
+      themeLbl=document.getElementById('themeLbl'),
+      themeIcon=document.getElementById('themeIcon');
+  var sun='M12 3v2M12 19v2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M3 12h2M19 12h2M5.6 18.4l1.4-1.4M17 7l1.4-1.4M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z';
+  var moon='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z';
+  function stored(){ try{ return localStorage.getItem('nown-theme'); }catch(e){ return null; } }
+  function systemDark(){ return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function apply(t){
+    root.setAttribute('data-theme', t);
+    var dark = t==='dark';
+    themeLbl.textContent = dark ? 'Light' : 'Dark';
+    themeIcon.querySelector('path').setAttribute('d', dark ? sun : moon);
+  }
+  apply(stored() || (systemDark() ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme')==='dark' ? 'light' : 'dark';
+    apply(next);
+    try{ localStorage.setItem('nown-theme', next); }catch(e){}
+  });
+
+  var toc=document.getElementById('toc'), tocToggle=document.getElementById('tocToggle');
+  tocToggle.addEventListener('click', function(){
+    var open=toc.classList.toggle('open');
+    tocToggle.setAttribute('aria-expanded', open?'true':'false');
+  });
+  toc.addEventListener('click', function(e){
+    if(e.target.closest('a') && window.matchMedia('(max-width: 940px)').matches){
+      toc.classList.remove('open'); tocToggle.setAttribute('aria-expanded','false');
+    }
+  });
+
+  var bar=document.getElementById('progress');
+  function progress(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    bar.style.width = (max>0 ? (h.scrollTop/max)*100 : 0) + '%';
+  }
+  document.addEventListener('scroll', progress, {passive:true});
+  window.addEventListener('resize', progress); progress();
+
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var map={}; links.forEach(function(a){ var h=a.getAttribute('href'); if(h) map[h.slice(1)]=a; });
+  var sections=[].slice.call(document.querySelectorAll('main section[id]'));
+  var spy=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        var a=map[en.target.id]; if(a) a.classList.add('active');
+      }
+    });
+  }, {rootMargin:'-20% 0px -70% 0px', threshold:0});
+  sections.forEach(function(s){ spy.observe(s); });
+
+  document.addEventListener('click', function(e){
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id=a.getAttribute('href').slice(1); if(!id) return;
+    var el=document.getElementById(id); if(!el) return;
+    e.preventDefault();
+    var y = Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - 54);
+    window.scrollTo(0, y);
+    try{ history.replaceState(null,'','#'+id); }catch(err){}
+  });
+})();
+</script>
+<script>
+/* Nown reader controls: text size, column width, reading face, alignment, print.
+   Features ported from the classic reader; each control flips a :root data-*
+   attribute or --font-scale that the paper CSS consumes, and persists the choice
+   to localStorage (guarded for private-mode). Furniture stays mono throughout. */
+(function(){
+  var root=document.documentElement;
+  function lget(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function lset(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function ldel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+
+  var SMIN=0.8, SMAX=1.5, STEP=0.1;
+  var sizeVal=document.getElementById('rdSize');
+
+  function curScale(){ var s=parseFloat(root.style.getPropertyValue('--font-scale')); return (s>=SMIN&&s<=SMAX)?s:1; }
+  function paintSize(){ if(sizeVal) sizeVal.textContent=Math.round(curScale()*100)+'%'; }
+  function setScale(s){
+    s=Math.max(SMIN, Math.min(SMAX, Math.round(s*100)/100));
+    if(s===1){ root.style.removeProperty('--font-scale'); ldel('nown-font-scale'); }
+    else { root.style.setProperty('--font-scale', String(s)); lset('nown-font-scale', String(s)); }
+    paintSize();
+  }
+
+  function paintGroup(id, attr, val){
+    var g=document.getElementById(id); if(!g) return;
+    [].forEach.call(g.getElementsByClassName('rdb'), function(b){
+      b.classList.toggle('on', b.getAttribute(attr)===val);
+    });
+  }
+  function paintMeasure(){ paintGroup('rdWidth','data-rd-measure', root.getAttribute('data-reader-measure')||'default'); }
+  function paintFont(){ paintGroup('rdFont','data-rd-font', root.getAttribute('data-reader-font')==='sans'?'sans':'serif'); }
+  function paintJustify(){ paintGroup('rdJustify','data-rd-justify', root.getAttribute('data-reader-justify')==='1'?'1':'0'); }
+
+  function setMeasure(m){
+    if(!m||m==='default'){ root.removeAttribute('data-reader-measure'); ldel('nown-measure'); }
+    else { root.setAttribute('data-reader-measure', m); lset('nown-measure', m); }
+    paintMeasure();
+  }
+  function setFont(f){
+    if(f==='sans'){ root.setAttribute('data-reader-font','sans'); lset('nown-font','sans'); }
+    else { root.removeAttribute('data-reader-font'); ldel('nown-font'); }
+    paintFont();
+  }
+  function setJustify(j){
+    j = j==='1' ? '1' : '0';
+    root.setAttribute('data-reader-justify', j); lset('nown-justify', j);
+    paintJustify();
+  }
+
+  /* apply stored preferences */
+  var v;
+  v=parseFloat(lget('nown-font-scale')); if(v>=SMIN&&v<=SMAX&&v!==1) root.style.setProperty('--font-scale', String(v));
+  v=lget('nown-measure'); if(v==='narrow'||v==='wide') root.setAttribute('data-reader-measure', v);
+  v=lget('nown-font'); if(v==='sans') root.setAttribute('data-reader-font','sans');
+  v=lget('nown-justify'); if(v==='1'||v==='0') root.setAttribute('data-reader-justify', v);
+
+  /* wire size */
+  var minus=document.getElementById('rdMinus'), plus=document.getElementById('rdPlus');
+  if(minus) minus.addEventListener('click', function(){ setScale(curScale()-STEP); });
+  if(plus) plus.addEventListener('click', function(){ setScale(curScale()+STEP); });
+  if(sizeVal) sizeVal.addEventListener('click', function(){ setScale(1); });
+
+  /* wire the segmented groups */
+  var W=document.getElementById('rdWidth');   if(W) W.addEventListener('click', function(e){ var b=e.target.closest('.rdb'); if(b) setMeasure(b.getAttribute('data-rd-measure')); });
+  var F=document.getElementById('rdFont');    if(F) F.addEventListener('click', function(e){ var b=e.target.closest('.rdb'); if(b) setFont(b.getAttribute('data-rd-font')); });
+  var J=document.getElementById('rdJustify'); if(J) J.addEventListener('click', function(e){ var b=e.target.closest('.rdb'); if(b) setJustify(b.getAttribute('data-rd-justify')); });
+
+  /* popover open / close (click-away + Escape) */
+  var menu=document.getElementById('rdMenu'), pop=document.getElementById('rdPop');
+  function openPop(o){ if(!pop||!menu) return; pop.hidden=!o; menu.setAttribute('aria-expanded', o?'true':'false'); }
+  if(menu&&pop){
+    menu.addEventListener('click', function(e){ e.stopPropagation(); openPop(pop.hidden); });
+    document.addEventListener('click', function(e){ if(!pop.hidden && !pop.contains(e.target) && !menu.contains(e.target)) openPop(false); });
+    document.addEventListener('keydown', function(e){ if((e.key==='Escape'||e.key==='Esc') && !pop.hidden){ openPop(false); menu.focus(); } });
+  }
+
+  /* print (article: window.print(); the whitepaper keeps its typeset-PDF link) */
+  var pb=document.getElementById('printBtn'); if(pb) pb.addEventListener('click', function(){ window.print(); });
+
+  paintSize(); paintMeasure(); paintFont(); paintJustify();
+})();
+</script>
+<script>(function(){var cur=null;function close(){if(cur){cur.p.classList.remove('on');cur.w.classList.remove('on');cur.b.setAttribute('aria-expanded','false');cur=null;}}document.addEventListener('click',function(e){var b=e.target.closest?e.target.closest('.fnr'):null;if(b){e.preventDefault();var w=b.closest('.fnw'),p=w.querySelector('.fnpop');if(cur&&cur.p===p){close();return;}close();w.classList.add('on');p.classList.add('on');b.setAttribute('aria-expanded','true');cur={p:p,w:w,b:b};return;}if(cur&&!e.target.closest('.fnpop'))close();});document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});})();</script>
+<script>
+
+</script>
+</body>
+</html>
