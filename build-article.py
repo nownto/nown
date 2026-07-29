@@ -115,7 +115,7 @@ def parse_article(md):
     ms = re.search(r'^### (.+)$', md, re.M)
     if ms:
         subtitle = re.sub(r'[*]', '', ms.group(1)).strip()
-    abs_m = re.search(r'## Abstract\s*\n(.*?)(?=\n## )', md, re.S)
+    abs_m = re.search(r'## Invitation\s*\n(.*?)(?=\n## )', md, re.S)
     abstract = [p.strip() for p in re.split(r'\n\n+', abs_m.group(1).strip()) if p.strip()]
     secs = []
     for m in re.finditer(r'## (\d+)\. (.+?)\n(.*?)(?=\n## \d+\. |\n## References|\n## Closing|\Z)', md, re.S):
@@ -226,10 +226,16 @@ def build():
                   '<title>Nown &middot; Collaborative Research Paper</title>', head, flags=re.S)
     head = re.sub(r'(<meta property="og:title" content=")[^"]*(")',
                   r'\1Nown &middot; the collaborative research paper\2', head)
+    head = re.sub(r'(<meta name="twitter:title" content=")[^"]*(")',
+                  r'\1Nown &middot; the collaborative research paper\2', head)
+    # the shell's canonical and og:url are the whitepaper's; the .html suffix is dropped
+    # because Workers Assets serves the extensionless path and redirects the other.
+    head = head.replace('https://nown.to/nown-whitepaper', 'https://nown.to/nown-article')
     ART_DESC = ('The collaborative research paper behind Nown: the reasoning, the economics, the open '
                 'problems, and the constructions under the protocol. Public domain (the Unlicense).')
     head = re.sub(r'(<meta name="description" content=")[^"]*(")', lambda m: m.group(1) + ART_DESC + m.group(2), head)
     head = re.sub(r'(<meta property="og:description" content=")[^"]*(")', lambda m: m.group(1) + ART_DESC + m.group(2), head)
+    head = re.sub(r'(<meta name="twitter:description" content=")[^"]*(")', lambda m: m.group(1) + ART_DESC + m.group(2), head)
     head = head[:head.rindex('</style>')] + '\n/* --- embedded simulations --- */\n' + sim_css + \
         '\n#simulations .math{ display:none }\n' + head[head.rindex('</style>'):]
     # math style
@@ -284,7 +290,7 @@ def build():
     top = re.sub(r'<a class="btn" id="pdfBtn".*?</a>', lambda m: pdf_btn, top, count=1, flags=re.S)
 
     # --- TOC ---
-    toc = ['      <li><a href="#abstract"><span class="n">&middot;</span> Abstract</a></li>',
+    toc = ['      <li><a href="#abstract"><span class="n">&middot;</span> Invitation</a></li>',
            '      <li class="sepli"><span class="sep"></span></li>']
     for num, ttl, _, _ in secs:
         toc.append(f'      <li><a href="#s{num}"><span class="n">{num}</span> {enc(ttl)}</a></li>')
@@ -301,7 +307,7 @@ def build():
     </section>'''
 
     # --- abstract ---
-    parts = [titleblock, '\n    <section class="abstract" id="abstract">', '      <p class="lbl">Abstract</p>']
+    parts = [titleblock, '\n    <section class="abstract" id="abstract">', '      <p class="lbl">Invitation</p>']
     for p in abstract:
         parts += render_paras(p)
     parts.append('    </section>')

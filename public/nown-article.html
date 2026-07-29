@@ -4,15 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nown &middot; Collaborative Research Paper</title>
-<link rel="canonical" href="https://nown.to/nown-article.html">
+<link rel="canonical" href="https://nown.to/nown-article">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://nown.to/nown-article.html">
+<meta property="og:url" content="https://nown.to/nown-article">
 <meta property="og:title" content="Nown &middot; the collaborative research paper">
 <meta property="og:description" content="The collaborative research paper behind Nown: the reasoning, the economics, the open problems, and the constructions under the protocol. Public domain (the Unlicense).">
 <meta name="twitter:card" content="summary_large_image">
-<meta property="og:image" content="https://nown.to/nown-og.png">
-<meta property="og:image:width" content="1956">
-<meta property="og:image:height" content="1016">
+<meta property="og:image" content="https://nown.to/nown-og-v2.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:alt" content="The Nown wordmark over the line: portable trust between strangers.">
+<meta property="og:site_name" content="Nown">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:image" content="https://nown.to/nown-og-v2.png">
+<meta name="twitter:image:alt" content="The Nown wordmark over the line: portable trust between strangers.">
+<meta name="twitter:title" content="Nown &middot; the collaborative research paper">
+<meta name="twitter:description" content="The collaborative research paper behind Nown: the reasoning, the economics, the open problems, and the constructions under the protocol. Public domain (the Unlicense).">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
 <link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
@@ -420,7 +428,7 @@ details.explore>.explore-body{ padding:.1rem 0 .5rem }
   <nav class="toc" id="toc" aria-label="Table of contents">
     <p class="lbl">Contents</p>
     <ol>
-      <li><a href="#abstract"><span class="n">&middot;</span> Abstract</a></li>
+      <li><a href="#abstract"><span class="n">&middot;</span> Invitation</a></li>
       <li class="sepli"><span class="sep"></span></li>
       <li><a href="#s1"><span class="n">1</span> Trust between strangers</a></li>
       <li><a href="#s2"><span class="n">2</span> Pretty Good Trust</a></li>
@@ -450,8 +458,10 @@ details.explore>.explore-body{ padding:.1rem 0 .5rem }
     </section>
 
     <section class="abstract" id="abstract">
-      <p class="lbl">Abstract</p>
-      <p>Nown&rsquo;s goal is a reputation a person owns outright and can carry anywhere. Trust works on its own between people who know each other, because each holds the other&rsquo;s history and breaking his word costs him every dealing that would have followed. Past that reach it has needed a keeper of records, a guild, a court, a bank, a platform, who supplies the history two strangers lack, owns it, prices it, and takes it with him when he goes. Nown keeps one public record instead, held by independent nodes and ordered by a clock no participant controls. The record holds karma marks and seals, and nothing else: when a dealing closes one mark lands on each key, and what the dealing was about stays with the two who made it. Each reader sums the marks himself under shared rules, so two readers reach the same figure. A key at zero confers nothing and can only receive, which is what keeps fresh keys from writing each other into standing. What the protocol supplies is consequence: every mark readable, every mark permanent, each one landing on the key that earned it.</p>
+      <p class="lbl">Invitation</p>
+      <p>The whitepaper carries the protocol: what Nown is, and enough of it to build from. This is the other half, and it is unfinished on purpose. Every section here takes the corresponding section of the whitepaper and opens it, giving the reasoning under the mechanism, the economics it has to survive, the objections it answers by construction, and the dead ends already ruled out so nobody spends a week rediscovering one.</p>
+      <p>Fourteen problems in it are genuinely unsolved. They are stated in the section they belong to, in full, with the candidate answer where one exists and the exact reason it is not yet enough. A key at zero confers nothing, which is the sybil bound, and it leaves the genesis open: at the first block every key is at zero, so nothing can move. The quorum&rsquo;s whole security rests on enough strangers volunteering to read a case. No coin pays the nodes that keep the record. Each of those carries a card, and each card links to its own section of the open problems file in the repository.</p>
+      <p>Nown is ownerless. There is no company, no token, no owner, and no admin key, so there is nothing to join and nobody to ask. What there is, is a protocol that works better the more people attack it and a list of the places it is thinnest. Take one.</p>
     </section>
 
     <section id="s1">

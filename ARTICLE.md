@@ -2,9 +2,13 @@
 
 Released into the public domain (the Unlicense).
 
-## Abstract
+## Invitation
 
-Nown's goal is a reputation a person owns outright and can carry anywhere. Trust works on its own between people who know each other, because each holds the other's history and breaking his word costs him every dealing that would have followed. Past that reach it has needed a keeper of records, a guild, a court, a bank, a platform, who supplies the history two strangers lack, owns it, prices it, and takes it with him when he goes. Nown keeps one public record instead, held by independent nodes and ordered by a clock no participant controls. The record holds karma marks and seals, and nothing else: when a dealing closes one mark lands on each key, and what the dealing was about stays with the two who made it. Each reader sums the marks himself under shared rules, so two readers reach the same figure. A key at zero confers nothing and can only receive, which is what keeps fresh keys from writing each other into standing. What the protocol supplies is consequence: every mark readable, every mark permanent, each one landing on the key that earned it.
+The whitepaper carries the protocol: what Nown is, and enough of it to build from. This is the other half, and it is unfinished on purpose. Every section here takes the corresponding section of the whitepaper and opens it, giving the reasoning under the mechanism, the economics it has to survive, the objections it answers by construction, and the dead ends already ruled out so nobody spends a week rediscovering one.
+
+Fourteen problems in it are genuinely unsolved. They are stated in the section they belong to, in full, with the candidate answer where one exists and the exact reason it is not yet enough. A key at zero confers nothing, which is the sybil bound, and it leaves the genesis open: at the first block every key is at zero, so nothing can move. The quorum's whole security rests on enough strangers volunteering to read a case. No coin pays the nodes that keep the record. Each of those carries a card, and each card links to its own section of the open problems file in the repository.
+
+Nown is ownerless. There is no company, no token, no owner, and no admin key, so there is nothing to join and nobody to ask. What there is, is a protocol that works better the more people attack it and a list of the places it is thinnest. Take one.
 
 ## 1. Trust between strangers
 
