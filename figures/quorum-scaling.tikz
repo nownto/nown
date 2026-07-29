@@ -1,0 +1,17 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize]
+  % axes: eligible keys across, magnitude up
+  \draw[muted,line width=0.8pt,->] (0,0) -- (0,4.42);
+  \draw[muted,line width=0.8pt,->] (0,0) -- (9.86,0);
+  \node[muted] at (4.82,-0.62) {eligible keys $\to$};
+  \node[muted,rotate=90] at (-0.52,2.06) {$\to$ larger};
+  % cost of swinging a verdict: climbs away super-linearly
+  \draw[ink,line width=1.1pt] (0,0.21)
+    .. controls (3.96,0.31) and (6.88,1.48) .. (9.46,3.92);
+  \node[ink,anchor=east,font=\footnotesize\itshape] at (9.32,4.03)
+    {cost to swing a verdict};
+  % quorum seats: a gentle rise by comparison
+  \draw[bronze,line width=1pt] (0,0.48)
+    .. controls (2.41,1.07) and (5.68,1.48) .. (9.46,1.75);
+  \node[bronze,anchor=east,font=\footnotesize\itshape] at (9.32,1.44)
+    {quorum seats};
+\end{tikzpicture}

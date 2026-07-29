@@ -1,0 +1,94 @@
+<svg viewBox="0 0 680 356" role="img" aria-label="Two paths to a seal: a key issues one as a dealing it answers for, or a quorum ratifies one by majority, and both write the same signed entry naming type, subject, term and issuer to the record." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .k{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.6 }
+    .kl{ font-family:var(--mono,monospace); font-size:18px; fill:var(--ink,#1b1a16); font-weight:600 }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:18px; fill:var(--ink,#1b1a16) }
+    .sm{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink-3,#726c60) }
+    .fld{ font-family:var(--mono,monospace); font-size:17px; fill:var(--ink,#1b1a16) }
+    .fldh{ font-family:var(--mono,monospace); font-size:17px; fill:var(--bronze,#9c7635); font-weight:600 }
+    .box{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:1.6 }
+    .slab{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.4 }
+    .flow{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.5 }
+    .up{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.2 }
+    .good{ fill:var(--bronze,#9c7635) }
+    .grey{ fill:var(--ink-3,#726c60) }
+    .rule{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1; stroke-dasharray:3 4 }
+    .em{ font-style:italic }
+  </style>
+
+  <!-- faint divider between the two paths a seal can take -->
+  <path class="rule" d="M340,26 L340,296"/>
+
+  <!-- ================= LEFT: issued by a key ================= -->
+  <text class="lbl em" x="18" y="30">issued by a key</text>
+
+  <circle class="k" cx="52" cy="74" r="20"/>
+  <text class="kl" x="52" y="79" text-anchor="middle">E</text>
+
+  <path class="up" d="M52,96 L52,126"/><polygon class="good" points="52,132 47,122 57,122"/>
+  <text class="sm em" x="72" y="112">issues it as a dealing</text>
+
+  <rect class="box" x="22" y="132" width="222" height="118" rx="7"/>
+  <text class="fldh" x="36" y="152">seal</text>
+  <text class="fld" x="36" y="174">type: certification</text>
+  <text class="fld" x="36" y="191">subject: key S</text>
+  <text class="fld" x="36" y="208">term: permanent</text>
+  <text class="fld" x="36" y="225">issuer: key E</text>
+  <text class="fld" x="36" y="242">signature: E</text>
+
+  <path class="up" d="M246,172 L266,172"/><polygon class="good" points="272,172 262,167 262,177"/>
+  <circle class="k" cx="292" cy="172" r="20"/>
+  <text class="kl" x="292" y="177" text-anchor="middle">S</text>
+
+  <text class="sm" x="18" y="266">a denied seal writes</text>
+  <text class="sm" x="18" y="283">one mark down on</text>
+  <text class="sm" x="18" y="300">the issuer alone</text>
+
+  <path class="flow" d="M211,250 L211,300"/><polygon class="grey" points="211,306 206,296 216,296"/>
+  <text class="sm" x="223" y="274">written to</text>
+  <text class="sm" x="223" y="291">the record</text>
+
+  <!-- ================= RIGHT: ratified by a quorum ================= -->
+  <text class="lbl em" x="356" y="30">ratified by a quorum</text>
+
+  <circle class="k" cx="378" cy="50" r="12"/>
+  <circle class="k" cx="378" cy="80" r="12"/>
+  <circle class="k" cx="378" cy="110" r="12"/>
+
+  <path class="flow" d="M391,50 L430,74"/>
+  <path class="flow" d="M391,80 L430,80"/>
+  <path class="flow" d="M391,110 L430,86"/>
+
+  <text class="lbl" x="442" y="86">majority</text>
+  <text class="sm" x="442" y="106">the verdict</text>
+
+  <path class="up" d="M524,80 L552,80 L552,126"/><polygon class="good" points="552,132 547,122 557,122"/>
+
+  <rect class="box" x="356" y="132" width="230" height="118" rx="7"/>
+  <text class="fldh" x="370" y="152">seal</text>
+  <text class="fld" x="370" y="174">type: marriage</text>
+  <text class="fld" x="370" y="191">subject: keys A and B</text>
+  <text class="fld" x="370" y="208">term: permanent</text>
+  <text class="fld" x="370" y="225">issuer: quorum verdict</text>
+  <text class="fld" x="370" y="242">signature: threshold</text>
+
+  <path class="up" d="M588,166 L608,166"/><polygon class="good" points="614,166 604,161 604,171"/>
+  <path class="up" d="M588,228 L608,228"/><polygon class="good" points="614,228 604,223 604,233"/>
+  <circle class="k" cx="630" cy="166" r="18"/>
+  <text class="kl" x="630" y="171" text-anchor="middle">A</text>
+  <circle class="k" cx="630" cy="228" r="18"/>
+  <text class="kl" x="630" y="233" text-anchor="middle">B</text>
+
+  <text class="sm" x="356" y="266">three anonymous stewards,</text>
+  <text class="sm" x="356" y="283">each bonded separately;</text>
+  <text class="sm" x="356" y="300">a forfeit pays the parties</text>
+
+  <path class="flow" d="M568,250 L568,300"/><polygon class="grey" points="568,306 563,296 573,296"/>
+  <text class="sm" x="580" y="274">written to</text>
+  <text class="sm" x="580" y="291">the record</text>
+
+  <!-- ================= the record ================= -->
+  <rect class="slab" x="18" y="308" width="644" height="38" rx="6"/>
+  <text class="lbl" x="34" y="333">the record</text>
+  <text class="sm em" x="393" y="333">append-only, ordered by block time</text>
+</svg>

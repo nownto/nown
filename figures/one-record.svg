@@ -1,0 +1,61 @@
+<svg viewBox="0 0 680 360" role="img" aria-label="The same fifteen keys plotted by Karma DOT against karma, cut two different ways by two applications that read one public record." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .ax{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.4 }
+    .crit{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.2 }
+    .critb{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.8; stroke-dasharray:7 4.5 }
+    .zone{ fill:var(--bronze,#9c7635); opacity:.10; stroke:none }
+    .in{ fill:var(--bronze,#9c7635); stroke:none }
+    .out{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.7 }
+    .rec{ fill:var(--bronze,#9c7635); fill-opacity:.07; stroke:var(--ink-2,#46423a); stroke-width:1.6 }
+    .flow{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.5 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:18px; fill:var(--ink,#1b1a16) }
+    .axl{ font-family:var(--serif,Georgia,serif); font-size:18px; fill:var(--ink-2,#46423a) }
+    .note{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink-3,#726c60); font-style:italic }
+  </style>
+
+  <!-- the region the hiring app reads in -->
+  <path class="zone" d="M175,30 C205,105 265,150 500,162 L500,30 Z"/>
+
+  <!-- the two figures any application reads off the record -->
+  <path class="ax" d="M110,30 L110,214 L505,214"/>
+  <text class="axl" x="94" y="122" text-anchor="middle" transform="rotate(-90 94 122)">karma (score on the record)</text>
+  <text class="axl" x="307" y="236" text-anchor="middle">Karma DOT (score divided by the key's lifetime)</text>
+
+  <!-- the same fifteen keys, plotted once -->
+  <circle class="in" cx="222" cy="60" r="5.5"/>
+  <circle class="in" cx="255" cy="48" r="5.5"/>
+  <circle class="in" cx="292" cy="86" r="5.5"/>
+  <circle class="in" cx="340" cy="62" r="5.5"/>
+  <circle class="in" cx="398" cy="100" r="5.5"/>
+  <circle class="in" cx="440" cy="142" r="5.5"/>
+  <circle class="in" cx="482" cy="140" r="5.5"/>
+  <circle class="out" cx="126" cy="66" r="5.5"/>
+  <circle class="out" cx="152" cy="80" r="5.5"/>
+  <circle class="out" cx="166" cy="166" r="5.5"/>
+  <circle class="out" cx="206" cy="196" r="5.5"/>
+  <circle class="out" cx="256" cy="166" r="5.5"/>
+  <circle class="out" cx="306" cy="186" r="5.5"/>
+  <circle class="out" cx="368" cy="192" r="5.5"/>
+  <circle class="out" cx="452" cy="188" r="5.5"/>
+
+  <!-- criteria boundary one: the hiring app trades DOT against the total -->
+  <path class="crit" d="M175,30 C205,105 265,150 500,162 L532,163"/>
+  <!-- criteria boundary two: the lender holds a floor on the total -->
+  <path class="critb" d="M112,86 C240,124 350,134 500,128 L532,127"/>
+
+  <!-- key to the marks -->
+  <circle class="in" cx="524" cy="44" r="5.5"/>
+  <text class="lbl" x="540" y="49">read in</text>
+  <circle class="out" cx="524" cy="74" r="5.5"/>
+  <text class="lbl" x="540" y="79">not read</text>
+  <text class="lbl" x="540" y="133">a lender</text>
+  <text class="lbl" x="540" y="167">a hiring app</text>
+
+  <!-- one record underneath both readings -->
+  <path class="flow" d="M250,284 L250,258"/><polygon class="arr" points="250,250 245,260 255,260"/>
+  <path class="flow" d="M360,284 L360,258"/><polygon class="arr" points="360,250 355,260 365,260"/>
+  <rect class="rec" x="110" y="284" width="395" height="38" rx="6"/>
+  <text class="lbl" x="307" y="308" text-anchor="middle">one public record</text>
+  <text class="note" x="307" y="344" text-anchor="middle">both compute the same karma from it; only the criteria differ</text>
+</svg>

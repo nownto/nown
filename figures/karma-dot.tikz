@@ -1,0 +1,31 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize,x=1.05cm,y=1.05cm]
+  % axes: karma against block time
+  \draw[muted,line width=0.8pt,->] (0,0) -- (0,3.55);
+  \draw[muted,line width=0.8pt,->] (0,0) -- (6.55,0);
+  \node[muted,font=\scriptsize,rotate=90] at (-0.45,1.60) {karma};
+  % the chord from the origin to today: its slope is Karma DOT
+  \draw[ink,line width=1pt,dash pattern=on 4pt off 3pt] (0,0) -- (6.13,3.17);
+  % the key's karma: a step that rises on success, falls on failure
+  \draw[bronze,line width=1.2pt]
+    (0,0) -- (0.70,0) -- (0.70,1.58) -- (2.22,1.58) -- (2.22,2.64) -- (3.10,2.64)
+    -- (3.10,1.58) -- (4.93,1.58) -- (4.93,2.64) -- (5.49,2.64) -- (5.49,3.17) -- (6.13,3.17);
+  \fill[ink] (6.13,3.17) circle (0.055);
+  % events
+  \node[ink,font=\scriptsize\ttfamily,anchor=south west] at (0.74,1.16) {$+$ success};
+  \node[ink,font=\scriptsize\ttfamily,anchor=south west] at (2.26,2.68) {$+$ success};
+  \node[ink,font=\scriptsize\ttfamily,anchor=south west] at (3.14,1.00) {$-$ failure};
+  \node[muted,font=\scriptsize\itshape] at (4.45,1.05) {idle};
+  % karma today
+  \draw[muted,line width=0.5pt,dash pattern=on 1pt off 2pt] (0.07,3.17) -- (6.06,3.17);
+  \node[muted,font=\scriptsize,anchor=south west] at (0.14,3.23) {karma today};
+  % blocks alive
+  \draw[muted,decorate,decoration={brace,amplitude=5pt,mirror}] (0,-0.42) -- (6.13,-0.42);
+  \node[ink,anchor=north] at (3.06,-0.74) {blocks alive};
+  % the arithmetic
+  \node[bronze,anchor=west,font=\footnotesize\ttfamily] at (6.70,2.55) {Karma DOT};
+  \node[ink,anchor=south west] at (6.72,1.92) {karma today};
+  \draw[ink,line width=0.6pt] (6.66,1.85) -- (8.86,1.85);
+  \node[ink,anchor=north west] at (6.72,1.78) {blocks alive};
+  \node[muted,font=\scriptsize,anchor=north west,align=left] at (6.70,1.35)
+    {the slope from the first\\block to now: idle blocks\\widen the span and\\flatten it};
+\end{tikzpicture}

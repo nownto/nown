@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is Nown?</title>
+<link rel="canonical" href="https://nown.to/what-is-nown.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nown.to/what-is-nown.html">
+<meta property="og:title" content="What is Nown?">
+<meta property="og:description" content="A peer-to-peer protocol for portable trust between strangers, built from eight concepts.">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://nown.to/nown-og.png">
+<meta property="og:image:width" content="1956">
+<meta property="og:image:height" content="1016">
+<meta name="description" content="What is Nown? A peer-to-peer protocol for portable trust between strangers, built from eight concepts: keys, the record, karma, dealings, oracles, quorums, seals, and the application layer.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="favicon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{
+  --paper:#14130e; --paper-2:#1c1a13; --ink:#e7e1d1; --ink-2:#b4ad9b; --ink-3:#867f6d;
+  --rule:#2b2820; --rule-2:#3a3427; --bronze:#c79b50; --bronze-2:#dcb96f; --sel:rgba(199,155,80,.20);
+  --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Palatino,"Sitka Text",Charter,Cambria,Georgia,serif;
+  --mono:"SFMono-Regular","SF Mono","JetBrains Mono","IBM Plex Mono",Menlo,"Roboto Mono",Consolas,monospace;
+}
+:root[data-theme="light"]{
+  --paper:#ece7dd; --paper-2:#f3efe6; --ink:#1b1a16; --ink-2:#46423a; --ink-3:#726c60;
+  --rule:#d6cfc1; --rule-2:#c4bcac; --bronze:#825f27; --bronze-2:#9c7635; --sel:rgba(130,95,39,.16);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.16rem;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+::selection{background:var(--sel)}
+a{color:var(--bronze);text-decoration:none}
+a:hover{color:var(--bronze-2);text-decoration:underline}
+:focus-visible{outline:2px solid var(--bronze);outline-offset:3px;border-radius:2px}
+.wrap{max-width:58rem;margin:0 auto;padding:0 clamp(20px,5vw,40px)}
+
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(16px,3vw,26px);height:48px;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.nlinks{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.nlinks a{color:var(--ink-2);margin-right:.9em}
+.nlinks a:hover{color:var(--ink);text-decoration:none}
+.nlinks a.cur{color:var(--ink);font-weight:600}
+.nlinks .dot{opacity:.4;margin-right:.9em}
+.tb-r{display:flex;align-items:center;gap:6px}
+#themeBtn{background:none;border:1px solid var(--rule-2);border-radius:999px;color:var(--ink-2);cursor:pointer;padding:6px;display:inline-flex}
+#themeBtn:hover{color:var(--ink);border-color:var(--bronze)}
+#themeBtn svg{width:15px;height:15px}
+/* Same control as the whitepaper and the article carry: it opens the typeset
+   PDF that build-pdf.sh makes from this very page, never a browser print. */
+#pdfBtn{display:inline-flex;align-items:center;gap:.5em;background:none;border:1px solid var(--rule-2);
+  border-radius:999px;color:var(--ink-2);padding:5px 11px;font-family:var(--mono);font-size:.62rem;
+  letter-spacing:.14em;text-transform:uppercase}
+#pdfBtn:hover{color:var(--ink);border-color:var(--bronze);text-decoration:none}
+#pdfBtn svg{width:13px;height:13px;display:block}
+@media (max-width:560px){ .nlinks{font-size:.52rem;letter-spacing:.03em;white-space:nowrap;overflow-x:auto} .nlinks a{margin-right:.45em} .nlinks .dot{margin-right:.45em} }
+/* the typeset PDF control is dropped on phones: the HTML is the mobile read. */
+@media (max-width:620px){ #pdfBtn{display:none} }
+
+.hero{padding:clamp(3rem,9vh,6rem) 0 2rem;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--bronze);margin:0 0 1.3rem}
+.hook{font-family:var(--serif);font-size:clamp(2rem,6vw,3.1rem);line-height:1.12;letter-spacing:-.02em;margin:0;font-weight:600;text-wrap:balance}
+.hook .g{color:var(--bronze)}
+.lede{font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;color:var(--ink-3);margin:1.6rem 0 0;text-transform:uppercase}
+
+.grid{column-count:2;column-gap:3.4rem;padding:2.6rem 0 .4rem;border-top:1px solid var(--rule);margin-top:2.4rem}
+@media (max-width:640px){ .grid{column-count:1} }
+.c{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 2.1rem}
+.c h2{font-family:var(--serif);font-size:1.2rem;margin:0 0 .55rem;letter-spacing:-.01em;text-wrap:balance}
+.c ul{margin:0;padding-left:1em;list-style:none}
+.c li{color:var(--ink-2);font-size:.92rem;line-height:1.5;margin:.3rem 0;text-wrap:pretty;position:relative}
+.c li::before{content:'';position:absolute;left:-1em;top:.62em;width:4px;height:1px;background:var(--ink-3)}
+
+.cta{border-top:1px solid var(--rule);margin-top:1.5rem;padding:2.6rem 0 3rem;text-align:center}
+.btn{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--bronze);color:#1b1a16;border-radius:999px;padding:13px 26px;font-weight:600}
+.btn:hover{background:var(--bronze-2);text-decoration:none;color:#1b1a16}
+.btn.ghost{background:none;color:var(--ink-2);border:1px solid var(--rule-2);margin-left:.6rem}
+.btn.ghost:hover{color:var(--ink);border-color:var(--bronze);background:none}
+.lic{max-width:46ch;margin:1.9rem auto 0;font-size:.86rem;line-height:1.6;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--rule);text-align:center;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;padding:2rem 0 2.6rem}
+footer a{color:var(--ink-3)}
+footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nlinks">
+    <a href="/">NOWN</a><span class="dot">·</span><a href="nown-whitepaper.html">Whitepaper</a><span class="dot">·</span><a href="nown-article.html">Article</a><span class="dot">·</span><a href="https://github.com/nownto/nown" target="_blank" rel="noopener noreferrer">GitHub</a><span class="dot">·</span><a href="what-is-nown.html" class="cur" aria-current="page">What is Nown?</a>
+  </div>
+  <div class="tb-r">
+    <a id="pdfBtn" href="nown-what-is.pdf" target="_blank" rel="noopener" title="Open the typeset PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
+      <span class="blab">PDF</span>
+    </a>
+    <button id="themeBtn" aria-label="Toggle color theme"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">What is Nown?</p>
+    <h1 class="hook">A peer-to-peer protocol for portable trust <span class="g">between strangers.</span></h1>
+    <p class="lede">Built from eight concepts</p>
+  </section>
+
+  <section class="grid">
+    <div class="c"><h2>Keys</h2><ul>
+      <li>Every participant acts through a public/private keypair.</li>
+      <li>The public key is the account others know and the anchor for its record.</li>
+      <li>The private key proves control without being revealed.</li>
+      <li>Public-key cryptography lets others verify control without seeing or holding it.</li>
+      <li>Keys are property, kept, transferred, or sold.</li>
+      <li>One person may hold any number of keys.</li>
+    </ul></div>
+    <div class="c"><h2>The record</h2><ul>
+      <li>One public, append-only, permanent record.</li>
+      <li>Independent nodes hold and serve it, so there is no central store and no single point of loss.</li>
+      <li>Ordered by block time, a public clock no participant controls.</li>
+      <li>It holds karma marks and seals, and nothing else. A dealing is never written to it.</li>
+      <li>A reader learns what a key has done without learning anything about the doing.</li>
+      <li>Anyone may verify it.</li>
+    </ul></div>
+    <div class="c"><h2>Karma</h2><ul>
+      <li>Karma is a key's score on the record: the sum of its marks, tied to the key, not to any platform.</li>
+      <li>Anyone can compute it from the public record, and two readers reach the same figure.</li>
+      <li>A dealing ruled correct writes a mark up, one ruled incorrect writes a mark down, and only a recorded mark moves the score.</li>
+      <li>A mark is a mark. Karma is not fractionable, and there is no limit in either direction.</li>
+      <li>Karma is minted, never moved: nothing is taken from anyone to write a mark, and karma is never staked, escrowed, or transferred.</li>
+      <li>A key at zero confers nothing. It can receive a mark from a key that carries karma, and it can give none, so empty keys write nothing to each other however often they deal.</li>
+    </ul></div>
+    <div class="c"><h2>Dealings</h2><ul>
+      <li>A dealing is any exchange a key puts something behind, and it is the only kind of entry there is.</li>
+      <li>Both keys agree everything before it opens: the outcomes, the oracle, and whether a quorum may be called.</li>
+      <li>Money is voluntary: a dealing that carries money is the same object with deposits attached.</li>
+      <li>Between two keys a dealing has three possible rulings: a mark up for both, or up for one and down for the other, either way round.</li>
+      <li>A deadline that passes with no attestation and no verdict closes the dealing as correct for both.</li>
+      <li>The marks are written once, at the close.</li>
+    </ul></div>
+    <div class="c"><h2>Oracles</h2><ul>
+      <li>An oracle supplies the fact an interaction depends on, and the parties name it before they deal.</li>
+      <li>The parties may settle by mutual agreement.</li>
+      <li>If they disagree, or if the dealing called for it at creation, a quorum decides between the outcomes agreed before the dealing.</li>
+      <li>Those two, the parties and the quorum, are the only oracles.</li>
+      <li>A panel with no power over the event is a witness, not an oracle.</li>
+      <li>The ruling is enforced by consequence: where money rides, signing the ruled path is the last act of the dealing, and a party who refuses has failed a dealing.</li>
+    </ul></div>
+    <div class="c"><h2>Quorums</h2><ul>
+      <li>A panel of strangers of high karma, called for one case, each free to answer the call or decline it.</li>
+      <li>Eligibility is karma above a bar that moves with the network, and every key tests it privately against its own record. No list of the panel exists anywhere.</li>
+      <li>Signing is seating: a steward signs every outcome his seat can have at the moment he accepts, and the stewards sign the oracle side together.</li>
+      <li>The evidence reaches him encrypted, and it opens only for a key that was called and took a seat.</li>
+      <li>Each steward privately picks one of the outcomes the dealing fixed, commits his choice, and opens it after the deadline, so no one can read a running count.</li>
+      <li>The outcome most of the opened choices carry is the verdict, and it is final. A steward who matches it takes his bond back, a bounty out of the fee, and a share of the bonds forfeited by the seats that missed; one who misses it, or stays silent, forfeits his bond to the seats that matched.</li>
+      <li>The panel is one side of a dealing and each steward is the other, so every steward deals with a part of himself, one share in the total size of the quorum.</li>
+      <li>The quorum decides the outcome, never takes custody of the funds, and writes nothing to a steward's key.</li>
+    </ul></div>
+    <div class="c"><h2>Seals</h2><ul>
+      <li>A seal is what someone else certified about a key: a credential, membership, ownership, authorship, or another attestation.</li>
+      <li>Issued by a key, or ratified by a quorum where no single signer can carry the fact alone.</li>
+      <li>A seal is a dealing, so its outcomes are fixed at issuance and a challenge calls a panel to pick one.</li>
+      <li>No seal lands without the subject's countersignature. A denied certification marks the issuer alone.</li>
+      <li>A seal mints karma from nothing, and nothing caps how many a key may issue or hold: an issuer is read through the keys he sealed.</li>
+      <li>Every seal is permanent, and a seal meant to lapse carries its ending inside it: a voiding mark appended at a stated block, which a reader sees as a term that has run.</li>
+    </ul></div>
+    <div class="c"><h2>The application layer</h2><ul>
+      <li>Every conforming application computes the same karma from the same record.</li>
+      <li>The application decides how to filter and present the record.</li>
+      <li>Metrics live here: Karma DOT is a key's score divided by its age plus a settling constant, the density of dealing over time.</li>
+      <li>The constant is what keeps a key one block old from outranking every veteran, and it keeps the division from breaking at a key's first appearance.</li>
+      <li>Gates live here too: reading a record as a bar for access or eligibility, an oracle only in a figurative sense.</li>
+      <li>Client-side rules never change the record or the karma beneath.</li>
+    </ul></div>
+  </section>
+
+  <section class="cta">
+    <a class="btn" href="nown-whitepaper.html">Read the whitepaper</a><a class="btn ghost" href="nown-article.html">Or the research paper</a>
+    <p class="lic">Nown is released into the public domain under <a href="https://unlicense.org" target="_blank" rel="noopener noreferrer">the Unlicense</a>: the protocol, both papers, the site, and every line of the tooling. No rights reserved, no owner, no company.</p>
+  </section>
+</main>
+
+<footer>
+  <a href="https://unlicense.org" target="_blank" rel="noopener noreferrer">PUBLIC DOMAIN</a> &middot; <a href="https://github.com/nownto/nown" target="_blank" rel="noopener noreferrer">OPEN PROTOCOL</a> &middot; <a href="mailto:hello@nown.to">NO COMPANY</a>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{ var t=localStorage.getItem('nown-theme'); if(t) root.setAttribute('data-theme',t); }catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    var next = cur==='light' ? 'dark' : (cur==='dark' ? 'light' : (matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
+    root.setAttribute('data-theme',next);
+    try{ localStorage.setItem('nown-theme',next); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

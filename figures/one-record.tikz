@@ -1,0 +1,46 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize]
+  % the region the hiring app reads in
+  \fill[bronze,opacity=0.10] (2.99,5.63) .. controls (3.50,4.35) and (4.52,3.58) .. (8.53,3.38)
+    -- (8.53,5.63) -- cycle;
+  % the two figures any application reads off the record
+  \draw[ink,line width=0.8pt] (1.88,5.70) -- (1.88,2.49) -- (8.62,2.49);
+  \node[muted,rotate=90,font=\scriptsize] at (1.44,4.06) {karma (score on the record)};
+  \node[muted,font=\scriptsize] at (5.20,2.11) {Karma DOT (score divided by the key's lifetime)};
+  % the same fifteen keys, plotted once
+  \fill[bronze] (3.79,5.12) circle (0.095);
+  \fill[bronze] (4.35,5.32) circle (0.095);
+  \fill[bronze] (4.98,4.68) circle (0.095);
+  \fill[bronze] (5.80,5.08) circle (0.095);
+  \fill[bronze] (6.79,4.44) circle (0.095);
+  \fill[bronze] (7.51,3.72) circle (0.095);
+  \fill[bronze] (8.22,3.75) circle (0.095);
+  \draw[muted,line width=0.7pt] (2.15,5.02) circle (0.095);
+  \draw[muted,line width=0.7pt] (2.59,4.78) circle (0.095);
+  \draw[muted,line width=0.7pt] (2.83,3.31) circle (0.095);
+  \draw[muted,line width=0.7pt] (3.51,2.80) circle (0.095);
+  \draw[muted,line width=0.7pt] (4.37,3.31) circle (0.095);
+  \draw[muted,line width=0.7pt] (5.22,2.97) circle (0.095);
+  \draw[muted,line width=0.7pt] (6.28,2.87) circle (0.095);
+  \draw[muted,line width=0.7pt] (7.71,2.94) circle (0.095);
+  % criteria boundary one: the hiring app trades DOT against the total
+  \draw[bronze,line width=1.1pt] (2.99,5.63) .. controls (3.50,4.35) and (4.52,3.58) ..
+    (8.53,3.38) -- (9.08,3.36);
+  % criteria boundary two: the lender holds a floor on the total
+  \draw[ink,line width=0.9pt,dash pattern=on 4pt off 2.5pt]
+    (1.91,4.68) .. controls (4.09,4.03) and (5.97,3.86) .. (8.53,3.96) -- (9.08,3.98);
+  % key to the marks
+  \fill[bronze] (8.94,5.39) circle (0.095);
+  \node[ink,anchor=west,font=\scriptsize] at (9.12,5.39) {read in};
+  \draw[muted,line width=0.7pt] (8.94,4.88) circle (0.095);
+  \node[ink,anchor=west,font=\scriptsize] at (9.12,4.88) {not read};
+  \node[ink,anchor=west,font=\scriptsize] at (9.12,3.96) {a lender};
+  \node[ink,anchor=west,font=\scriptsize] at (9.12,3.38) {a hiring app};
+  % one record underneath both readings
+  \draw[muted,line width=0.9pt,->] (4.27,1.32) -- (4.27,1.88);
+  \draw[muted,line width=0.9pt,->] (6.14,1.32) -- (6.14,1.88);
+  \fill[bronze,opacity=0.07] (1.88,0.65) rectangle (8.53,1.30);
+  \draw[ink,line width=0.9pt,rounded corners=2pt] (1.88,0.65) rectangle (8.53,1.30);
+  \node[ink] at (5.20,0.97) {one public record};
+  \node[muted,font=\scriptsize\itshape] at (5.20,0.26)
+    {both compute the same karma from it; only the criteria differ};
+\end{tikzpicture}

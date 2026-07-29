@@ -1,0 +1,112 @@
+<svg viewBox="0 0 680 420" role="img" aria-label="Five stewards called at random from the keys eligible to sit each take a seat under bond and vote in secret. The majority is the verdict and it is final. The two forfeited bonds of the seats that missed go to the three stewards who matched, and the fee posted at the creation of the dealing pays each of them a bounty on top of his returned bond." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .pool{ fill:var(--ink-3,#726c60) }
+    .seat{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:1.8 }
+    .bond{ fill:var(--bronze,#9c7635) }
+    .ballot{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.3 }
+    .flow{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.5 }
+    .pay{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:1.8 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .arrb{ fill:var(--bronze,#9c7635) }
+    .brk{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.2 }
+    .rule{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:0.8; opacity:0.45 }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:18px; fill:var(--ink,#1b1a16) }
+    .ann{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink-3,#726c60); font-style:italic }
+    .kl{ font-family:var(--mono,monospace); font-size:18px; fill:var(--ink,#1b1a16) }
+    .klq{ font-family:var(--mono,monospace); font-size:18px; fill:var(--ink-3,#726c60) }
+  </style>
+
+  <!-- stage 1: the pool of eligible keys -->
+  <g class="pool">
+    <circle cx="34" cy="74" r="4"/><circle cx="62" cy="62" r="4"/><circle cx="88" cy="80" r="4"/>
+    <circle cx="30" cy="106" r="4"/><circle cx="58" cy="98" r="4"/><circle cx="86" cy="110" r="4"/>
+    <circle cx="40" cy="136" r="4"/><circle cx="68" cy="132" r="4"/><circle cx="92" cy="142" r="4"/>
+  </g>
+  <text class="lbl" x="86" y="170" text-anchor="middle">eligible keys</text>
+  <text class="ann" x="86" y="192" text-anchor="middle">keys above the bar,</text>
+  <text class="ann" x="86" y="210" text-anchor="middle">less the parties</text>
+
+  <!-- the call -->
+  <text class="ann" x="146" y="98" text-anchor="middle">called at random,</text>
+  <path class="flow" d="M108,108 L182,108"/><polygon class="arr" points="190,108 180,103 180,113"/>
+  <text class="ann" x="146" y="126" text-anchor="middle">anonymous</text>
+
+  <!-- stage 2: five stewards, each with a bond and a sealed private ballot -->
+  <text class="lbl" x="275" y="24" text-anchor="middle">five stewards</text>
+
+  <circle class="seat" cx="210" cy="40" r="13"/>
+  <rect class="bond" x="230" y="33" width="14" height="14"/>
+  <text class="kl" x="252" y="45">B</text>
+  <rect class="ballot" x="272" y="29" width="66" height="22" rx="4"/>
+  <circle class="bond" cx="286" cy="40" r="4.5"/>
+  <text class="kl" x="310" y="45">A</text>
+
+  <circle class="seat" cx="210" cy="74" r="13"/>
+  <rect class="bond" x="230" y="67" width="14" height="14"/>
+  <text class="kl" x="252" y="79">B</text>
+  <rect class="ballot" x="272" y="63" width="66" height="22" rx="4"/>
+  <circle class="bond" cx="286" cy="74" r="4.5"/>
+  <text class="kl" x="310" y="79">A</text>
+
+  <circle class="seat" cx="210" cy="108" r="13"/>
+  <rect class="bond" x="230" y="101" width="14" height="14"/>
+  <text class="kl" x="252" y="113">B</text>
+  <rect class="ballot" x="272" y="97" width="66" height="22" rx="4"/>
+  <circle class="bond" cx="286" cy="108" r="4.5"/>
+  <text class="kl" x="310" y="113">A</text>
+
+  <circle class="seat" cx="210" cy="142" r="13"/>
+  <rect class="bond" x="230" y="135" width="14" height="14"/>
+  <text class="kl" x="252" y="147">B</text>
+  <rect class="ballot" x="272" y="131" width="66" height="22" rx="4"/>
+  <circle class="bond" cx="286" cy="142" r="4.5"/>
+  <text class="klq" x="310" y="147">B</text>
+
+  <circle class="seat" cx="210" cy="176" r="13"/>
+  <rect class="bond" x="230" y="169" width="14" height="14"/>
+  <text class="kl" x="252" y="181">B</text>
+  <rect class="ballot" x="272" y="165" width="66" height="22" rx="4"/>
+  <circle class="bond" cx="286" cy="176" r="4.5"/>
+  <text class="klq" x="310" y="181">B</text>
+
+  <!-- stage 3: the tally and the verdict -->
+  <path class="brk" d="M344,25 L350,25 L350,191 L344,191"/>
+  <path class="flow" d="M350,108 L402,108"/><polygon class="arr" points="410,108 400,103 400,113"/>
+  <text class="ann" x="422" y="92">tally</text>
+  <text class="kl" x="422" y="114">3 A / 2 B</text>
+  <path class="flow" d="M516,108 L548,108"/><polygon class="arr" points="556,108 546,103 546,113"/>
+  <text class="lbl" x="568" y="102">verdict: A</text>
+  <text class="ann" x="568" y="122">final</text>
+
+  <!-- what the ballot is -->
+  <text class="ann" x="404" y="212" text-anchor="middle">each privately selects one of the outcomes agreed before the dealing,</text>
+  <text class="ann" x="404" y="230" text-anchor="middle">before a block-time deadline</text>
+
+  <path class="rule" d="M20,250 L660,250"/>
+
+  <!-- settlement -->
+  <text class="ann" x="24" y="272">once the verdict is final</text>
+
+  <!-- the forfeited bonds go to the seats that matched -->
+  <text class="lbl" x="24" y="308">the 2 who missed</text>
+  <rect class="bond" x="200" y="294" width="16" height="16"/>
+  <text class="kl" x="222" y="307">B</text>
+  <rect class="bond" x="248" y="294" width="16" height="16"/>
+  <text class="kl" x="270" y="307">B</text>
+  <text class="ann" x="200" y="332">bonds forfeited</text>
+  <path class="pay" d="M300,302 L356,302"/><polygon class="arrb" points="364,302 354,297 354,307"/>
+  <text class="lbl" x="382" y="308">the 3 who matched</text>
+
+  <!-- the fee posted at creation pays a fixed bounty -->
+  <text class="lbl" x="24" y="382">the fee</text>
+  <text class="ann" x="24" y="404">posted at creation</text>
+  <rect class="bond" x="200" y="368" width="16" height="16"/>
+  <text class="kl" x="222" y="381">F</text>
+  <path class="pay" d="M300,376 L328,376"/><polygon class="arrb" points="336,376 326,371 326,381"/>
+  <circle class="seat" cx="360" cy="376" r="10"/>
+  <circle class="seat" cx="390" cy="376" r="10"/>
+  <circle class="seat" cx="420" cy="376" r="10"/>
+  <path class="brk" d="M434,362 L440,362 L440,390 L434,390"/>
+  <text class="lbl" x="452" y="370" font-size="16">the 3 who matched:</text>
+  <text class="lbl" x="452" y="392" font-size="16">bond back and a fixed bounty</text>
+</svg>

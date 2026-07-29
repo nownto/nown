@@ -1,0 +1,44 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize,
+  key/.style={draw=ink,text=ink,circle,line width=1pt,minimum size=0.5cm,inner sep=0pt,font=\footnotesize\ttfamily},
+  keysm/.style={draw=ink,text=ink,circle,line width=0.9pt,minimum size=0.42cm,inner sep=0pt,font=\scriptsize\ttfamily}]
+  \node[muted,font=\scriptsize\itshape] at (3.1,9.3) {every record is permanent};
+  % funding
+  \node[key] (A) at (1.15,8.55) {A};
+  \node[key] (B) at (5.05,8.55) {B};
+  \draw[muted,line width=0.8pt,->] (1.35,8.32) -- (2.1,7.95);
+  \draw[muted,line width=0.8pt,->] (4.85,8.32) -- (4.1,7.95);
+  \draw[muted,line width=0.7pt] (1.9,6.9) rectangle (4.3,7.9);
+  \node[ink] at (3.1,7.65) {2-of-2 escrow};
+  \fill[bronze] (2.15,7.28) rectangle ++(0.2,0.2);
+  \node[ink,font=\scriptsize\ttfamily,anchor=west] at (2.5,7.38) {deposit A};
+  \fill[bronze] (2.15,6.98) rectangle ++(0.2,0.2);
+  \node[ink,font=\scriptsize\ttfamily,anchor=west] at (2.5,7.08) {deposit B};
+  \node[muted,font=\scriptsize\itshape] at (3.1,6.58) {outcomes fixed and pre-signed at funding};
+  % the oracle
+  \draw[muted,line width=0.8pt,->] (3.1,6.36) -- (3.1,6.0);
+  \node[draw=ink,line width=1pt,rectangle,rotate=45,minimum size=0.3cm,inner sep=0pt] at (3.1,5.74) {};
+  \node[muted,font=\scriptsize\itshape] at (3.1,5.25) {attestation or a quorum};
+  % one of three rulings
+  \draw[muted,line width=0.8pt,->] (3.1,5.02) -- (3.1,4.6);
+  \draw[rulec,line width=0.5pt] (0.1,4.35) -- (6.1,4.35);
+  \node[ink,anchor=west] at (0.1,3.95) {A and B correct};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (0.1,3.6) {deposits return to both};
+  \node[keysm] at (4.35,3.85) {A};
+  \draw[bronze,line width=1.3pt,->] (4.75,3.68) -- (4.75,4.02);
+  \node[keysm] at (5.25,3.85) {B};
+  \draw[bronze,line width=1.3pt,->] (5.65,3.68) -- (5.65,4.02);
+  \draw[rulec,line width=0.5pt] (0.1,3.25) -- (6.1,3.25);
+  \node[ink,anchor=west] at (0.1,2.85) {A correct, B incorrect};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (0.1,2.5) {deposits move by the ruled path};
+  \node[keysm] at (4.35,2.75) {A};
+  \draw[bronze,line width=1.3pt,->] (4.75,2.58) -- (4.75,2.92);
+  \node[keysm] at (5.25,2.75) {B};
+  \draw[muted,line width=1.3pt,->] (5.65,2.92) -- (5.65,2.58);
+  \draw[rulec,line width=0.5pt] (0.1,2.15) -- (6.1,2.15);
+  \node[ink,anchor=west] at (0.1,1.75) {A incorrect, B correct};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (0.1,1.4) {deposits move by the ruled path};
+  \node[keysm] at (4.35,1.65) {A};
+  \draw[muted,line width=1.3pt,->] (4.75,1.82) -- (4.75,1.48);
+  \node[keysm] at (5.25,1.65) {B};
+  \draw[bronze,line width=1.3pt,->] (5.65,1.48) -- (5.65,1.82);
+\end{tikzpicture}

@@ -1,0 +1,81 @@
+<svg viewBox="0 0 680 344" role="img" aria-label="The call, on the block-time axis. At the opening block the keys eligible to sit are those whose karma stands above the bar, and each one tests that privately against its own record. The call is carried by the parties’ clients and names no party. The evidence window runs a fixed span from the call and closes on its own tick. Seats open at a later block no one can predict, marked on the axis by a question mark. Each eligible key runs the case through a verifiable random function and qualifies below the threshold privately, then takes a seat by signing under bond. At the panel minimum the ballot clock starts." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .box{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.2 }
+    .exit{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1; stroke-dasharray:3 4 }
+    .num{ font-family:var(--mono,monospace); font-size:12px; fill:var(--bronze,#9c7635) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--ink,#1b1a16) }
+    .xlbl{ font-family:var(--serif,Georgia,serif); font-size:14px; fill:var(--ink-3,#726c60); font-style:italic }
+    .axis{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.6 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .ax{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink-3,#726c60); font-style:italic }
+    .tick{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--bronze,#9c7635); font-style:italic }
+    .drop{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1; stroke-dasharray:2 4 }
+  </style>
+
+  <!-- who may sit, and who carries the call -->
+  <rect class="exit" x="60" y="16" width="202" height="52" rx="10"/>
+  <text class="xlbl" x="161" y="38" text-anchor="middle">keys above the bar,</text>
+  <text class="xlbl" x="161" y="56" text-anchor="middle">less the parties</text>
+  <path class="drop" d="M161,104 L161,74"/><polygon class="arr" points="161,72 155,82 167,82"/>
+
+  <rect class="exit" x="282" y="16" width="262" height="52" rx="10"/>
+  <text class="xlbl" x="413" y="38" text-anchor="middle">the call is carried by the clients,</text>
+  <text class="xlbl" x="413" y="56" text-anchor="middle">evidence size, terms, never a party</text>
+  <path class="drop" d="M310,104 L310,74"/><polygon class="arr" points="310,72 304,82 316,82"/>
+
+  <!-- five stages -->
+  <rect class="box" x="112" y="104" width="98" height="64" rx="5"/>
+  <text class="num" x="121" y="121">1</text>
+  <text class="lbl" x="161" y="149" text-anchor="middle" font-size="14">eligibility</text>
+
+  <polygon class="arr" points="221,136 213,132 213,140"/>
+  <rect class="box" x="226" y="104" width="98" height="64" rx="5"/>
+  <text class="num" x="235" y="121">2</text>
+  <text class="lbl" x="275" y="149" text-anchor="middle">the call</text>
+
+  <polygon class="arr" points="335,136 327,132 327,140"/>
+  <rect class="box" x="340" y="104" width="98" height="64" rx="5"/>
+  <text class="num" x="349" y="121">3</text>
+  <text class="lbl" x="389" y="142" text-anchor="middle" font-size="14">evidence</text>
+  <text class="lbl" x="389" y="160" text-anchor="middle" font-size="14">window</text>
+
+  <polygon class="arr" points="449,136 441,132 441,140"/>
+  <rect class="box" x="454" y="104" width="98" height="64" rx="5"/>
+  <text class="num" x="463" y="121">4</text>
+  <text class="lbl" x="503" y="142" text-anchor="middle" font-size="14">seats</text>
+  <text class="lbl" x="503" y="160" text-anchor="middle" font-size="14">open</text>
+
+  <polygon class="arr" points="563,136 555,132 555,140"/>
+  <rect class="box" x="568" y="104" width="98" height="64" rx="5"/>
+  <text class="num" x="577" y="121">5</text>
+  <text class="lbl" x="617" y="142" text-anchor="middle" font-size="14">panel</text>
+  <text class="lbl" x="617" y="160" text-anchor="middle" font-size="14">minimum</text>
+
+  <!-- the axis, block time at its beginning -->
+  <text class="ax" x="24" y="224">block time</text>
+  <path class="axis" d="M24,244 L658,244"/><polygon class="arr" points="668,244 656,238 656,250"/>
+
+  <path class="drop" d="M161,168 L161,238"/>
+  <path class="axis" d="M161,238 L161,250"/>
+  <text class="tick" x="161" y="272" text-anchor="middle">opening block</text>
+
+  <path class="drop" d="M275,168 L275,238"/>
+  <path class="axis" d="M275,238 L275,250"/>
+  <text class="tick" x="275" y="272" text-anchor="middle">the call</text>
+
+  <path class="drop" d="M389,168 L389,238"/>
+  <path class="axis" d="M389,238 L389,250"/>
+  <text class="tick" x="389" y="272" text-anchor="middle">close tick</text>
+
+  <path class="drop" d="M503,168 L503,238"/>
+  <path class="axis" d="M503,238 L503,250"/>
+  <text class="tick" x="503" y="272" text-anchor="middle">?</text>
+
+  <path class="drop" d="M617,168 L617,238"/>
+  <path class="axis" d="M617,238 L617,250"/>
+  <text class="tick" x="617" y="272" text-anchor="middle">ballot clock</text>
+
+  <text class="xlbl" x="340" y="298" text-anchor="middle">seats open at a block no one can predict</text>
+  <text class="xlbl" x="340" y="318" text-anchor="middle">each eligible key runs the case through a verifiable random function,</text>
+  <text class="xlbl" x="340" y="336" text-anchor="middle">qualifies below the threshold privately, and takes a seat by posting a bond</text>
+</svg>

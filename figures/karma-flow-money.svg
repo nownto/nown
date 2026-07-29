@@ -1,0 +1,72 @@
+<svg viewBox="0 0 420 640" role="img" aria-label="A dealing that carries money: both keys fund a two-of-two escrow with every outcome pre-signed, attestation or a quorum rules, and one of three outcomes follows: both correct with deposits returned, or one key correct and the other incorrect with deposits moved along the ruled path. One mark up on the key ruled correct, one mark down on the other." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .k{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.8 }
+    .kl{ font-family:var(--mono,monospace); font-size:17px; fill:var(--ink,#1b1a16); font-weight:600 }
+    .dl{ font-family:var(--mono,monospace); font-size:15px; fill:var(--ink,#1b1a16) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink,#1b1a16) }
+    .ann{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--ink-3,#726c60); font-style:italic }
+    .esc{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.4 }
+    .flow{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.6 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .rule{ stroke:var(--rule,#d8d2c4); stroke-width:1 }
+    .up{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.6 }
+    .b{ fill:var(--bronze,#9c7635) }
+    .dn{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:2.6 }
+    .m{ fill:var(--ink-3,#726c60) }
+  </style>
+
+  <text class="ann" x="210" y="28" text-anchor="middle">every record is permanent</text>
+
+  <!-- funding -->
+  <circle class="k" cx="80" cy="86" r="20"/>
+  <text class="kl" x="80" y="92" text-anchor="middle">A</text>
+  <circle class="k" cx="340" cy="86" r="20"/>
+  <text class="kl" x="340" y="92" text-anchor="middle">B</text>
+  <path class="flow" d="M96,101 L140,126"/><polygon class="arr" points="148,131 135,129 141,118"/>
+  <path class="flow" d="M324,101 L280,126"/><polygon class="arr" points="272,131 279,118 285,129"/>
+  <rect class="esc" x="130" y="118" width="160" height="84" rx="5"/>
+  <text class="lbl" x="210" y="144" text-anchor="middle">2-of-2 escrow</text>
+  <rect class="b" x="150" y="156" width="13" height="13"/>
+  <text class="dl" x="172" y="168">deposit A</text>
+  <rect class="b" x="150" y="178" width="13" height="13"/>
+  <text class="dl" x="172" y="190">deposit B</text>
+  <text class="ann" x="210" y="228" text-anchor="middle">outcomes fixed and pre-signed at funding</text>
+
+  <!-- the oracle -->
+  <path class="flow" d="M210,242 L210,268"/><polygon class="arr" points="210,278 204,266 216,266"/>
+  <polygon class="k" points="210,284 232,306 210,328 188,306"/>
+  <text class="ann" x="210" y="358" text-anchor="middle">attestation or a quorum</text>
+
+  <!-- one of three rulings -->
+  <path class="flow" d="M210,370 L210,392"/><polygon class="arr" points="210,402 204,390 216,390"/>
+
+  <line class="rule" x1="30" y1="414" x2="390" y2="414"/>
+  <text class="lbl" x="30" y="444">A and B correct</text>
+  <text class="ann" x="30" y="466">deposits return to both</text>
+  <circle class="k" cx="300" cy="446" r="15"/>
+  <text class="kl" x="300" y="452" text-anchor="middle">A</text>
+  <path class="up" d="M322,454 L322,440"/><polygon class="b" points="322,431 315,443 329,443"/>
+  <circle class="k" cx="356" cy="446" r="15"/>
+  <text class="kl" x="356" y="452" text-anchor="middle">B</text>
+  <path class="up" d="M378,454 L378,440"/><polygon class="b" points="378,431 371,443 385,443"/>
+
+  <line class="rule" x1="30" y1="488" x2="390" y2="488"/>
+  <text class="lbl" x="30" y="518">A correct, B incorrect</text>
+  <text class="ann" x="30" y="540">deposits move by the ruled path</text>
+  <circle class="k" cx="300" cy="520" r="15"/>
+  <text class="kl" x="300" y="526" text-anchor="middle">A</text>
+  <path class="up" d="M322,528 L322,514"/><polygon class="b" points="322,505 315,517 329,517"/>
+  <circle class="k" cx="356" cy="520" r="15"/>
+  <text class="kl" x="356" y="526" text-anchor="middle">B</text>
+  <path class="dn" d="M378,512 L378,526"/><polygon class="m" points="378,535 371,523 385,523"/>
+
+  <line class="rule" x1="30" y1="562" x2="390" y2="562"/>
+  <text class="lbl" x="30" y="592">A incorrect, B correct</text>
+  <text class="ann" x="30" y="614">deposits move by the ruled path</text>
+  <circle class="k" cx="300" cy="594" r="15"/>
+  <text class="kl" x="300" y="600" text-anchor="middle">A</text>
+  <path class="dn" d="M322,586 L322,600"/><polygon class="m" points="322,609 315,597 329,597"/>
+  <circle class="k" cx="356" cy="594" r="15"/>
+  <text class="kl" x="356" y="600" text-anchor="middle">B</text>
+  <path class="up" d="M378,602 L378,588"/><polygon class="b" points="378,579 371,591 385,591"/>
+</svg>

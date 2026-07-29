@@ -1,0 +1,79 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize]
+  % faint divider between the two paths a seal can take
+  \draw[muted,dashed,line width=0.5pt] (5.80,5.63) -- (5.80,1.02);
+
+  % ================ LEFT: issued by a key ================
+  \node[ink,anchor=west,font=\footnotesize\itshape] at (0.31,5.56) {issued by a key};
+
+  \node[draw=ink,text=ink,circle,line width=1pt,minimum size=0.70cm,font=\footnotesize\ttfamily] (E) at (0.89,4.81) {E};
+
+  % the issuer signs the seal and answers for it like any other dealing
+  \draw[bronze,line width=1pt,->] (0.89,4.43) -- (0.89,3.84);
+  \node[muted,anchor=west,font=\scriptsize\itshape] at (1.23,4.16) {issues it as a dealing};
+
+  % the seal itself: one record entry, with named fields
+  \draw[bronze,line width=0.9pt,rounded corners=2pt] (0.375,3.82) rectangle (4.16,1.81);
+  \node[bronze,anchor=west,font=\scriptsize\ttfamily\bfseries] at (0.61,3.48) {seal};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (0.61,3.10) {type: certification};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (0.61,2.81) {subject: key S};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (0.61,2.52) {term: permanent};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (0.61,2.23) {issuer: key E};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (0.61,1.94) {signature: E};
+
+  % the seal is attached to the subject's key
+  \draw[bronze,line width=1pt,->] (4.20,3.14) -- (4.62,3.14);
+  \node[draw=ink,text=ink,circle,line width=1pt,minimum size=0.70cm,font=\footnotesize\ttfamily] (S) at (4.98,3.14) {S};
+
+  \node[muted,anchor=west,font=\scriptsize] at (0.31,1.54) {a denied seal writes};
+  \node[muted,anchor=west,font=\scriptsize] at (0.31,1.25) {one mark down on};
+  \node[muted,anchor=west,font=\scriptsize] at (0.31,0.96) {the issuer alone};
+
+  % and written to the record
+  \draw[muted,line width=0.9pt,->] (3.60,1.81) -- (3.60,0.87);
+  \node[muted,anchor=west,font=\scriptsize] at (3.80,1.42) {written to};
+  \node[muted,anchor=west,font=\scriptsize] at (3.80,1.13) {the record};
+
+  % ================ RIGHT: ratified by a quorum ================
+  \node[ink,anchor=west,font=\footnotesize\itshape] at (6.07,5.56) {ratified by a quorum};
+
+  \node[draw=ink,circle,line width=1pt,minimum size=0.44cm] (q1) at (6.45,5.22) {};
+  \node[draw=ink,circle,line width=1pt,minimum size=0.44cm] (q2) at (6.45,4.71) {};
+  \node[draw=ink,circle,line width=1pt,minimum size=0.44cm] (q3) at (6.45,4.20) {};
+
+  % three separate private answers converge on one
+  \draw[muted,line width=0.7pt] (6.68,5.22) -- (7.34,4.81);
+  \draw[muted,line width=0.7pt] (6.68,4.71) -- (7.34,4.71);
+  \draw[muted,line width=0.7pt] (6.68,4.20) -- (7.34,4.61);
+  \node[ink,anchor=west] at (7.54,4.65) {majority};
+  \node[muted,anchor=west,font=\scriptsize] at (7.54,4.26) {the verdict};
+
+  \draw[bronze,line width=1pt,->] (8.95,4.71) -- (9.42,4.71) -- (9.42,3.84);
+
+  % the same kind of object, signed by threshold instead of by one key
+  \draw[bronze,line width=0.9pt,rounded corners=2pt] (6.07,3.82) rectangle (10.00,1.81);
+  \node[bronze,anchor=west,font=\scriptsize\ttfamily\bfseries] at (6.31,3.48) {seal};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (6.31,3.10) {type: marriage};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (6.31,2.81) {subject: keys A and B};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (6.31,2.52) {term: permanent};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (6.31,2.23) {issuer: quorum verdict};
+  \node[ink,anchor=west,font=\scriptsize\ttfamily] at (6.31,1.94) {signature: threshold};
+
+  % attached to both subject keys
+  \draw[bronze,line width=1pt,->] (10.03,3.24) -- (10.42,3.24);
+  \draw[bronze,line width=1pt,->] (10.03,2.18) -- (10.42,2.18);
+  \node[draw=ink,text=ink,circle,line width=1pt,minimum size=0.64cm,font=\footnotesize\ttfamily] (KA) at (10.75,3.24) {A};
+  \node[draw=ink,text=ink,circle,line width=1pt,minimum size=0.64cm,font=\footnotesize\ttfamily] (KB) at (10.75,2.18) {B};
+
+  \node[muted,anchor=west,font=\scriptsize] at (6.07,1.54) {three anonymous stewards,};
+  \node[muted,anchor=west,font=\scriptsize] at (6.07,1.25) {each bonded separately;};
+  \node[muted,anchor=west,font=\scriptsize] at (6.07,0.96) {a forfeit pays the parties};
+
+  \draw[muted,line width=0.9pt,->] (9.70,1.81) -- (9.70,0.87);
+  \node[muted,anchor=west,font=\scriptsize] at (9.90,1.42) {written to};
+  \node[muted,anchor=west,font=\scriptsize] at (9.90,1.13) {the record};
+
+  % ================ the record ================
+  \draw[muted,line width=0.8pt,rounded corners=2pt] (0.31,0.80) rectangle (11.29,0.14);
+  \node[ink,anchor=west] at (0.48,0.47) {the record};
+  \node[muted,anchor=west,font=\scriptsize\itshape] at (6.70,0.47) {append-only, ordered by block time};
+\end{tikzpicture}

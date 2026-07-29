@@ -7,8 +7,31 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{enumitem}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+% Engine: XeLaTeX. Latin Modern is Computer Modern's Unicode descendant, so the
+% typeset result is the one the pdflatex build produced; the fonts are named by
+% file so kpathsea resolves them from the TeX tree with no system install.
+% The pdfTeX branch is kept so the template still typesets under pdflatex.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX}
+  \setmainfont{lmroman10-regular.otf}[
+    ItalicFont     = lmroman10-italic.otf,
+    BoldFont       = lmroman10-bold.otf,
+    BoldItalicFont = lmroman10-bolditalic.otf,
+    SmallCapsFont  = lmromancaps10-regular.otf]
+  \setsansfont{lmsans10-regular.otf}[
+    ItalicFont     = lmsans10-oblique.otf,
+    BoldFont       = lmsans10-bold.otf,
+    BoldItalicFont = lmsans10-boldoblique.otf]
+  \setmonofont{lmmono10-regular.otf}[
+    ItalicFont     = lmmono10-italic.otf,
+    BoldFont       = lmmonolt10-bold.otf,
+    BoldItalicFont = lmmonolt10-boldoblique.otf]
+\fi
 \usepackage[english]{babel}
 \usepackage{microtype}
 \usepackage[svgnames]{xcolor}
@@ -20,12 +43,25 @@
 \definecolor{ink}{HTML}{1B1A16}
 \definecolor{muted}{HTML}{726C60}
 \definecolor{bronze}{HTML}{825F27}
+\definecolor{rulec}{HTML}{D8D2C4}
 \newcommand{\figcap}[1]{\caption{\small #1}}
+% Endnotes, industry standard: markers in the text, notes gathered under "Notes"
+% just before the references. \theendnotes is emitted by build-pdf.sh.
+\usepackage{endnotes}
+\let\footnote=\endnote
+\renewcommand{\notesname}{Notes}
+\renewcommand\enoteheading{\section*{\notesname}\mbox{}\par\vspace{-\baselineskip}}
+\renewcommand{\enotesize}{\small}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=linkblue, citecolor=black,
-  pdftitle={Nown: A Protocol for Portable Trust},
+  pdftitle={$if(doctitle)$$doctitle$$else$Nown: A Protocol for Portable Trust$endif$},
   pdfauthor={Anonymous}, pdfcreator={}, pdfproducer={}}
 % Strip identifying metadata: no creation/mod dates, deterministic trailer ID.
+% Under pdfTeX the primitives below do it. Under XeLaTeX the output driver
+% (xdvipdfmx) writes /Producer and /CreationDate after TeX has finished, so
+% build-pdf.sh blanks them in the finished file; it also runs the driver with
+% -V 4, which keeps the Info dictionary a plain object rather than burying it
+% in a compressed object stream where it could not be reached.
 \ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
 \ifdefined\pdftrailerid\pdftrailerid{}\fi
 \ifdefined\pdfsuppressptexinfo\pdfsuppressptexinfo=-1\fi
@@ -41,7 +77,7 @@
 \setcounter{secnumdepth}{0} % headings carry their own "1.", "2." numbers; no LaTeX auto-numbering
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\title{Nown: A Protocol for Portable Trust}
+\title{$if(doctitle)$$doctitle$$else$Nown: A Protocol for Portable Trust$endif$}
 \author{Anonymous \\ \href{https://nown.to}{nown.to} \quad \href{https://github.com/nownto/nown}{github.com/nownto/nown} \\[3pt] \normalfont\itshape\small v0.1 \quad Released into the public domain (the Unlicense)}
 \date{}
 

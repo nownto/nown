@@ -1,0 +1,85 @@
+<svg viewBox="0 0 440 620" role="img" aria-label="A dealing without money. At setup it fixes two outcomes, the oracle, and the quorum's moment. Parties only: both attest and both are correct, or on disagreement a quorum picks one of the two, one correct and one incorrect. A quorum from the start, for a certification: the panel picks one of the two, either affirm with the seal affixed and both correct, or deny with no seal and the issuer marked. If no one answers the call the dealing falls to the timeout outcome the parties fixed at creation." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .k{ fill:none; stroke:var(--ink-2,#46423a); stroke-width:1.8 }
+    .kl{ font-family:var(--mono,monospace); font-size:17px; fill:var(--ink,#1b1a16); font-weight:600 }
+    .kls{ font-family:var(--mono,monospace); font-size:15px; fill:var(--ink,#1b1a16); font-weight:600 }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink,#1b1a16) }
+    .lbs{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--ink,#1b1a16) }
+    .ann{ font-family:var(--serif,Georgia,serif); font-size:14px; fill:var(--ink-3,#726c60); font-style:italic }
+    .brz{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--bronze,#9c7635) }
+    .flow{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.6 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .rule{ stroke:var(--rule,#d8d2c4); stroke-width:1 }
+    .up{ fill:none; stroke:var(--bronze,#9c7635); stroke-width:2.6 }
+    .b{ fill:var(--bronze,#9c7635) }
+    .dn{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:2.6 }
+    .m{ fill:var(--ink-3,#726c60) }
+    .dash{ stroke:var(--ink-3,#726c60); stroke-width:2.4 }
+  </style>
+
+  <text class="ann" x="220" y="26" text-anchor="middle">every record is permanent</text>
+
+  <!-- the dealing -->
+  <circle class="k" cx="160" cy="74" r="18"/>
+  <text class="kl" x="160" y="80" text-anchor="middle">A</text>
+  <circle class="k" cx="280" cy="74" r="18"/>
+  <text class="kl" x="280" y="80" text-anchor="middle">B</text>
+  <path class="flow" d="M181,74 L259,74"/>
+  <text class="lbl" x="220" y="118" text-anchor="middle">a dealing</text>
+  <text class="ann" x="220" y="143" text-anchor="middle">two outcomes, the oracle, and the quorum's moment, fixed at setup</text>
+
+  <!-- two modes -->
+  <path class="flow" d="M220,155 L220,169 L115,169 L115,187"/><polygon class="arr" points="115,195 109,183 121,183"/>
+  <path class="flow" d="M220,169 L325,169 L325,187"/><polygon class="arr" points="325,195 319,183 331,183"/>
+
+  <text class="lbs" x="115" y="221" text-anchor="middle">parties only</text>
+  <text class="lbs" x="325" y="221" text-anchor="middle">a quorum from the start</text>
+
+  <line class="rule" x1="220" y1="239" x2="220" y2="556"/>
+
+  <!-- left: parties only -->
+  <text class="lbs" x="115" y="261" text-anchor="middle">both attest</text>
+  <circle class="k" cx="83" cy="295" r="14"/>
+  <text class="kls" x="83" y="300" text-anchor="middle">A</text>
+  <path class="up" d="M104,303 L104,289"/><polygon class="b" points="104,280 97,292 111,292"/>
+  <circle class="k" cx="145" cy="295" r="14"/>
+  <text class="kls" x="145" y="300" text-anchor="middle">B</text>
+  <path class="up" d="M166,303 L166,289"/><polygon class="b" points="166,280 159,292 173,292"/>
+
+  <text class="lbs" x="115" y="360" text-anchor="middle">or a quorum picks</text>
+  <text class="lbs" x="115" y="382" text-anchor="middle">one of the two:</text>
+  <text class="lbs" x="115" y="412" text-anchor="middle">one correct,</text>
+  <text class="lbs" x="115" y="434" text-anchor="middle">one incorrect</text>
+  <circle class="k" cx="83" cy="472" r="14"/>
+  <text class="kls" x="83" y="477" text-anchor="middle">A</text>
+  <path class="up" d="M104,480 L104,466"/><polygon class="b" points="104,457 97,469 111,469"/>
+  <circle class="k" cx="145" cy="472" r="14"/>
+  <text class="kls" x="145" y="477" text-anchor="middle">B</text>
+  <path class="dn" d="M166,464 L166,478"/><polygon class="m" points="166,487 159,475 173,475"/>
+
+  <!-- right: a quorum from the start (certification) -->
+  <text class="lbs" x="325" y="261" text-anchor="middle">the panel picks one:</text>
+  <text class="brz" x="325" y="290" text-anchor="middle">affirm: seal affixed</text>
+  <circle class="k" cx="293" cy="324" r="14"/>
+  <text class="kls" x="293" y="329" text-anchor="middle">A</text>
+  <path class="up" d="M314,332 L314,318"/><polygon class="b" points="314,309 307,321 321,321"/>
+  <circle class="k" cx="355" cy="324" r="14"/>
+  <text class="kls" x="355" y="329" text-anchor="middle">B</text>
+  <path class="up" d="M376,332 L376,318"/><polygon class="b" points="376,309 369,321 383,321"/>
+
+  <text class="brz" x="325" y="392" text-anchor="middle">deny: no seal,</text>
+  <text class="brz" x="325" y="414" text-anchor="middle">the issuer marked</text>
+  <circle class="k" cx="293" cy="452" r="14"/>
+  <text class="kls" x="293" y="457" text-anchor="middle">A</text>
+  <path class="dn" d="M314,444 L314,458"/><polygon class="m" points="314,467 307,455 321,455"/>
+  <circle class="k" cx="355" cy="452" r="14"/>
+  <text class="kls" x="355" y="457" text-anchor="middle">B</text>
+  <line class="dash" x1="369" y1="452" x2="383" y2="452"/>
+
+  <!-- lapse, full width -->
+  <line class="rule" x1="30" y1="520" x2="410" y2="520"/>
+  <text class="ann" x="220" y="546" text-anchor="middle">no one answers the call: the dealing falls to the</text>
+  <text class="ann" x="220" y="564" text-anchor="middle">timeout outcome the parties fixed at creation</text>
+
+  <text class="ann" x="220" y="600" text-anchor="middle">one mark to each key: up, or down</text>
+</svg>

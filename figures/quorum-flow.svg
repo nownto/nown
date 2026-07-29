@@ -1,0 +1,69 @@
+<svg viewBox="0 0 680 300" role="img" aria-label="A quorum arbitration on the block-time axis with its exits: the dealing opens and may close mutually with no panel; on disagreement the call goes out, and a call no one answers falls to the timeout outcome the parties fixed at creation; a seated panel runs the evidence window to the close block, secret ballots land by the deadline, and settlement follows the majority." xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+  <style>
+    .box{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.2 }
+    .exit{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1; stroke-dasharray:3 4 }
+    .num{ font-family:var(--mono,monospace); font-size:12px; fill:var(--bronze,#9c7635) }
+    .lbl{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--ink,#1b1a16) }
+    .xlbl{ font-family:var(--serif,Georgia,serif); font-size:14px; fill:var(--ink-3,#726c60); font-style:italic }
+    .axis{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1.6 }
+    .arr{ fill:var(--ink-3,#726c60) }
+    .ax{ font-family:var(--serif,Georgia,serif); font-size:16px; fill:var(--ink-3,#726c60); font-style:italic }
+    .tick{ font-family:var(--serif,Georgia,serif); font-size:15px; fill:var(--bronze,#9c7635); font-style:italic }
+    .drop{ fill:none; stroke:var(--ink-3,#726c60); stroke-width:1; stroke-dasharray:2 4 }
+  </style>
+
+  <!-- exits above the path -->
+  <rect class="exit" x="30" y="16" width="188" height="48" rx="10"/>
+  <text class="xlbl" x="124" y="36" text-anchor="middle">parties agree:</text>
+  <text class="xlbl" x="124" y="54" text-anchor="middle">mutual close, no panel</text>
+  <path class="drop" d="M72,96 L72,66"/><polygon class="arr" points="72,64 66,74 78,74"/>
+
+  <rect class="exit" x="240" y="16" width="180" height="48" rx="10"/>
+  <text class="xlbl" x="330" y="36" text-anchor="middle">call unanswered:</text>
+  <text class="xlbl" x="330" y="54" text-anchor="middle">the timeout outcome</text>
+  <path class="drop" d="M282,96 L282,66"/><polygon class="arr" points="282,64 276,74 288,74"/>
+
+  <!-- six stages -->
+  <rect class="box" x="22" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="31" y="113">1</text>
+  <text class="lbl" x="72" y="141" text-anchor="middle" font-size="14">dealing opens</text>
+
+  <polygon class="arr" points="129,128 121,124 121,132"/>
+  <rect class="box" x="127" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="136" y="113">2</text>
+  <text class="lbl" x="177" y="141" text-anchor="middle" font-size="14">disagreement</text>
+
+  <polygon class="arr" points="234,128 226,124 226,132"/>
+  <rect class="box" x="232" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="241" y="113">3</text>
+  <text class="lbl" x="282" y="141" text-anchor="middle">the call</text>
+
+  <polygon class="arr" points="339,128 331,124 331,132"/>
+  <rect class="box" x="337" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="346" y="113">4</text>
+  <text class="lbl" x="387" y="134" text-anchor="middle">evidence</text>
+  <text class="lbl" x="387" y="152" text-anchor="middle">window</text>
+
+  <polygon class="arr" points="444,128 436,124 436,132"/>
+  <rect class="box" x="442" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="451" y="113">5</text>
+  <text class="lbl" x="492" y="134" text-anchor="middle">secret</text>
+  <text class="lbl" x="492" y="152" text-anchor="middle">ballots</text>
+
+  <polygon class="arr" points="554,128 546,124 546,132"/>
+  <rect class="box" x="547" y="96" width="100" height="64" rx="5"/>
+  <text class="num" x="556" y="113">6</text>
+  <text class="lbl" x="597" y="141" text-anchor="middle">settlement</text>
+
+  <!-- the axis, block time at its beginning -->
+  <text class="ax" x="24" y="236">block time</text>
+  <path class="axis" d="M24,256 L640,256"/><polygon class="arr" points="650,256 638,250 638,262"/>
+
+  <path class="drop" d="M437,160 L437,250"/>
+  <path class="axis" d="M437,250 L437,262"/>
+  <text class="tick" x="437" y="286" text-anchor="middle">close block</text>
+
+  <path class="drop" d="M542,160 L542,250"/>
+  <path class="axis" d="M542,250 L542,262"/>
+  <text class="tick" x="542" y="286" text-anchor="middle">deadline</text>
+</svg>

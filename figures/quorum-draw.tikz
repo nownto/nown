@@ -1,0 +1,91 @@
+\begin{tikzpicture}[>=Latex,font=\footnotesize]
+  % stage 1: the pool of eligible keys
+  \fill[muted] (0.30,6.15) circle (0.07);
+  \fill[muted] (0.75,6.35) circle (0.07);
+  \fill[muted] (1.20,6.10) circle (0.07);
+  \fill[muted] (0.20,5.65) circle (0.07);
+  \fill[muted] (0.70,5.80) circle (0.07);
+  \fill[muted] (1.25,5.60) circle (0.07);
+  \fill[muted] (0.35,5.10) circle (0.07);
+  \fill[muted] (0.85,5.20) circle (0.07);
+  \fill[muted] (1.30,5.05) circle (0.07);
+  \node[ink] at (1.15,4.55) {eligible keys};
+  \node[muted,font=\scriptsize\itshape,align=center] at (1.15,4.02) {keys above the bar,\\ less the parties};
+  % the call
+  \node[muted,font=\scriptsize\itshape] at (2.60,5.95) {called at random,};
+  \draw[muted,line width=0.8pt,->] (1.80,5.60) -- (3.60,5.60);
+  \node[muted,font=\scriptsize\itshape] at (2.60,5.25) {anonymous};
+  % stage 2: five stewards, each with a bond and a sealed private ballot
+  \node[ink] at (4.85,6.90) {five stewards};
+  % seat 1, outcome A
+  \draw[bronze,line width=0.9pt] (3.95,6.30) circle (0.16);
+  \fill[bronze] (4.20,6.22) rectangle ++(0.16,0.16);
+  \node[ink,font=\footnotesize\ttfamily] at (4.53,6.30) {B};
+  \draw[muted,line width=0.6pt] (4.75,6.11) rectangle (5.75,6.49);
+  \fill[bronze] (4.95,6.30) circle (0.06);
+  \node[ink,font=\footnotesize\ttfamily] at (5.30,6.30) {A};
+  % seat 2, outcome A
+  \draw[bronze,line width=0.9pt] (3.95,5.75) circle (0.16);
+  \fill[bronze] (4.20,5.67) rectangle ++(0.16,0.16);
+  \node[ink,font=\footnotesize\ttfamily] at (4.53,5.75) {B};
+  \draw[muted,line width=0.6pt] (4.75,5.56) rectangle (5.75,5.94);
+  \fill[bronze] (4.95,5.75) circle (0.06);
+  \node[ink,font=\footnotesize\ttfamily] at (5.30,5.75) {A};
+  % seat 3, outcome A
+  \draw[bronze,line width=0.9pt] (3.95,5.20) circle (0.16);
+  \fill[bronze] (4.20,5.12) rectangle ++(0.16,0.16);
+  \node[ink,font=\footnotesize\ttfamily] at (4.53,5.20) {B};
+  \draw[muted,line width=0.6pt] (4.75,5.01) rectangle (5.75,5.39);
+  \fill[bronze] (4.95,5.20) circle (0.06);
+  \node[ink,font=\footnotesize\ttfamily] at (5.30,5.20) {A};
+  % seat 4, outcome B
+  \draw[bronze,line width=0.9pt] (3.95,4.65) circle (0.16);
+  \fill[bronze] (4.20,4.57) rectangle ++(0.16,0.16);
+  \node[ink,font=\footnotesize\ttfamily] at (4.53,4.65) {B};
+  \draw[muted,line width=0.6pt] (4.75,4.46) rectangle (5.75,4.84);
+  \fill[bronze] (4.95,4.65) circle (0.06);
+  \node[muted,font=\footnotesize\ttfamily] at (5.30,4.65) {B};
+  % seat 5, outcome B
+  \draw[bronze,line width=0.9pt] (3.95,4.10) circle (0.16);
+  \fill[bronze] (4.20,4.02) rectangle ++(0.16,0.16);
+  \node[ink,font=\footnotesize\ttfamily] at (4.53,4.10) {B};
+  \draw[muted,line width=0.6pt] (4.75,3.91) rectangle (5.75,4.29);
+  \fill[bronze] (4.95,4.10) circle (0.06);
+  \node[muted,font=\footnotesize\ttfamily] at (5.30,4.10) {B};
+  % stage 3: the tally and the verdict
+  \draw[muted,line width=0.6pt] (5.85,6.55) -- (5.95,6.55) -- (5.95,3.85) -- (5.85,3.85);
+  \draw[muted,line width=0.8pt,->] (5.95,5.20) -- (6.55,5.20);
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (6.70,5.60) {tally};
+  \node[ink,font=\footnotesize\ttfamily,anchor=west] at (6.70,5.20) {3 A / 2 B};
+  \draw[muted,line width=0.8pt,->] (8.55,5.20) -- (9.15,5.20);
+  \node[ink,anchor=west] at (9.30,5.38) {verdict: A};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (9.30,5.02) {final};
+  % what the ballot is
+  \node[muted,font=\scriptsize\itshape] at (6.05,3.45)
+    {each privately selects one of the outcomes agreed before the dealing,};
+  \node[muted,font=\scriptsize\itshape] at (6.05,3.12) {before a block-time deadline};
+  \draw[muted,line width=0.3pt,opacity=0.5] (0.00,2.85) -- (11.00,2.85);
+  % settlement: the forfeited bonds go to the seats that matched, the fee pays the bounty
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (0.05,2.55) {once the verdict is final};
+  % the 2 who missed
+  \node[ink,anchor=west] at (0.05,2.00) {the 2 who missed};
+  \fill[bronze] (3.25,1.90) rectangle ++(0.20,0.20);
+  \node[ink,font=\footnotesize\ttfamily,anchor=west] at (3.55,2.00) {B};
+  \fill[bronze] (4.05,1.90) rectangle ++(0.20,0.20);
+  \node[ink,font=\footnotesize\ttfamily,anchor=west] at (4.35,2.00) {B};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (3.25,1.55) {bonds forfeited};
+  \draw[bronze,line width=0.9pt,->] (4.85,2.00) -- (5.90,2.00);
+  \node[ink,anchor=west] at (6.15,2.00) {the 3 who matched};
+  % the fee, posted at creation
+  \node[ink,anchor=west] at (0.05,0.85) {the fee};
+  \node[muted,font=\scriptsize\itshape,anchor=west] at (0.05,0.45) {posted at creation};
+  \fill[bronze] (3.25,0.75) rectangle ++(0.20,0.20);
+  \node[ink,font=\footnotesize\ttfamily,anchor=west] at (3.55,0.85) {F};
+  \draw[bronze,line width=0.9pt,->] (4.85,0.85) -- (5.45,0.85);
+  \draw[bronze,line width=0.9pt] (5.82,0.85) circle (0.16);
+  \draw[bronze,line width=0.9pt] (6.30,0.85) circle (0.16);
+  \draw[bronze,line width=0.9pt] (6.78,0.85) circle (0.16);
+  \draw[muted,line width=0.6pt] (7.02,1.10) -- (7.12,1.10) -- (7.12,0.60) -- (7.02,0.60);
+  \node[ink,anchor=west,font=\scriptsize] at (7.30,1.02) {the 3 who matched:};
+  \node[ink,anchor=west,font=\scriptsize] at (7.30,0.68) {bond back and a fixed bounty};
+\end{tikzpicture}
