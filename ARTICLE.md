@@ -6,7 +6,7 @@ Released into the public domain (the Unlicense).
 
 The whitepaper carries the protocol: what Nown is, and enough of it to build from. This is the other half, and it is unfinished on purpose. Every section here takes the corresponding section of the whitepaper and opens it, giving the reasoning under the mechanism, the economics it has to survive, the objections it answers by construction, and the dead ends already ruled out so nobody spends a week rediscovering one.
 
-Fourteen problems in it are genuinely unsolved. They are stated in the section they belong to, in full, with the candidate answer where one exists and the exact reason it is not yet enough. A key at zero confers nothing, which is the sybil bound, and it leaves the genesis open: at the first block every key is at zero, so nothing can move. The quorum's whole security rests on enough strangers volunteering to read a case. No coin pays the nodes that keep the record. Each of those carries a card, and each card links to its own section of the open problems file in the repository.
+Fifteen problems in it are genuinely unsolved. They are stated in the section they belong to, in full, with the candidate answer where one exists and the exact reason it is not yet enough. A key at zero confers nothing, which is the sybil bound, and it leaves the genesis open: at the first block every key is at zero, so nothing can move. The quorum's whole security rests on enough strangers volunteering to read a case. No coin pays the nodes that keep the record. Each of those carries a card, and each card links to its own section of the open problems file in the repository.
 
 Nown is ownerless. There is no company, no token, no owner, and no admin key, so there is nothing to join and nobody to ask. What there is, is a protocol that works better the more people attack it and a list of the places it is thinnest. Take one.
 
@@ -136,7 +136,23 @@ So the question dissolves at this layer, and it does not disappear. A key's karm
 
 One consequence of that is worth naming rather than hiding. A proven key can deal with its own fresh keys and lift them, manufacturing a second reputation out of its first. Keys are property, and a forbidden version of this would simply be sold instead. What it produces is a history whose karma all flows from one source, and an application that reads the graph sees that source: a mono-source history reads the way a young company with a single investor reads.
 
+### Seeing repetition
+
+Repetition can be made readable without naming anyone, and the candidate for it is a pair tag. Two keys can each compute the same secret from their own private half and the other's public half, and nobody else can.[cite:15] Each mark carries a tag derived from that secret, so every mark a key takes from one counterparty carries one tag. A reader who sees thirty-eight of a key's forty marks under a single tag learns that most of its history came from one source. Who the source was stays as hidden as before.
+
+Two details hold it together. The two sides of a dealing get different tags from the same secret, so the mark on one key never matches the mark on the other and the pair stays unlinked. The proof that makes a mark valid also shows its tag came from the real counterparty, so a key cannot escape the reading by writing a fresh tag each time.
+
+The tag adds one field to a mark and nothing else to the record. What it gives up is a count: a reader learns how often a key returned to one counterparty, though never to whom. What it gives an application is something to weigh. An application can count each tag once, or discount a history drawn mostly from one source. A key lifted by its owner's other key then reads as the mono-source history it is, and the protocol still rules on none of it.
+
+It reaches two keys and stops there. A ring of many keys spreads its marks across as many tags and reads as varied as a real history.
+
+CAROUSEL-START problems-dealings
+
+CARD :: Two keys looping :: Two keys that carry karma can mark each other up as often as they deal, at no cost to either, and the record holds no pair to read. The candidate is a pair tag: each mark carries a tag only its two keys can compute, a different one for each side, proven to come from the real counterparty, so an application sees how much of a history came from one source without learning whose it was. Open: whether the repeat count it reveals costs more privacy than it buys, the exact derivation and the proof it adds to a mark, and rings of many keys, which spread their marks across as many tags. [Work on this problem.](https://github.com/nownto/nown/blob/main/OPEN-PROBLEMS.md#two-keys-looping)
+
 CARD :: The genesis :: A key at zero confers nothing, so at the network's first block, when every key is at zero, nothing can move: the problem is how to launch. The candidate is a genesis beacon, declared openly in the record's first entries: a node that grants each new key one small injection and shuts itself down for good once block time and network action pass a stated saturation. Open: the injection's size and schedule, the saturation test, how a per-key injection is rationed when a person may open unlimited keys, and the math that leaves the earliest keys no advantage over those who come after. [Work on this problem.](https://github.com/nownto/nown/blob/main/OPEN-PROBLEMS.md#the-genesis)
+
+CAROUSEL-END
 
 ## 7. Oracles
 
@@ -443,6 +459,7 @@ Trust between strangers is built from three parts: a history, a way to read it, 
 12. Imperva. 2024 Bad Bot Report (bots 49.6% of internet traffic in 2023). 2024.
 13. Consumer Financial Protection Bureau. Technical correction and update to the CFPB's credit invisibles estimate (December 2020: 7.0M consumers with no credit record, 25.3M with an unscored record). 2025.
 14. Federal Bureau of Investigation, IC3. 2024 Internet Crime Report ($16.6B total reported losses; $672,009,052 Confidence/Romance). 2025.
+15. W. Diffie, M. E. Hellman. New Directions in Cryptography. IEEE Transactions on Information Theory, 1976.
 
 [^key]: A keypair: two matched numbers. The private one is a secret only its holder knows, used to sign; the public one is shared and lets anyone check those signatures. Holding the private key is owning everything the key carries, its history and its karma.
 [^pgp]: Pretty Good Privacy, Phil Zimmermann's 1991 email-encryption software. Its web of trust let each user judge a key's authenticity from signatures collected from other people, with no central authority, on a good-enough rather than perfect standard.

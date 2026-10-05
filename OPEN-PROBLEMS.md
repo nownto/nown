@@ -25,6 +25,23 @@ should show a person who has never seen one, given that the sum alone hides the 
 behind it; and whether a reader needs anything beyond the sum and the count of marks in each direction to
 judge a key well.
 
+## Two keys looping
+
+Two keys that both carry karma can deal with each other as often as they like, each dealing writing a mark
+up on each, at no cost to either. The record holds no pair, so the protocol has no rule against it, and an
+application that wants to discount it has nothing to read.
+
+The candidate is a pair tag. Two keys can each compute the same secret from their own private half and the
+other's public half, and nobody else can. Each mark carries a tag derived from that secret, a different
+one for each side of the dealing so the two marks never match, and the proof that makes the mark valid
+shows the tag came from the real counterparty. Every mark from one counterparty then carries one tag, and
+an application can count each tag once or discount a history drawn mostly from one source, without
+learning who the counterparty was.
+
+**Open:** whether the repeat count the tag reveals costs more privacy than it buys; the exact derivation
+and the proof it adds to a mark; and rings of many keys, which spread their marks across as many tags and
+read as varied as a real history.
+
 ## The genesis
 
 A key at zero confers nothing, so at the network's first block, when every key is at zero, nothing can

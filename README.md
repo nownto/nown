@@ -36,14 +36,14 @@ derived from the dev master via `strip-hold.py`.
 | `build-pdf.sh` + `nown.latex` | Typeset-PDF pipeline (pandoc + xelatex). `./build-pdf.sh all` builds all three prints |
 | `win-to-md.py` | Reads `what-is-nown.html` and emits the markdown for `nown-what-is.pdf`, so the one-pager stays the only source of its own text |
 | `strip-hold.py` | Derives the public lander from the dev master |
-| **[OPEN-PROBLEMS.md](OPEN-PROBLEMS.md)** | The fourteen genuinely unsolved parts, one section each. Every "Work on this problem" card in the article links to its section here. |
+| **[OPEN-PROBLEMS.md](OPEN-PROBLEMS.md)** | The fifteen genuinely unsolved parts, one section each. Every "Work on this problem" card in the article links to its section here. |
 | `verify.sh` | Invariant checks (register, banned terms, structure) |
 
 ## Honest status
 
 A **design and research draft, not running code.** The whitepaper carries solutions only. Everything
 unfinished is named in the Collaborative research paper, in the section it belongs to, and each card
-links to its own section of [OPEN-PROBLEMS.md](OPEN-PROBLEMS.md). Fourteen problems, fourteen sections.
+links to its own section of [OPEN-PROBLEMS.md](OPEN-PROBLEMS.md). Fifteen problems, fifteen sections.
 Some of them:
 
 - **The genesis.** A key at zero confers nothing and can only receive, which is the sybil bound. It is
