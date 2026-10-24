@@ -241,7 +241,7 @@ def build():
     # math style
     head = head.replace('</style>', ".math{ font-family:var(--mono); text-align:center; font-size:1rem; "
                         "color:var(--ink); margin:1.1rem auto; letter-spacing:.02em }\n"
-                        ".subsec{ font-family:var(--serif); font-weight:600; font-size:1.16rem; "
+                        ".subsec{ font-family:var(--serif); font-weight:600; font-size:calc(1.16 * var(--ur)); "
                         "color:var(--ink); margin:2.1rem 0 .3rem; letter-spacing:-.01em }\n"
                         ".wpfig{ margin:2rem 0; }\n"
                         ".carousel{ display:grid; grid-auto-flow:column; grid-auto-columns:min(330px,82%); gap:1rem;"
@@ -259,7 +259,7 @@ def build():
                         ".wpfig .fig-frame svg{ display:block; width:100%; height:auto; max-width:560px; margin:0 auto }\n"
                         "details.explore{ margin:1.6rem 0 0; border-top:1px solid var(--rule) }\n"
                         "details.explore>summary{ cursor:pointer; list-style:none; display:flex; align-items:center; gap:.6rem;"
-                        " padding:.9rem .1rem; font-family:var(--mono); font-size:.78rem; letter-spacing:.12em;"
+                        " padding:.9rem .1rem; font-family:var(--mono); font-size:calc(.78 * var(--ur)); letter-spacing:.12em;"
                         " text-transform:uppercase; color:var(--bronze); -webkit-tap-highlight-color:transparent }\n"
                         "details.explore>summary::-webkit-details-marker{ display:none }\n"
                         "details.explore>summary::after{ content:''; width:.46rem; height:.46rem;"
