@@ -39,8 +39,9 @@
 }
 *{box-sizing:border-box}
 /* page scale: 1 up to a 1920px-wide viewport, 1.2 at 3840px (4K), capped at 1.3.
-   Root type carries it for everything in rem; --up is the scaled px. */
-html{-webkit-text-size-adjust:100%;font-size:clamp(1rem,calc(.8rem + .16667vw),1.3rem)}
+   Root type carries it for everything in rem; --up is the scaled px. --ui-scale is the reader's
+   own multiplier, from the A- / A+ buttons (shared with the papers' Aa UI row). */
+html{-webkit-text-size-adjust:100%;font-size:calc(clamp(1rem,calc(.8rem + .16667vw),1.3rem) * var(--ui-scale,1))}
 :root{--up:calc(1rem / 16)}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1.16rem;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 ::selection{background:var(--sel)}
@@ -61,6 +62,9 @@ nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-con
 #themeBtn{background:none;border:1px solid var(--rule-2);border-radius:999px;color:var(--ink-2);cursor:pointer;padding:calc(6 * var(--up));display:inline-flex}
 #themeBtn:hover{color:var(--ink);border-color:var(--bronze)}
 #themeBtn svg{width:calc(15 * var(--up));height:calc(15 * var(--up))}
+.uib{background:none;border:1px solid var(--rule-2);border-radius:999px;color:var(--ink-2);cursor:pointer;
+  padding:calc(6 * var(--up)) calc(9 * var(--up));font-family:var(--mono);font-size:.62rem;letter-spacing:.04em;line-height:1}
+.uib:hover{color:var(--ink);border-color:var(--bronze)}
 /* Same control as the whitepaper and the article carry: it opens the typeset
    PDF that build-pdf.sh makes from this very page, never a browser print. */
 #pdfBtn{display:inline-flex;align-items:center;gap:.5em;background:none;border:1px solid var(--rule-2);
@@ -110,6 +114,8 @@ footer a:hover{color:var(--ink)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v7H6z"/></svg>
       <span class="blab">PDF</span>
     </a>
+    <button class="uib" id="uiMinus" type="button" aria-label="Smaller interface" title="Smaller interface">A&minus;</button>
+    <button class="uib" id="uiPlus" type="button" aria-label="Larger interface" title="Larger interface">A+</button>
     <button id="themeBtn" aria-label="Toggle color theme"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
   </div>
 </nav>
@@ -200,6 +206,21 @@ footer a:hover{color:var(--ink)}
   <a href="https://unlicense.org" target="_blank" rel="noopener noreferrer">PUBLIC DOMAIN</a> &middot; <a href="https://github.com/nownto/nown" target="_blank" rel="noopener noreferrer">OPEN PROTOCOL</a> &middot; <a href="mailto:hello@nown.to">NO COMPANY</a>
 </footer>
 
+<script>
+/* interface size: the same nown-ui-scale the papers' Aa UI row sets, here scaling the whole page */
+(function(){
+  var root=document.documentElement, MIN=0.8, MAX=1.6, STEP=0.1;
+  function cur(){ var s=parseFloat(root.style.getPropertyValue('--ui-scale')); return (s>=MIN&&s<=MAX)?s:1; }
+  function set(s){
+    s=Math.max(MIN, Math.min(MAX, Math.round(s*100)/100));
+    if(s===1){ root.style.removeProperty('--ui-scale'); try{ localStorage.removeItem('nown-ui-scale'); }catch(e){} }
+    else { root.style.setProperty('--ui-scale', String(s)); try{ localStorage.setItem('nown-ui-scale', String(s)); }catch(e){} }
+  }
+  try{ var v=parseFloat(localStorage.getItem('nown-ui-scale')); if(v>=MIN&&v<=MAX&&v!==1) root.style.setProperty('--ui-scale', String(v)); }catch(e){}
+  document.getElementById('uiMinus').addEventListener('click', function(){ set(cur()-STEP); });
+  document.getElementById('uiPlus').addEventListener('click', function(){ set(cur()+STEP); });
+})();
+</script>
 <script>
 (function(){
   var root=document.documentElement, btn=document.getElementById('themeBtn');
